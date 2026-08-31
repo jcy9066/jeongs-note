@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>데이터중심 AI 입문 - 11. Fine-tuing, Instruction Data, Preference Data</title><meta charset="utf-8"/><link rel="preload" href="../index-1269a69c.css" as="style"/><link rel="preload" href="../prescript-2bfc6315.js" as="script"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans:wght@400;700&amp;family=Noto Sans:ital,wght@0,400;0,600;1,400;1,600&amp;family=Noto Sans Mono:wght@400;600&amp;display=swap"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans:wght@400;600&amp;text=Wan&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="Wan"/><meta property="og:title" content="데이터중심 AI 입문 - 11. Fine-tuing, Instruction Data, Preference Data"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="데이터중심 AI 입문 - 11. Fine-tuing, Instruction Data, Preference Data"/><meta name="twitter:description" content="fine-tuning의 장점 Pre-train에 비해 필요한 컴퓨팅 자원이 적음 PEFT (Parameter-Efficient Fine Tuning) Pre-trained LLM 내 대부분의 parameter를 freezing하고 일부만 fine-tuning Fine-Tuning Downstream Task를 해결하기 위해, Pre-trained model에 추가적인 train을 진행하는 것 개요 LLM에서 pre-train은 대규모 text를 수집하고, 다음 단어를 예측하는 성능을 높이는 방식 그러나 사람들은, AI Assist..."/><meta property="og:description" content="fine-tuning의 장점 Pre-train에 비해 필요한 컴퓨팅 자원이 적음 PEFT (Parameter-Efficient Fine Tuning) Pre-trained LLM 내 대부분의 parameter를 freezing하고 일부만 fine-tuning Fine-Tuning Downstream Task를 해결하기 위해, Pre-trained model에 추가적인 train을 진행하는 것 개요 LLM에서 pre-train은 대규모 text를 수집하고, 다음 단어를 예측하는 성능을 높이는 방식 그러나 사람들은, AI Assist..."/><meta property="og:image:alt" content="fine-tuning의 장점 Pre-train에 비해 필요한 컴퓨팅 자원이 적음 PEFT (Parameter-Efficient Fine Tuning) Pre-trained LLM 내 대부분의 parameter를 freezing하고 일부만 fine-tuning Fine-Tuning Downstream Task를 해결하기 위해, Pre-trained model에 추가적인 train을 진행하는 것 개요 LLM에서 pre-train은 대규모 text를 수집하고, 다음 단어를 예측하는 성능을 높이는 방식 그러나 사람들은, AI Assist..."/><meta property="og:image" content="https://jcy9066.github.io/jeongs-note/static/og-image.png"/><meta property="og:image:url" content="https://jcy9066.github.io/jeongs-note/static/og-image.png"/><meta name="twitter:image" content="https://jcy9066.github.io/jeongs-note/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="jcy9066.github.io/jeongs-note"/><meta property="og:url" content="https://jcy9066.github.io/jeongs-note/06_인턴십/데이터중심-ai-입문---11.-fine-tuing,-instruction-data,-preference-data"/><meta property="twitter:url" content="https://jcy9066.github.io/jeongs-note/06_인턴십/데이터중심-ai-입문---11.-fine-tuing,-instruction-data,-preference-data"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="fine-tuning의 장점 Pre-train에 비해 필요한 컴퓨팅 자원이 적음 PEFT (Parameter-Efficient Fine Tuning) Pre-trained LLM 내 대부분의 parameter를 freezing하고 일부만 fine-tuning Fine-Tuning Downstream Task를 해결하기 위해, Pre-trained model에 추가적인 train을 진행하는 것 개요 LLM에서 pre-train은 대규모 text를 수집하고, 다음 단어를 예측하는 성능을 높이는 방식 그러나 사람들은, AI Assist..."/><meta name="generator" content="Quartz"/><link href="../index-1269a69c.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-735924e0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-589c1cea.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-bbc3f7c0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-2911f5d1.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-7f220492.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-e427079e.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-53b25b2b.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-c93c6a44.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-8a06014f.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-77d6a441.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-6ee21cee.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-ebc1adcf.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-34bdfded.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-788c9ca3.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-642859cd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-4abc06bd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-274a3dfe.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-94cb6c84.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-58d5ff56.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-9f9b2774.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-7262b5a7.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-a5c806d2.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-6bd36952.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" data-persist="true"/><script src="../prescript-2bfc6315.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="06_인턴십/데이터중심-ai-입문---11.-fine-tuing,-instruction-data,-preference-data" data-basepath="/jeongs-note"><div id="quartz-root" class="page" data-frame="default"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">Wan</a></h2><div class="mobile-only"><div class="spacer"></div></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 0.5rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button" aria-label="검색" aria-expanded="false"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true" data-field-priority="[&quot;title&quot;,&quot;content&quot;,&quot;tags&quot;]"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode" aria-label="다크 모드"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode" aria-label="리더 모드"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><nav class="tag-explorer" aria-label="List"><h2 class="tag-explorer-title">List</h2><ul class="tag-explorer-list"><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/3d">3d</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/usd">USD</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/viewpoint">Viewpoint</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/visual--and--lidar-descriptor">Visual &amp; LiDAR Descriptor</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/algorithm">algorithm</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/actor-critic">Actor-Critic</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dagger">DAgger</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/grid-search">Grid Search</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mappo">MAPPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ppo">PPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rrt">RRT</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/coding">coding</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/coding-agent">Coding Agent</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/context">Context</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/hook">Hook</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/matplotlib">Matplotlib</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mcp">MCP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/multi-agent">Multi-Agent</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/numpy">Numpy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/orchestration">Orchestration</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pandas">Pandas</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/skill">Skill</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/sub-agent">Sub-Agent</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/tool">Tool</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/torchvision">Torchvision</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/deeplearning">deeplearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/activation-function">Activation Function</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/backpropagation">Backpropagation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/batch--and--epoch">Batch &amp; Epoch</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/cnns">CNNs</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/crossentropyloss">CrossEntropyLoss</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/data-augmentation">Data Augmentation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dropout">Dropout</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/evaluation">Evaluation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/fashion-mnist">Fashion-MNIST</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gradient">Gradient</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loss-function">Loss Function</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mlp">MLP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/nlloss">NLLoss</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/normalization--and--standardization">Normalization &amp; Standardization</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/optimization">Optimization</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pixel-value">Pixel Value</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pooling">Pooling</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rag">RAG</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/residual-learning">Residual Learning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/softmax">Softmax</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/task-definition">Task Definition</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/training-loop">Training Loop</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/transformation">Transformation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/vllm">vLLM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/worker">Worker</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---1.-데이터중심ai란">데이터중심 AI 입문 - 1. 데이터중심AI란</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---2.-데이터셋의-크기와-모델-성능의-관계">데이터중심 AI 입문 - 2. 데이터셋의 크기와 모델 성능의 관계</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---4.-이미지-인식-모델의-기초-지식">데이터중심 AI 입문 - 4. 이미지 인식 모델의 기초 지식</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---5.-이미지-데이터를-확장-생성하는-기술">데이터중심 AI 입문 - 5. 이미지 데이터를 확장 생성하는 기술</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---7.-vlm">데이터중심 AI 입문 - 7. VLM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---9.-pre-train,-denoise-filtering">데이터중심 AI 입문 - 9. Pre-train, Denoise Filtering</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---11.-fine-tuing,-instruction-data,-preference-data">데이터중심 AI 입문 - 11. Fine-tuing, Instruction Data, Preference Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---12.-fine-tuning-model-evaluation">데이터중심 AI 입문 - 12. Fine-tuning Model Evaluation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---2.-텍스트-전처리">딥러닝 이론 - 2. 텍스트 전처리</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---7.-deeplearning">딥러닝 이론 - 7. DeepLearning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---8.-recurrent-neural-network">딥러닝 이론 - 8. Recurrent Neural Network</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---14.-encoder--and--decoder-using-rnn">딥러닝 이론 - 14. Encoder &amp; Decoder using RNN</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---15.-attention-mechanism">딥러닝 이론 - 15. Attention Mechanism</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---16.-transformer">딥러닝 이론 - 16. Transformer</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---20.-pretrained-encoder-decoder-model">딥러닝 이론 - 20. Pretrained Encoder-Decoder Model</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---24.-llm-fine-tuning">딥러닝 이론 - 24. LLM Fine-tuning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---25.-이미지를-인식하는-vlm-fine-tuning">딥러닝 이론 - 25. 이미지를 인식하는 VLM Fine-Tuning</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/equation">equation</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/bayes-error">Bayes Error</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/bellman-equation">Bellman Equation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/exponential">Exponential</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gaussian">Gaussian</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pd-controller">PD Controller</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/git">git</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/git">Git</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/git---cherry-pick">Git - Cherry-pick</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/git---worktree">Git - Worktree</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/imitationlearning">imitationlearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/behavioral-cloning">Behavioral Cloning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/compounding-error">Compounding Error</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dagger">DAgger</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---1.-introduction">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 1. Introduction</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gradient">Gradient</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/horizon">Horizon</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/kinestheitic-teaching">Kinestheitic Teaching</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/kl-divergence">KL Divergence</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mmp">MMP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/modeling">Modeling</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/movement-primitive">Movement Primitive</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/probability--and--likelihood">Probability &amp; Likelihood</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/trajectory">Trajectory</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/lecture">lecture</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---1.-introduction">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 1. Introduction</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-입문---1.기초">ROS 입문 - 1.기초</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---1.-데이터중심ai란">데이터중심 AI 입문 - 1. 데이터중심AI란</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---2.-데이터셋의-크기와-모델-성능의-관계">데이터중심 AI 입문 - 2. 데이터셋의 크기와 모델 성능의 관계</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---4.-이미지-인식-모델의-기초-지식">데이터중심 AI 입문 - 4. 이미지 인식 모델의 기초 지식</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---5.-이미지-데이터를-확장-생성하는-기술">데이터중심 AI 입문 - 5. 이미지 데이터를 확장 생성하는 기술</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---7.-vlm">데이터중심 AI 입문 - 7. VLM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---11.-fine-tuing,-instruction-data,-preference-data">데이터중심 AI 입문 - 11. Fine-tuing, Instruction Data, Preference Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---12.-fine-tuning-model-evaluation">데이터중심 AI 입문 - 12. Fine-tuning Model Evaluation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---13.-robot-data">데이터중심 AI 입문 - 13. Robot Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---14.-collecting-robot-data">데이터중심 AI 입문 - 14. Collecting Robot Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---2.-텍스트-전처리">딥러닝 이론 - 2. 텍스트 전처리</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---6.-machinelearning">딥러닝 이론 - 6. MachineLearning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---7.-deeplearning">딥러닝 이론 - 7. DeepLearning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---8.-recurrent-neural-network">딥러닝 이론 - 8. Recurrent Neural Network</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---14.-encoder--and--decoder-using-rnn">딥러닝 이론 - 14. Encoder &amp; Decoder using RNN</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---15.-attention-mechanism">딥러닝 이론 - 15. Attention Mechanism</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---16.-transformer">딥러닝 이론 - 16. Transformer</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---20.-pretrained-encoder-decoder-model">딥러닝 이론 - 20. Pretrained Encoder-Decoder Model</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---24.-llm-fine-tuning">딥러닝 이론 - 24. LLM Fine-tuning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---25.-이미지를-인식하는-vlm-fine-tuning">딥러닝 이론 - 25. 이미지를 인식하는 VLM Fine-Tuning</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/linearalgebra">linearalgebra</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/manifold">Manifold</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/projection">Projection</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/subspace">Subspace</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/llm">llm</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/rag">RAG</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/vllm">vLLM</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/machinelearning">machinelearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/episode">Episode</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ml-workflow">ML Workflow</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---6.-machinelearning">딥러닝 이론 - 6. MachineLearning</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/paper">paper</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/making-quadrupeds-learning-to-walk.-step-by-step-guide">Making quadrupeds Learning to walk. Step-by-Step Guide</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/perception">perception</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/visual--and--lidar-descriptor">Visual &amp; LiDAR Descriptor</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/practice">practice</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/fashion-mnist">Fashion-MNIST</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl_practice_cartpole">RL_Practice_CartPole</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl_practice_moutaincar">RL_Practice_MoutainCar</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/reinforcementlearning">reinforcementlearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/action-(rl)">Action (RL)</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/actor-critic">Actor-Critic</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/actuator">Actuator</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/bellman-equation">Bellman Equation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/curriculum-learning--and--scaffolding">Curriculum Learning &amp; Scaffolding</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---1.-introduction">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 1. Introduction</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dqn">DQN</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/e-greedy-policy">E-Greedy Policy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/environment">Environment</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/exploration--and--exploitation">Exploration &amp; Exploitation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gae">GAE</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gradient">Gradient</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/horizon">Horizon</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/making-quadrupeds-learning-to-walk.-step-by-step-guide">Making quadrupeds Learning to walk. Step-by-Step Guide</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mappo">MAPPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mdp">MDP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/modeling">Modeling</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/movement-primitive">Movement Primitive</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/policy">Policy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/potential-based-reward-shaping">Potential-Based Reward Shaping</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ppo">PPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/q-learning">Q-Learning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/replay-memory">Replay Memory</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/reward-shaping">Reward Shaping</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl_practice_cartpole">RL_Practice_CartPole</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl_practice_moutaincar">RL_Practice_MoutainCar</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rollout">Rollout</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/sensor">Sensor</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/target-network">Target Network</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/trajectory">Trajectory</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/robotics">robotics</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/dof">DoF</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-closure">Loop Closure</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-detection">Loop Detection</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/making-quadrupeds-learning-to-walk.-step-by-step-guide">Making quadrupeds Learning to walk. Step-by-Step Guide</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/movement-primitive">Movement Primitive</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pd-controller">PD Controller</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/primitive-behavior">Primitive Behavior</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-입문---1.기초">ROS 입문 - 1.기초</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rrt">RRT</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/trajectory">Trajectory</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/visual-odometry">Visual Odometry</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---13.-robot-data">데이터중심 AI 입문 - 13. Robot Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---14.-collecting-robot-data">데이터중심 AI 입문 - 14. Collecting Robot Data</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/ros">ros</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/action-(ros)">Action (ROS)</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/namespace">Namespace</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/nav2">Nav2</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/node">Node</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/occupancy-grid-map">Occupancy Grid Map</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-입문---1.기초">ROS 입문 - 1.기초</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros2">ROS2</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/service">Service</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/tf">TF</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/topic">Topic</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/urdf">URDF</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/slam">slam</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-closure">Loop Closure</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-detection">Loop Detection</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/scan-context">Scan Context</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/visual--and--lidar-descriptor">Visual &amp; LiDAR Descriptor</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/statistics">statistics</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/entropy">Entropy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/exponential">Exponential</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/kl-divergence">KL Divergence</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/lagrange-multiplier">Lagrange Multiplier</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/map">MAP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/posteriori">Posteriori</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/probability--and--likelihood">Probability &amp; Likelihood</a></li></ul></li></ul></nav></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../06_인턴십/">06_인턴십</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>데이터중심 AI 입문 - 11. Fine-tuing, Instruction Data, Preference Data</a></div></nav><h1 class="article-title">데이터중심 AI 입문 - 11. Fine-tuing, Instruction Data, Preference Data</h1><p show-comma="true" class="content-meta"><time datetime="2026-08-31T08:44:22.711Z">2026년 8월 31일</time><span>16 min read</span></p><ul class="tags"><li><a href="../tags/deeplearning" class="internal tag-link">deeplearning</a></li><li><a href="../tags/lecture" class="internal tag-link">lecture</a></li></ul></div></div><article class="popover-hint"><div class="markdown-preview-view markdown-rendered"><hr/>
+<ul>
+<li>fine-tuning의 장점
+<ul>
+<li>Pre-train에 비해 필요한 컴퓨팅 자원이 적음</li>
+<li><code>PEFT</code> (Parameter-Efficient Fine Tuning)
+<ul>
+<li>Pre-trained LLM 내 대부분의 parameter를 freezing하고 일부만 fine-tuning</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="fine-tuning">Fine-Tuning<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#fine-tuning" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>
+<p>Downstream Task를 해결하기 위해, Pre-trained model에 추가적인 train을 진행하는 것</p>
+</li>
+<li>
+<p>개요</p>
+<ul>
+<li>
+<p>LLM에서 pre-train은 대규모 text를 수집하고, 다음 단어를 예측하는 성능을 높이는 방식</p>
+<ul>
+<li>그러나 사람들은, AI Assistant를 기대하면서 LLM을 사용함
+<ul>
+<li>이 격차를 해소하기 위해 Pre-trained model을 조정하는 방법</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>ICL</code> (In-Context Learning)</p>
+<ul>
+<li>
+<p>Prompt 안에 Example이나 Instruction을 제공해 새로운 input을 처리하게 하는 방식</p>
+</li>
+<li>
+<p>GPT-3 논문에서 제안된 방법</p>
+</li>
+<li>
+<p>Pre-trained LLM에 대해 Task 설명, 구체적인 질문과 답변 sample을 input으로 제공해 모델이 Task를 이해하고 올바른 답변을 생성하도록 함</p>
+</li>
+<li>
+<p>장점</p>
+<ul>
+<li>모델의 parameter를 업데이트하지 않고도, input text를 어떻게 설계하느냐에 따라 동작을 제어하고, 소량의 sample로 다양한 task를 해결할 수 있음</li>
+</ul>
+</li>
+<li>
+<p>단점</p>
+<ul>
+<li>Zero-shot Learning 성능이 극도로 낮음</li>
+<li>성능이 Sample에 크게 의존함
+<ul>
+<li>sample 수가 적은 경우</li>
+<li>sample 내용이나 순서가 다른 경우</li>
+</ul>
+</li>
+<li>Sample 수에 제한이 존재함
+<ul>
+<li>최대 input 길이 제한이 있음</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Instruction Tuning</code></p>
+<ul>
+<li>
+<p>다양한 Task의 Dataset를 Instruction과 Response 형식으로 통일하고, Supervised Learning으로 parameter를 업데이트하는 기법</p>
+<ul>
+<li>Instruction과 Response Pair를 학습해 범용적인 성능을 갖게 됨</li>
+</ul>
+</li>
+<li>
+<p><code>ICL</code>의 문제를 해결하기 위해 제안된 방법</p>
+</li>
+<li>
+<p>장점</p>
+<ul>
+<li>다양하고 자연스러운 응답을 생성함</li>
+</ul>
+</li>
+<li>
+<p>단점</p>
+<ul>
+<li>부정확하고 잘못된 정보를 기반으로 한 응답을 할 수 있음</li>
+<li>편견, 차별, 불법 행위를 조장하는 응답을 할 수 있음</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>RLHF</code> (Reinforcement Learning from Human Feedback)</p>
+<ul>
+<li>인간 feedback을 활용한 강화학습</li>
+<li>지시에 대해 생성된 여러 응답을 사람이 평가하고, 이를 활용해 모델을 fine-tuning
+<ul>
+<li>모델의 output을 사람의 선호에 더 가깝게 만들고자 함
+<ul>
+<li>Preference Tuning인 DPO, IPO 등 제안
+<ul>
+<li>DPO (Direct Preference Optimization)
+<ul>
+<li>선호 응답이 비선호 응답보다 더 높은 확률을 갖도록 LLM 최적화 (Reward Model, RL 없이)</li>
+</ul>
+</li>
+<li>IPO (Identify Preference Optimization)
+<ul>
+<li>선호 pair의 차이를 일저안 목표 수준으로 맞추도록 최적화 하는 방법</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="instruction-data">Instruction Data<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#instruction-data" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>
+<p>Instruction tuning을 수행하기 위해 instruction과 response로 구성된 Instruction Data가 필요</p>
+<ul>
+<li>Instruction : 사용자가 LLM에 Task를 전달하기 위한 문장</li>
+<li>Ideal Response : 사용자가 지시에 대해 생성을 바라는 문장</li>
+</ul>
+</li>
+<li>
+<p>좋은 Instruction Data</p>
+<ul>
+<li>
+<p>Response Quality, Instruction Diversity, Instruction Complexity 관점이 중요함</p>
+</li>
+<li>
+<p>Response Quality</p>
+<ul>
+<li>
+<p>고품질 Response 특징</p>
+<ul>
+<li>Instruction의 의도를 정확하게 인지하고, 적절히 답변</li>
+<li>너무 짧거나 길지 않고 적절한 길이를 가짐</li>
+<li>지시가 윤리적, 도덕적 관점에서 부적절한 경우, 응답을 거부할 수 있음</li>
+</ul>
+</li>
+<li>
+<p>저품질 Response 특징</p>
+<ul>
+<li>지시의 의도를 이해하지 못하고, 전혀 맞지 않는 대답을 함</li>
+<li>공격적이거나 차별적인 표현이 포함됨</li>
+<li>부정확한 정보를 포함함</li>
+</ul>
+</li>
+<li>
+<p>Superficial Alignment Hypothesis</p>
+<ul>
+<li>LLM이 지닌 지식과 능력은, Pre-train에서 획득된다는 가설 (Zhou 등 제안)</li>
+<li>Instruction Tuning은, 대화의 스타일을 습득하기 위한 과정이며, Instruction Data는 소량이어도 모델의 성능을 충분히 향상 시킬 수 있다고 주장함</li>
+</ul>
+</li>
+<li>
+<p>Instruction Mining</p>
+<ul>
+<li>Instruction Data의 Quality를 추정해, 고품질 데이터 선별 (Cao 등 제안)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Instruction Diversity</p>
+<ul>
+<li>
+<p>Instruction Data에 포함된 Task의 종류를 늘려, Diversity를 높이면 모델 성능이 향상됨</p>
+</li>
+<li>
+<p>반면, 단순히 각 Task에 대한 Data 수를 늘리면 성능이 크게 개선되지 않았음</p>
+</li>
+<li>
+<p>InsTag</p>
+<ul>
+<li>Instruction에 의도와 의미를 tag로 표현해, SFT data의 Diversity와 Complexity를 측정하고, 좋은 train data를 선택하는 방법
+<ul>
+<li>SFT (Supervised Fine-tuning Data) : 모델이 볼 정답이 포함된 예시 train data</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Instruction Complexity</p>
+<ul>
+<li>
+<p>Instruction Data 내 Instruction Complelxity는 모델 성능이 큰 영향을 미침</p>
+</li>
+<li>
+<p>Evol Complexity</p>
+<ul>
+<li>Instruction Data의 Complexity를 5단계로 평가하고, 데이터 선별을 위한 Complexity 예측 모델을 구성함 (Liu 등 제안)</li>
+<li>복잡도가 높은 데이터를 우선 선택</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>기존 데이터를 활용한 Dataset 제작</p>
+<ul>
+<li>
+<p>대규모 Dataset에, 각 Task에 맞는 template을 적용해 Instruction Data를 구축함</p>
+</li>
+<li>
+<p>Flan Collection</p>
+<ul>
+<li>여러 NLP Task를 Instruction-Response 형식으로 모은 Dataset</li>
+</ul>
+</li>
+<li>
+<p>xP3 (Crossligual Public Pool of Prompts)</p>
+<ul>
+<li>
+<p>여러 언어로 구성된 Instruction Data를 모은 Dataset</p>
+</li>
+<li>
+<p>장점</p>
+<ul>
+<li>낮은 비용</li>
+<li>NLP 처리 관련 Data의 수월한 확보</li>
+</ul>
+</li>
+<li>
+<p>단점</p>
+<ul>
+<li>부자연스러운 데이터</li>
+<li>Diversity 부족</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>사람에 의한 Dataset 작성</p>
+<ul>
+<li>
+<p>이미 존재하는 Dataset으로 Instruction Data를 구축하면, Quality와 Diversity를 보장하기 어려웠음</p>
+<ul>
+<li>따라서 사람이 직접 Instruction Data를 작성하고자 함</li>
+</ul>
+</li>
+<li>
+<p>유의점</p>
+<ul>
+<li>
+<p>명확한 가이드라인 설정</p>
+<ul>
+<li>일관성 있는 data를 위해, Response에 대한 구체적인 가이드라인이 있어야 함</li>
+</ul>
+</li>
+<li>
+<p>적절한 Annotator의 채용</p>
+<ul>
+<li>전문 지식이 요구될 때는, 해당 분야에 해박한 사람을 고용해야 함</li>
+</ul>
+</li>
+<li>
+<p>적절한 Task 할당</p>
+<ul>
+<li>Annotator별로, Task를 적절히 분배하고, Instruction의 종류나 Response 난이도가 한쪽으로 치우치지 않아야 함</li>
+</ul>
+</li>
+<li>
+<p>지속적인 품질 관리</p>
+<ul>
+<li>정기적인 평가와 확인이 필요</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>databricks-dolly-15k</p>
+<ul>
+<li>
+<p>임직원들이 작성한 15,000건 이상의 Instruction과 Response로 구성된 data</p>
+</li>
+<li>
+<p>총 8개의 범주로 나눠짐</p>
+</li>
+<li>
+<p>특징</p>
+<ol>
+<li>임직원에 의한 Annotation</li>
+<li>Gamification 도입
+<ul>
+<li>Gamification : 게임 요소를 적용해, 참여와 동기를 높이는 방식</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>OpenAssistant Conversations Dataset</p>
+<ul>
+<li>
+<p>자원봉사자들의 Crowdsourcing을 통해 수집된 Dataset</p>
+<ul>
+<li>Crowdsourcing : 대중이 참여해 만들어나가는 프로세스</li>
+</ul>
+</li>
+<li>
+<p>특징</p>
+<ul>
+<li>Annotation Task 분리
+<ul>
+<li>Instruciton 단계와 Response 단계를 나누어, 단계별로 Task 할당</li>
+</ul>
+</li>
+<li>Quality 관리</li>
+<li>해야 할 일 (DO)와 하지 말아야 할 일 (Don’t)를 구체적으로 기술함</li>
+</ul>
+</li>
+<li>
+<p>장점</p>
+<ul>
+<li>고품질 데이터 확보 가능</li>
+<li>목적에 맞는 데이터 수집</li>
+<li>전문적인 Domain 대응</li>
+</ul>
+</li>
+<li>
+<p>단점</p>
+<ul>
+<li>높은 비용</li>
+<li>품질 관리의 어려움</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>LLM을 활용한 Dataset</p>
+<ul>
+<li>사람이 직접 Instruction Data를 구축하려면, 많은 시간과 비용이 듦
+<ul>
+<li>고성능 LLM을 통해 Instruction Data를 효율적으로 수집 및 작성하는 방법이 주목받고 있음</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>
+<p>사람과 LLM 간 대화를 그대로 Instruction Data로 활용하는 방식</p>
+<ul>
+<li>Usecase에 근거한 Instruction을 얻을 수 있음
+<ul>
+<li>Usecase : 사용자가 시스템이나 모델을 어떤 목적과 방식으로 사용하는지 나타내는 활용 사례</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>LLM으로 Instruction과 Response를 모두 생성해 Instruciton Data를 만드는 방식</p>
+<ul>
+<li>
+<p>Self-Instruct</p>
+<ul>
+<li>사람이 작성한 n개의 Instruction을 준비하고, 이를 저장할 Task Pool을 만듦</li>
+<li>Pool에서 무작위로 m개를 뽑아 Few-shot Learning Sample로 제시해 Instruction 생성</li>
+<li>생성된 데이터를 Filtering, Postprocessing한 뒤, 다시 Task Pool에 추가</li>
+</ul>
+</li>
+<li>
+<p>Evol-Instruct</p>
+<ul>
+<li>
+<p>LLM을 통해 다양하고 복잡한 내용으로 구성된 Instruction Data를 생성하기 위해 개발된 방법</p>
+</li>
+<li>
+<p>특징</p>
+<ul>
+<li>Diversity와 Complexity를 높이기 위해, 초기 Instruction을 In-Depth Evolving과 In-Breath Evolving 방식으로 Evolving 시킴
+<ul>
+<li>Evolving : LLM으로 Instruction을 변형해 더 다양하거나 복잡하게 발전시키는 과정</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>
+<p>In-Depth Evolving</p>
+<ul>
+<li>주어진 Instruction을 더 복잡하게 바꾸는 기법</li>
+</ul>
+<ol>
+<li>Add Constraints : 원래 Instruction에 제약 조건이나 요구 사항 추가</li>
+<li>Deepening : 내용을 더 깊게 파고들어, Complexity를 늘림</li>
+<li>Concretizing : 추상적인 개념을 더 구체적으로 치환</li>
+<li>Increase Reasoning : Instruction 해결을 위한 추론 단계 수 증가</li>
+<li>Complicate Input : Instruction에 XML, table 등 복잡한 input 추가</li>
+</ol>
+</li>
+<li>
+<p>In-Breath Evolving</p>
+<ul>
+<li>LLM으로 주어진 Instruction과 전혀 다른 유형의 Instruction을 생성해 Diversity를 높이는 작업</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>Instruction BackTransition</p>
+<ul>
+<li>웹에 존재하는 text에서 Response를 만든 뒤, Response에서 Instruction을 다시 만들어 Instruction Data를 생성하는 방법</li>
+</ul>
+<ol>
+<li>
+<p>Self-Augmentation</p>
+<ul>
+<li>웹 Corpus에서 Instruction Data를 만듦
+<ul>
+<li>Corpus : 연구 목적으로 정리한 단어 집단</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>Seed Data를 준비함
+<ul>
+<li>Seed Data : 고품질의 Instruction Data</li>
+</ul>
+</li>
+<li>Response <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">y</span></span></span></span>가 주어졌을 때, Instruction <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span>를 출력하는 Backward 모델 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.109em;">M</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.109em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0359em;">y</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:=</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.0359em;">y</span><span class="mclose">)</span></span></span></span>를 구축
+<ul>
+<li>Backward Model : 정답이 주어졌을 때, input을 생성하는 모델</li>
+</ul>
+</li>
+<li>웹에서 수집한 text <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0359em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>를 Response로 삼아, 모델 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.109em;">M</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.109em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0359em;">y</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span>에 입력해 Instructoin <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">u</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>를 생성함<br/>
+→ <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0785em;">I</span><span class="mord mathnormal">n</span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mord mathnormal">u</span><span class="mord mathnormal">c</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">D</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:=</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord"><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6944em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">x</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2222em;"><span class="mord">^</span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0359em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">}</span></span></span></span></li>
+</ol>
+</li>
+<li>
+<p>Self-Curation</p>
+<ul>
+<li>앞서 생성한 Instruction Data A에 Quality가 높은 data를 추출하는 것이 목적</li>
+</ul>
+<ol>
+<li>Seed Data만 이용해 Instruction Tuning한 모델 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.109em;">M</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.109em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">o</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>를 구축</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0785em;">I</span><span class="mord mathnormal">n</span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mord mathnormal">u</span><span class="mord mathnormal">c</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">D</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">A</span></span></span></span>를 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.109em;">M</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.109em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">o</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>로 5단계로 평가해, score <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>를 측정</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>가 threshold <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.0315em;">k</span></span></span></span> 이상인 pair만 선별해 고품질의 Instruction Data <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0315em;">k</span><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>을 얻음</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>장점
+<ul>
+<li>고속 구축 가능 : 사람보다 훨씬 빠르고 대량으로 구축할 수 있음</li>
+<li>낮은 비용</li>
+</ul>
+</li>
+<li>단점
+<ul>
+<li>이용 약관에 따른 제약</li>
+<li>낮은 데이터 신뢰도</li>
+<li>Data Quality가 LLM에 의존</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="preference-data">Preference Data<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#preference-data" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>
+<p>Instruction에 대한 여러 Response의 선호도를 매긴 Data를 만들어 train에 사용하는 방식</p>
+<ul>
+<li>
+<p>단, 더 선호되는 Response가 무엇인지 명확하지 않음</p>
+</li>
+<li>
+<p>Helpfulness와 Safety를 기준으로 설정한 data</p>
+</li>
+<li>
+<p>개발자가 생각하는, 선호되는 Response에 대한 명확한 정의를 세워야 함</p>
+<ul>
+<li>
+<p>HHH 기준</p>
+<ul>
+<li>3가지를 충족하면, 사람이 선호하는 모델 (Anthropic이 제안)</li>
+</ul>
+<ol>
+<li>Helpful : 사용자 지시나 질문을 정확히 이해하고, 간결하고 유용한 답변 제공</li>
+<li>Honest : 제공하는 정보에 거짓이나 오류가 없도록 주의</li>
+<li>Harmless : 공격적 및 차별적인 발언을 하지 않음</li>
+</ol>
+</li>
+<li>
+<p>Model Spec</p>
+<ul>
+<li>모델이 어떤 행동을 해야할 지에 대한 규정 (OpenAI의 기준)</li>
+</ul>
+<ol>
+<li>Objectives : 모델의 바람직한 행동 방향 제시</li>
+<li>Rules : 2가지 이상의 목적이 상충될 때, 어느 목적을 우선시할지 정한 규칙</li>
+<li>Defaults : 최종 판단은 개발자나 사용자에게 맡기는 항목</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>작성 방법</p>
+<ul>
+<li>어떤 Instruction가, 생성된 여러 Response와 어느 쪽이 우수한 지 정보를 포함해 구성
+<ol>
+<li>사람 또는 LLM을 활용해, 폭넓은 난이도를 갖춘 Instruction 수집</li>
+<li>여러 Response를 생성한 뒤, 서로 간의 우열을 부여하는 정보 추가
+<ol>
+<li>Ranking
+<ul>
+<li>Annotator가 여러 개의 Response를 가장 뛰어나다고 생각하는 순서대로 늫는 방법</li>
+</ul>
+</li>
+<li>Voting
+<ul>
+<li>Annotator와 model의 다수결로 응답을 결정</li>
+</ul>
+</li>
+<li>Scoring
+<ul>
+<li>Annotator나 Regression Model을 이용해 각 Response에 점수를 부여하지 않고, 대소 관계를 바탕으로 우열 관계 파악</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>Annotator의 참여로 발생하는 문제와 대응 방안</p>
+<ol>
+<li>편향</li>
+<li>부담 : 유해한 문장을 포함하는 Response의 우열을 가리므로 스트레스를 받을 수 있음</li>
+<li>난이도 상승 : LLM 성능 향상에 따라, Response의 우열을 정확히 가리기 어려움</li>
+</ol>
+</li>
+<li>
+<p>Dataset</p>
+<ul>
+<li>
+<p>hh-rlhf (Anthropic Helpfulness and Harmlessness Dataset)</p>
+<ul>
+<li>Helpfulness와 Harmlessness 관점에서 작성한 Preference Data</li>
+<li>Crowd Worker가 LLM과 대화를 주고 받으며 구축함
+<ul>
+<li>Crowd Worker : 다수의 작업자</li>
+<li>Likert Scale에 따라, 8단계로 평가
+<ul>
+<li>Likert Scale : 설문조사 방식</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>UltraFeedback</p>
+<ul>
+<li>GPT-4를 활용해 작성된 대규모 Preference Data</li>
+<li>각 Response에 대해 2가지 Feedback 제공</li>
+</ul>
+<ol>
+<li>
+<p>Response에 대한 점수</p>
+<ul>
+<li>아래 4가지 요소에 기반한 점수</li>
+</ul>
+<ol>
+<li>Folllow Instruction : 지시 준수도</li>
+<li>Helpful and Informative : 유용성 및 정보 풍부도</li>
+<li>Truthful : 신뢰성</li>
+<li>Honesty : 정직성</li>
+</ol>
+</li>
+<li>
+<p>Response에 대한 서술형 Feedback</p>
+<ul>
+<li>Feedback을 토대로, Response에 비평하는 UltraCM 모델을 만듦
+<ul>
+<li>UltraFeedback
+<ol>
+<li>여러 Dataset에서 Instruction sampling</li>
+<li>서비스 형태로 제공되는 모델과 공개된 모델 중 4개를 무작위로 선택해 각 Instruction에 대한 Response 생성</li>
+<li>Response에 대해, GPT-4를 사용해 앞선 4가지 항목 점수 부여</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>SHP-2</p>
+<ul>
+<li>약 480만 건의 Preference Data로 이루어진 Dataset
+<ul>
+<li>SNS, QA 웹사이트에서 Scraping한 글, 댓글, 투표 등에 대한 data를 수집함</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>| 다음 : <a href="../데이터중심-ai-입문---12.fine-tuning-model-evaluation" class="internal internal-link alias" data-slug="데이터중심-ai-입문---12.fine-tuning-model-evaluation">데이터중심 AI 입문 - 12.Fine-tuning Model Evaluation</a></p></div></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:false,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc"><button type="button" class="toc-header" aria-controls="toc-49" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-0" class="toc-content overflow"><li class="depth-0"><a href="#fine-tuning" data-for="fine-tuning">Fine-Tuning</a></li><li class="depth-0"><a href="#instruction-data" data-for="instruction-data">Instruction Data</a></li><li class="depth-0"><a href="#preference-data" data-for="preference-data">Preference Data</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v5.0.0</a> © 2026</p><ul><li><a href="https://github.com/jcy9066">GitHub</a></li><li><a href="https://www.linkedin.com/in/changwan-jeong-6666813a1/">LinkedIn</a></li></ul></footer></div></div></body><script src="../static/resource-after-e13fffa1.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-8b336f9a.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-baba652b.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-5eb75950.js" type="module" data-persist="true"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript" data-persist="true"></script><script src="../postscript-b6a6ef3c.js" type="module" data-persist="true"></script></html>

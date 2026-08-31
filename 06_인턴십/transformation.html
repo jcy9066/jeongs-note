@@ -1,0 +1,2865 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>Transformation</title><meta charset="utf-8"/><link rel="preload" href="../index-1269a69c.css" as="style"/><link rel="preload" href="../prescript-2bfc6315.js" as="script"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans:wght@400;700&amp;family=Noto Sans:ital,wght@0,400;0,600;1,400;1,600&amp;family=Noto Sans Mono:wght@400;600&amp;display=swap"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans:wght@400;600&amp;text=Wan&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="Wan"/><meta property="og:title" content="Transformation"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Transformation"/><meta name="twitter:description" content="// ============================================================ // Interactive 3D Linear Transformation // Obsidian + DataviewJS // // Transformation composition: // // A = Rz · Ry · Rx · H · S // // S : Scale // H : Shear // Rx : Rotation around X // Ry : Rotation around Y // Rz : Rotation around ..."/><meta property="og:description" content="// ============================================================ // Interactive 3D Linear Transformation // Obsidian + DataviewJS // // Transformation composition: // // A = Rz · Ry · Rx · H · S // // S : Scale // H : Shear // Rx : Rotation around X // Ry : Rotation around Y // Rz : Rotation around ..."/><meta property="og:image:alt" content="// ============================================================ // Interactive 3D Linear Transformation // Obsidian + DataviewJS // // Transformation composition: // // A = Rz · Ry · Rx · H · S // // S : Scale // H : Shear // Rx : Rotation around X // Ry : Rotation around Y // Rz : Rotation around ..."/><meta property="og:image" content="https://jcy9066.github.io/jeongs-note/static/og-image.png"/><meta property="og:image:url" content="https://jcy9066.github.io/jeongs-note/static/og-image.png"/><meta name="twitter:image" content="https://jcy9066.github.io/jeongs-note/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="jcy9066.github.io/jeongs-note"/><meta property="og:url" content="https://jcy9066.github.io/jeongs-note/06_인턴십/transformation"/><meta property="twitter:url" content="https://jcy9066.github.io/jeongs-note/06_인턴십/transformation"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="// ============================================================ // Interactive 3D Linear Transformation // Obsidian + DataviewJS // // Transformation composition: // // A = Rz · Ry · Rx · H · S // // S : Scale // H : Shear // Rx : Rotation around X // Ry : Rotation around Y // Rz : Rotation around ..."/><meta name="generator" content="Quartz"/><link href="../index-1269a69c.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-735924e0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-589c1cea.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-bbc3f7c0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-2911f5d1.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-7f220492.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-e427079e.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-53b25b2b.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-c93c6a44.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-8a06014f.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-77d6a441.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-6ee21cee.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-ebc1adcf.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-34bdfded.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-788c9ca3.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-642859cd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-4abc06bd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-274a3dfe.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-94cb6c84.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-58d5ff56.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-9f9b2774.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-7262b5a7.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-a5c806d2.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-6bd36952.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" data-persist="true"/><script src="../prescript-2bfc6315.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="06_인턴십/transformation" data-basepath="/jeongs-note"><div id="quartz-root" class="page" data-frame="default"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">Wan</a></h2><div class="mobile-only"><div class="spacer"></div></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 0.5rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button" aria-label="검색" aria-expanded="false"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true" data-field-priority="[&quot;title&quot;,&quot;content&quot;,&quot;tags&quot;]"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode" aria-label="다크 모드"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode" aria-label="리더 모드"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><nav class="tag-explorer" aria-label="List"><h2 class="tag-explorer-title">List</h2><ul class="tag-explorer-list"><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/3d">3d</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/usd">USD</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/viewpoint">Viewpoint</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/visual--and--lidar-descriptor">Visual &amp; LiDAR Descriptor</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/algorithm">algorithm</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/actor-critic">Actor-Critic</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dagger">DAgger</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/grid-search">Grid Search</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mappo">MAPPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ppo">PPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rrt">RRT</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/coding">coding</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/coding-agent">Coding Agent</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/context">Context</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/hook">Hook</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/matplotlib">Matplotlib</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mcp">MCP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/multi-agent">Multi-Agent</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/numpy">Numpy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/orchestration">Orchestration</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pandas">Pandas</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/skill">Skill</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/sub-agent">Sub-Agent</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/tool">Tool</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/torchvision">Torchvision</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/deeplearning">deeplearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/activation-function">Activation Function</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/backpropagation">Backpropagation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/batch--and--epoch">Batch &amp; Epoch</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/cnns">CNNs</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/crossentropyloss">CrossEntropyLoss</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/data-augmentation">Data Augmentation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dropout">Dropout</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/evaluation">Evaluation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/fashion-mnist">Fashion-MNIST</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gradient">Gradient</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loss-function">Loss Function</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mlp">MLP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/nlloss">NLLoss</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/normalization--and--standardization">Normalization &amp; Standardization</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/optimization">Optimization</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pixel-value">Pixel Value</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pooling">Pooling</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rag">RAG</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/residual-learning">Residual Learning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/softmax">Softmax</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/task-definition">Task Definition</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/training-loop">Training Loop</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/transformation">Transformation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/vllm">vLLM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/worker">Worker</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---1.-데이터중심ai란">데이터중심 AI 입문 - 1. 데이터중심AI란</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---2.-데이터셋의-크기와-모델-성능의-관계">데이터중심 AI 입문 - 2. 데이터셋의 크기와 모델 성능의 관계</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---4.-이미지-인식-모델의-기초-지식">데이터중심 AI 입문 - 4. 이미지 인식 모델의 기초 지식</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---5.-이미지-데이터를-확장-생성하는-기술">데이터중심 AI 입문 - 5. 이미지 데이터를 확장 생성하는 기술</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---7.-vlm">데이터중심 AI 입문 - 7. VLM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---9.-pre-train,-denoise-filtering">데이터중심 AI 입문 - 9. Pre-train, Denoise Filtering</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---11.-fine-tuing,-instruction-data,-preference-data">데이터중심 AI 입문 - 11. Fine-tuing, Instruction Data, Preference Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---12.-fine-tuning-model-evaluation">데이터중심 AI 입문 - 12. Fine-tuning Model Evaluation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---2.-텍스트-전처리">딥러닝 이론 - 2. 텍스트 전처리</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---7.-deeplearning">딥러닝 이론 - 7. DeepLearning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---8.-recurrent-neural-network">딥러닝 이론 - 8. Recurrent Neural Network</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---14.-encoder--and--decoder-using-rnn">딥러닝 이론 - 14. Encoder &amp; Decoder using RNN</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---15.-attention-mechanism">딥러닝 이론 - 15. Attention Mechanism</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---16.-transformer">딥러닝 이론 - 16. Transformer</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---20.-pretrained-encoder-decoder-model">딥러닝 이론 - 20. Pretrained Encoder-Decoder Model</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---24.-llm-fine-tuning">딥러닝 이론 - 24. LLM Fine-tuning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---25.-이미지를-인식하는-vlm-fine-tuning">딥러닝 이론 - 25. 이미지를 인식하는 VLM Fine-Tuning</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/equation">equation</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/bayes-error">Bayes Error</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/bellman-equation">Bellman Equation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/exponential">Exponential</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gaussian">Gaussian</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pd-controller">PD Controller</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/git">git</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/git">Git</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/git---cherry-pick">Git - Cherry-pick</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/git---worktree">Git - Worktree</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/imitationlearning">imitationlearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/behavioral-cloning">Behavioral Cloning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/compounding-error">Compounding Error</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dagger">DAgger</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---1.-introduction">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 1. Introduction</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gradient">Gradient</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/horizon">Horizon</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/kinestheitic-teaching">Kinestheitic Teaching</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/kl-divergence">KL Divergence</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mmp">MMP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/modeling">Modeling</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/movement-primitive">Movement Primitive</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/probability--and--likelihood">Probability &amp; Likelihood</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/trajectory">Trajectory</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/lecture">lecture</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---1.-introduction">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 1. Introduction</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-입문---1.기초">ROS 입문 - 1.기초</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---1.-데이터중심ai란">데이터중심 AI 입문 - 1. 데이터중심AI란</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---2.-데이터셋의-크기와-모델-성능의-관계">데이터중심 AI 입문 - 2. 데이터셋의 크기와 모델 성능의 관계</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---4.-이미지-인식-모델의-기초-지식">데이터중심 AI 입문 - 4. 이미지 인식 모델의 기초 지식</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---5.-이미지-데이터를-확장-생성하는-기술">데이터중심 AI 입문 - 5. 이미지 데이터를 확장 생성하는 기술</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---7.-vlm">데이터중심 AI 입문 - 7. VLM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---11.-fine-tuing,-instruction-data,-preference-data">데이터중심 AI 입문 - 11. Fine-tuing, Instruction Data, Preference Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---12.-fine-tuning-model-evaluation">데이터중심 AI 입문 - 12. Fine-tuning Model Evaluation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---13.-robot-data">데이터중심 AI 입문 - 13. Robot Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---14.-collecting-robot-data">데이터중심 AI 입문 - 14. Collecting Robot Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---2.-텍스트-전처리">딥러닝 이론 - 2. 텍스트 전처리</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---6.-machinelearning">딥러닝 이론 - 6. MachineLearning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---7.-deeplearning">딥러닝 이론 - 7. DeepLearning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---8.-recurrent-neural-network">딥러닝 이론 - 8. Recurrent Neural Network</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---14.-encoder--and--decoder-using-rnn">딥러닝 이론 - 14. Encoder &amp; Decoder using RNN</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---15.-attention-mechanism">딥러닝 이론 - 15. Attention Mechanism</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---16.-transformer">딥러닝 이론 - 16. Transformer</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---20.-pretrained-encoder-decoder-model">딥러닝 이론 - 20. Pretrained Encoder-Decoder Model</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---24.-llm-fine-tuning">딥러닝 이론 - 24. LLM Fine-tuning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---25.-이미지를-인식하는-vlm-fine-tuning">딥러닝 이론 - 25. 이미지를 인식하는 VLM Fine-Tuning</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/linearalgebra">linearalgebra</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/manifold">Manifold</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/projection">Projection</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/subspace">Subspace</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/llm">llm</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/rag">RAG</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/vllm">vLLM</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/machinelearning">machinelearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/episode">Episode</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ml-workflow">ML Workflow</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---6.-machinelearning">딥러닝 이론 - 6. MachineLearning</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/paper">paper</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/making-quadrupeds-learning-to-walk.-step-by-step-guide">Making quadrupeds Learning to walk. Step-by-Step Guide</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/perception">perception</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/visual--and--lidar-descriptor">Visual &amp; LiDAR Descriptor</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/practice">practice</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/fashion-mnist">Fashion-MNIST</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl_practice_cartpole">RL_Practice_CartPole</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl_practice_moutaincar">RL_Practice_MoutainCar</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/reinforcementlearning">reinforcementlearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/action-(rl)">Action (RL)</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/actor-critic">Actor-Critic</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/actuator">Actuator</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/bellman-equation">Bellman Equation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/curriculum-learning--and--scaffolding">Curriculum Learning &amp; Scaffolding</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---1.-introduction">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 1. Introduction</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dqn">DQN</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/e-greedy-policy">E-Greedy Policy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/environment">Environment</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/exploration--and--exploitation">Exploration &amp; Exploitation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gae">GAE</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gradient">Gradient</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/horizon">Horizon</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/making-quadrupeds-learning-to-walk.-step-by-step-guide">Making quadrupeds Learning to walk. Step-by-Step Guide</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mappo">MAPPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mdp">MDP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/modeling">Modeling</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/movement-primitive">Movement Primitive</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/policy">Policy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/potential-based-reward-shaping">Potential-Based Reward Shaping</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ppo">PPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/q-learning">Q-Learning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/replay-memory">Replay Memory</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/reward-shaping">Reward Shaping</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl_practice_cartpole">RL_Practice_CartPole</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl_practice_moutaincar">RL_Practice_MoutainCar</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rollout">Rollout</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/sensor">Sensor</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/target-network">Target Network</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/trajectory">Trajectory</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/robotics">robotics</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/dof">DoF</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-closure">Loop Closure</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-detection">Loop Detection</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/making-quadrupeds-learning-to-walk.-step-by-step-guide">Making quadrupeds Learning to walk. Step-by-Step Guide</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/movement-primitive">Movement Primitive</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pd-controller">PD Controller</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/primitive-behavior">Primitive Behavior</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-입문---1.기초">ROS 입문 - 1.기초</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rrt">RRT</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/trajectory">Trajectory</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/visual-odometry">Visual Odometry</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---13.-robot-data">데이터중심 AI 입문 - 13. Robot Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---14.-collecting-robot-data">데이터중심 AI 입문 - 14. Collecting Robot Data</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/ros">ros</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/action-(ros)">Action (ROS)</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/namespace">Namespace</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/nav2">Nav2</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/node">Node</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/occupancy-grid-map">Occupancy Grid Map</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-입문---1.기초">ROS 입문 - 1.기초</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros2">ROS2</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/service">Service</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/tf">TF</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/topic">Topic</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/urdf">URDF</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/slam">slam</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-closure">Loop Closure</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-detection">Loop Detection</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/scan-context">Scan Context</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/visual--and--lidar-descriptor">Visual &amp; LiDAR Descriptor</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/statistics">statistics</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/entropy">Entropy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/exponential">Exponential</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/kl-divergence">KL Divergence</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/lagrange-multiplier">Lagrange Multiplier</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/map">MAP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/posteriori">Posteriori</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/probability--and--likelihood">Probability &amp; Likelihood</a></li></ul></li></ul></nav></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../06_인턴십/">06_인턴십</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>Transformation</a></div></nav><h1 class="article-title">Transformation</h1><p show-comma="true" class="content-meta"><time datetime="2026-08-31T08:44:22.710Z">2026년 8월 31일</time><span>18 min read</span></p><ul class="tags"><li><a href="../tags/deeplearning" class="internal tag-link">deeplearning</a></li></ul></div></div><article class="popover-hint"><div class="markdown-preview-view markdown-rendered"><hr/>
+<h3 id><img src="../00_attachments/pasted-image-20260831164949.png" alt width="auto" height="auto"/></h3>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="dataviewjs" data-theme="github-light github-dark"><code data-language="dataviewjs" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Interactive 3D Linear Transformation</span></span>
+<span data-line><span>// Obsidian + DataviewJS</span></span>
+<span data-line><span>//</span></span>
+<span data-line><span>// Transformation composition:</span></span>
+<span data-line><span>//</span></span>
+<span data-line><span>// A = Rz · Ry · Rx · H · S</span></span>
+<span data-line><span>//</span></span>
+<span data-line><span>// S  : Scale</span></span>
+<span data-line><span>// H  : Shear</span></span>
+<span data-line><span>// Rx : Rotation around X</span></span>
+<span data-line><span>// Ry : Rotation around Y</span></span>
+<span data-line><span>// Rz : Rotation around Z</span></span>
+<span data-line><span>//</span></span>
+<span data-line><span>// The selected Vault image is remembered per note.</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// DOM Utility</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function makeElement(tag, parent, options = {}) {</span></span>
+<span data-line><span>    const element = document.createElement(tag);</span></span>
+<span data-line> </span>
+<span data-line><span>    if (options.text !== undefined) {</span></span>
+<span data-line><span>        element.textContent = options.text;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    if (options.html !== undefined) {</span></span>
+<span data-line><span>        element.innerHTML = options.html;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    if (options.style !== undefined) {</span></span>
+<span data-line><span>        Object.assign(element.style, options.style);</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    parent.appendChild(element);</span></span>
+<span data-line> </span>
+<span data-line><span>    return element;</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Root</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>const root = dv.el(&quot;div&quot;, &quot;&quot;);</span></span>
+<span data-line> </span>
+<span data-line><span>Object.assign(root.style, {</span></span>
+<span data-line><span>    width: &quot;100%&quot;,</span></span>
+<span data-line><span>    maxWidth: &quot;950px&quot;,</span></span>
+<span data-line><span>    margin: &quot;10px auto 20px auto&quot;,</span></span>
+<span data-line><span>    fontFamily: &quot;var(--font-interface)&quot;</span></span>
+<span data-line><span>});</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Note-specific persistent storage</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>const currentNotePath =</span></span>
+<span data-line><span>    dv.current()?.file?.path ??</span></span>
+<span data-line><span>    &quot;unknown-note&quot;;</span></span>
+<span data-line> </span>
+<span data-line><span>const imageStorageKey =</span></span>
+<span data-line><span>    `linear-transform-image:${currentNotePath}`;</span></span>
+<span data-line> </span>
+<span data-line><span>function saveSelectedImagePath(path) {</span></span>
+<span data-line><span>    try {</span></span>
+<span data-line><span>        localStorage.setItem(</span></span>
+<span data-line><span>            imageStorageKey,</span></span>
+<span data-line><span>            path</span></span>
+<span data-line><span>        );</span></span>
+<span data-line><span>    } catch (error) {</span></span>
+<span data-line><span>        console.warn(</span></span>
+<span data-line><span>            &quot;Could not save selected image:&quot;,</span></span>
+<span data-line><span>            error</span></span>
+<span data-line><span>        );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>function getSavedImagePath() {</span></span>
+<span data-line><span>    try {</span></span>
+<span data-line><span>        return localStorage.getItem(</span></span>
+<span data-line><span>            imageStorageKey</span></span>
+<span data-line><span>        );</span></span>
+<span data-line><span>    } catch (error) {</span></span>
+<span data-line><span>        console.warn(</span></span>
+<span data-line><span>            &quot;Could not read saved image:&quot;,</span></span>
+<span data-line><span>            error</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line><span>        return null;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Top Controls</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>const topControls = makeElement(</span></span>
+<span data-line><span>    &quot;div&quot;,</span></span>
+<span data-line><span>    root,</span></span>
+<span data-line><span>    {</span></span>
+<span data-line><span>        style: {</span></span>
+<span data-line><span>            display: &quot;flex&quot;,</span></span>
+<span data-line><span>            justifyContent: &quot;center&quot;,</span></span>
+<span data-line><span>            alignItems: &quot;center&quot;,</span></span>
+<span data-line><span>            flexWrap: &quot;wrap&quot;,</span></span>
+<span data-line><span>            gap: &quot;8px&quot;,</span></span>
+<span data-line><span>            marginBottom: &quot;10px&quot;</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>);</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Vault Image Selector</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>const vaultSelect = makeElement(</span></span>
+<span data-line><span>    &quot;select&quot;,</span></span>
+<span data-line><span>    topControls</span></span>
+<span data-line><span>);</span></span>
+<span data-line> </span>
+<span data-line><span>Object.assign(vaultSelect.style, {</span></span>
+<span data-line><span>    maxWidth: &quot;420px&quot;</span></span>
+<span data-line><span>});</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>const placeholder = document.createElement(</span></span>
+<span data-line><span>    &quot;option&quot;</span></span>
+<span data-line><span>);</span></span>
+<span data-line> </span>
+<span data-line><span>placeholder.value = &quot;&quot;;</span></span>
+<span data-line><span>placeholder.textContent =</span></span>
+<span data-line><span>    &quot;Select a Vault image&quot;;</span></span>
+<span data-line> </span>
+<span data-line><span>vaultSelect.appendChild(</span></span>
+<span data-line><span>    placeholder</span></span>
+<span data-line><span>);</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>let vaultImageFiles = [];</span></span>
+<span data-line> </span>
+<span data-line><span>try {</span></span>
+<span data-line> </span>
+<span data-line><span>    if (</span></span>
+<span data-line><span>        typeof app !== &quot;undefined&quot; &amp;&amp;</span></span>
+<span data-line><span>        app.vault &amp;&amp;</span></span>
+<span data-line><span>        typeof app.vault.getFiles === &quot;function&quot;</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        vaultImageFiles =</span></span>
+<span data-line><span>            app.vault</span></span>
+<span data-line><span>                .getFiles()</span></span>
+<span data-line><span>                .filter(file =></span></span>
+<span data-line><span>                    /\.(png|jpg|jpeg|webp)$/i</span></span>
+<span data-line><span>                        .test(file.path)</span></span>
+<span data-line><span>                )</span></span>
+<span data-line><span>                .sort((a, b) =></span></span>
+<span data-line><span>                    a.path.localeCompare(</span></span>
+<span data-line><span>                        b.path</span></span>
+<span data-line><span>                    )</span></span>
+<span data-line><span>                );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        for (</span></span>
+<span data-line><span>            const file</span></span>
+<span data-line><span>            of vaultImageFiles</span></span>
+<span data-line><span>        ) {</span></span>
+<span data-line> </span>
+<span data-line><span>            const option =</span></span>
+<span data-line><span>                document.createElement(</span></span>
+<span data-line><span>                    &quot;option&quot;</span></span>
+<span data-line><span>                );</span></span>
+<span data-line> </span>
+<span data-line><span>            option.value =</span></span>
+<span data-line><span>                file.path;</span></span>
+<span data-line> </span>
+<span data-line><span>            option.textContent =</span></span>
+<span data-line><span>                file.path;</span></span>
+<span data-line> </span>
+<span data-line><span>            vaultSelect.appendChild(</span></span>
+<span data-line><span>                option</span></span>
+<span data-line><span>            );</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>} catch (error) {</span></span>
+<span data-line> </span>
+<span data-line><span>    console.warn(</span></span>
+<span data-line><span>        &quot;Could not load Vault images:&quot;,</span></span>
+<span data-line><span>        error</span></span>
+<span data-line><span>    );</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Buttons</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>const identityButton =</span></span>
+<span data-line><span>    makeElement(</span></span>
+<span data-line><span>        &quot;button&quot;,</span></span>
+<span data-line><span>        topControls,</span></span>
+<span data-line><span>        {</span></span>
+<span data-line><span>            text: &quot;Identity&quot;</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>const exampleButton =</span></span>
+<span data-line><span>    makeElement(</span></span>
+<span data-line><span>        &quot;button&quot;,</span></span>
+<span data-line><span>        topControls,</span></span>
+<span data-line><span>        {</span></span>
+<span data-line><span>            text: &quot;Example&quot;</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Image Status</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>const imageStatus =</span></span>
+<span data-line><span>    makeElement(</span></span>
+<span data-line><span>        &quot;div&quot;,</span></span>
+<span data-line><span>        root,</span></span>
+<span data-line><span>        {</span></span>
+<span data-line><span>            text:</span></span>
+<span data-line><span>                &quot;Select an image from the Vault.&quot;,</span></span>
+<span data-line><span>            style: {</span></span>
+<span data-line><span>                textAlign: &quot;center&quot;,</span></span>
+<span data-line><span>                fontSize: &quot;13px&quot;,</span></span>
+<span data-line><span>                opacity: &quot;0.7&quot;,</span></span>
+<span data-line><span>                marginBottom: &quot;10px&quot;</span></span>
+<span data-line><span>            }</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Canvas</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>const canvasWrap =</span></span>
+<span data-line><span>    makeElement(</span></span>
+<span data-line><span>        &quot;div&quot;,</span></span>
+<span data-line><span>        root,</span></span>
+<span data-line><span>        {</span></span>
+<span data-line><span>            style: {</span></span>
+<span data-line><span>                width: &quot;100%&quot;,</span></span>
+<span data-line><span>                display: &quot;flex&quot;,</span></span>
+<span data-line><span>                justifyContent: &quot;center&quot;</span></span>
+<span data-line><span>            }</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>const canvas =</span></span>
+<span data-line><span>    makeElement(</span></span>
+<span data-line><span>        &quot;canvas&quot;,</span></span>
+<span data-line><span>        canvasWrap</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>canvas.width = 900;</span></span>
+<span data-line><span>canvas.height = 560;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>Object.assign(</span></span>
+<span data-line><span>    canvas.style,</span></span>
+<span data-line><span>    {</span></span>
+<span data-line><span>        width: &quot;100%&quot;,</span></span>
+<span data-line><span>        maxWidth: &quot;900px&quot;,</span></span>
+<span data-line><span>        border:</span></span>
+<span data-line><span>            &quot;1px solid var(--background-modifier-border)&quot;,</span></span>
+<span data-line><span>        borderRadius: &quot;8px&quot;,</span></span>
+<span data-line><span>        background:</span></span>
+<span data-line><span>            &quot;var(--background-primary)&quot;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>);</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>const ctx =</span></span>
+<span data-line><span>    canvas.getContext(&quot;2d&quot;);</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>ctx.imageSmoothingEnabled = true;</span></span>
+<span data-line><span>ctx.imageSmoothingQuality = &quot;high&quot;;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Transformation Parameters</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>//</span></span>
+<span data-line><span>// These are semantic transformation parameters,</span></span>
+<span data-line><span>// not direct matrix-element controls.</span></span>
+<span data-line><span>//</span></span>
+<span data-line><span>// Initial parameters reproduce:</span></span>
+<span data-line><span>//</span></span>
+<span data-line><span>//     [ 1   2   -0.2 ]</span></span>
+<span data-line><span>// A = [ 0   1    0   ]</span></span>
+<span data-line><span>//     [ 0   0    1   ]</span></span>
+<span data-line><span>//</span></span>
+<span data-line><span>// because:</span></span>
+<span data-line><span>//</span></span>
+<span data-line><span>// rotation = 0</span></span>
+<span data-line><span>// scale    = identity</span></span>
+<span data-line><span>//</span></span>
+<span data-line><span>// H =</span></span>
+<span data-line><span>// [ 1  shXY  shXZ ]</span></span>
+<span data-line><span>// [ 0   1    shYZ ]</span></span>
+<span data-line><span>// [ 0   0      1  ]</span></span>
+<span data-line><span>//</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>const exampleParameters = {</span></span>
+<span data-line> </span>
+<span data-line><span>    scaleX: 1,</span></span>
+<span data-line><span>    scaleY: 1,</span></span>
+<span data-line><span>    scaleZ: 1,</span></span>
+<span data-line> </span>
+<span data-line><span>    rotateX: 0,</span></span>
+<span data-line><span>    rotateY: 0,</span></span>
+<span data-line><span>    rotateZ: 0,</span></span>
+<span data-line> </span>
+<span data-line><span>    shearXY: 2,</span></span>
+<span data-line><span>    shearXZ: -0.2,</span></span>
+<span data-line><span>    shearYZ: 0</span></span>
+<span data-line><span>};</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>const identityParameters = {</span></span>
+<span data-line> </span>
+<span data-line><span>    scaleX: 1,</span></span>
+<span data-line><span>    scaleY: 1,</span></span>
+<span data-line><span>    scaleZ: 1,</span></span>
+<span data-line> </span>
+<span data-line><span>    rotateX: 0,</span></span>
+<span data-line><span>    rotateY: 0,</span></span>
+<span data-line><span>    rotateZ: 0,</span></span>
+<span data-line> </span>
+<span data-line><span>    shearXY: 0,</span></span>
+<span data-line><span>    shearXZ: 0,</span></span>
+<span data-line><span>    shearYZ: 0</span></span>
+<span data-line><span>};</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>let parameters = {</span></span>
+<span data-line><span>    ...exampleParameters</span></span>
+<span data-line><span>};</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Matrix Utilities</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function multiplyMatrices(A, B) {</span></span>
+<span data-line> </span>
+<span data-line><span>    const result = [</span></span>
+<span data-line><span>        [0, 0, 0],</span></span>
+<span data-line><span>        [0, 0, 0],</span></span>
+<span data-line><span>        [0, 0, 0]</span></span>
+<span data-line><span>    ];</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    for (</span></span>
+<span data-line><span>        let r = 0;</span></span>
+<span data-line><span>        r &lt; 3;</span></span>
+<span data-line><span>        r++</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        for (</span></span>
+<span data-line><span>            let c = 0;</span></span>
+<span data-line><span>            c &lt; 3;</span></span>
+<span data-line><span>            c++</span></span>
+<span data-line><span>        ) {</span></span>
+<span data-line> </span>
+<span data-line><span>            for (</span></span>
+<span data-line><span>                let k = 0;</span></span>
+<span data-line><span>                k &lt; 3;</span></span>
+<span data-line><span>                k++</span></span>
+<span data-line><span>            ) {</span></span>
+<span data-line> </span>
+<span data-line><span>                result[r][c] +=</span></span>
+<span data-line><span>                    A[r][k] *</span></span>
+<span data-line><span>                    B[k][c];</span></span>
+<span data-line><span>            }</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    return result;</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>function degreesToRadians(</span></span>
+<span data-line><span>    degrees</span></span>
+<span data-line><span>) {</span></span>
+<span data-line> </span>
+<span data-line><span>    return (</span></span>
+<span data-line><span>        degrees *</span></span>
+<span data-line><span>        Math.PI /</span></span>
+<span data-line><span>        180</span></span>
+<span data-line><span>    );</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Construct Current Transformation Matrix</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function buildTransformationMatrix() {</span></span>
+<span data-line> </span>
+<span data-line><span>    const sx =</span></span>
+<span data-line><span>        parameters.scaleX;</span></span>
+<span data-line> </span>
+<span data-line><span>    const sy =</span></span>
+<span data-line><span>        parameters.scaleY;</span></span>
+<span data-line> </span>
+<span data-line><span>    const sz =</span></span>
+<span data-line><span>        parameters.scaleZ;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const rx =</span></span>
+<span data-line><span>        degreesToRadians(</span></span>
+<span data-line><span>            parameters.rotateX</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line><span>    const ry =</span></span>
+<span data-line><span>        degreesToRadians(</span></span>
+<span data-line><span>            parameters.rotateY</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line><span>    const rz =</span></span>
+<span data-line><span>        degreesToRadians(</span></span>
+<span data-line><span>            parameters.rotateZ</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const hxy =</span></span>
+<span data-line><span>        parameters.shearXY;</span></span>
+<span data-line> </span>
+<span data-line><span>    const hxz =</span></span>
+<span data-line><span>        parameters.shearXZ;</span></span>
+<span data-line> </span>
+<span data-line><span>    const hyz =</span></span>
+<span data-line><span>        parameters.shearYZ;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    // --------------------------------------------------------</span></span>
+<span data-line><span>    // Scale</span></span>
+<span data-line><span>    // --------------------------------------------------------</span></span>
+<span data-line> </span>
+<span data-line><span>    const S = [</span></span>
+<span data-line> </span>
+<span data-line><span>        [sx, 0,  0],</span></span>
+<span data-line> </span>
+<span data-line><span>        [0,  sy, 0],</span></span>
+<span data-line> </span>
+<span data-line><span>        [0,  0,  sz]</span></span>
+<span data-line><span>    ];</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    // --------------------------------------------------------</span></span>
+<span data-line><span>    // Shear</span></span>
+<span data-line><span>    //</span></span>
+<span data-line><span>    // x' = x + hXY*y + hXZ*z</span></span>
+<span data-line><span>    // y' = y + hYZ*z</span></span>
+<span data-line><span>    // z' = z</span></span>
+<span data-line><span>    // --------------------------------------------------------</span></span>
+<span data-line> </span>
+<span data-line><span>    const H = [</span></span>
+<span data-line> </span>
+<span data-line><span>        [1, hxy, hxz],</span></span>
+<span data-line> </span>
+<span data-line><span>        [0, 1,   hyz],</span></span>
+<span data-line> </span>
+<span data-line><span>        [0, 0,   1]</span></span>
+<span data-line><span>    ];</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    // --------------------------------------------------------</span></span>
+<span data-line><span>    // Rotation around X</span></span>
+<span data-line><span>    // --------------------------------------------------------</span></span>
+<span data-line> </span>
+<span data-line><span>    const Rx = [</span></span>
+<span data-line> </span>
+<span data-line><span>        [</span></span>
+<span data-line><span>            1,</span></span>
+<span data-line><span>            0,</span></span>
+<span data-line><span>            0</span></span>
+<span data-line><span>        ],</span></span>
+<span data-line> </span>
+<span data-line><span>        [</span></span>
+<span data-line><span>            0,</span></span>
+<span data-line><span>            Math.cos(rx),</span></span>
+<span data-line><span>            -Math.sin(rx)</span></span>
+<span data-line><span>        ],</span></span>
+<span data-line> </span>
+<span data-line><span>        [</span></span>
+<span data-line><span>            0,</span></span>
+<span data-line><span>            Math.sin(rx),</span></span>
+<span data-line><span>            Math.cos(rx)</span></span>
+<span data-line><span>        ]</span></span>
+<span data-line><span>    ];</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    // --------------------------------------------------------</span></span>
+<span data-line><span>    // Rotation around Y</span></span>
+<span data-line><span>    // --------------------------------------------------------</span></span>
+<span data-line> </span>
+<span data-line><span>    const Ry = [</span></span>
+<span data-line> </span>
+<span data-line><span>        [</span></span>
+<span data-line><span>            Math.cos(ry),</span></span>
+<span data-line><span>            0,</span></span>
+<span data-line><span>            Math.sin(ry)</span></span>
+<span data-line><span>        ],</span></span>
+<span data-line> </span>
+<span data-line><span>        [</span></span>
+<span data-line><span>            0,</span></span>
+<span data-line><span>            1,</span></span>
+<span data-line><span>            0</span></span>
+<span data-line><span>        ],</span></span>
+<span data-line> </span>
+<span data-line><span>        [</span></span>
+<span data-line><span>            -Math.sin(ry),</span></span>
+<span data-line><span>            0,</span></span>
+<span data-line><span>            Math.cos(ry)</span></span>
+<span data-line><span>        ]</span></span>
+<span data-line><span>    ];</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    // --------------------------------------------------------</span></span>
+<span data-line><span>    // Rotation around Z</span></span>
+<span data-line><span>    // --------------------------------------------------------</span></span>
+<span data-line> </span>
+<span data-line><span>    const Rz = [</span></span>
+<span data-line> </span>
+<span data-line><span>        [</span></span>
+<span data-line><span>            Math.cos(rz),</span></span>
+<span data-line><span>            -Math.sin(rz),</span></span>
+<span data-line><span>            0</span></span>
+<span data-line><span>        ],</span></span>
+<span data-line> </span>
+<span data-line><span>        [</span></span>
+<span data-line><span>            Math.sin(rz),</span></span>
+<span data-line><span>            Math.cos(rz),</span></span>
+<span data-line><span>            0</span></span>
+<span data-line><span>        ],</span></span>
+<span data-line> </span>
+<span data-line><span>        [</span></span>
+<span data-line><span>            0,</span></span>
+<span data-line><span>            0,</span></span>
+<span data-line><span>            1</span></span>
+<span data-line><span>        ]</span></span>
+<span data-line><span>    ];</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    // --------------------------------------------------------</span></span>
+<span data-line><span>    // A = Rz · Ry · Rx · H · S</span></span>
+<span data-line><span>    // --------------------------------------------------------</span></span>
+<span data-line> </span>
+<span data-line><span>    return multiplyMatrices(</span></span>
+<span data-line> </span>
+<span data-line><span>        Rz,</span></span>
+<span data-line> </span>
+<span data-line><span>        multiplyMatrices(</span></span>
+<span data-line> </span>
+<span data-line><span>            Ry,</span></span>
+<span data-line> </span>
+<span data-line><span>            multiplyMatrices(</span></span>
+<span data-line> </span>
+<span data-line><span>                Rx,</span></span>
+<span data-line> </span>
+<span data-line><span>                multiplyMatrices(</span></span>
+<span data-line><span>                    H,</span></span>
+<span data-line><span>                    S</span></span>
+<span data-line><span>                )</span></span>
+<span data-line><span>            )</span></span>
+<span data-line><span>        )</span></span>
+<span data-line><span>    );</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>let A =</span></span>
+<span data-line><span>    buildTransformationMatrix();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Matrix Display</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>const matrixSection =</span></span>
+<span data-line><span>    makeElement(</span></span>
+<span data-line><span>        &quot;div&quot;,</span></span>
+<span data-line><span>        root,</span></span>
+<span data-line><span>        {</span></span>
+<span data-line><span>            style: {</span></span>
+<span data-line><span>                display: &quot;flex&quot;,</span></span>
+<span data-line><span>                flexDirection: &quot;column&quot;,</span></span>
+<span data-line><span>                alignItems: &quot;center&quot;,</span></span>
+<span data-line><span>                marginTop: &quot;18px&quot;,</span></span>
+<span data-line><span>                marginBottom: &quot;10px&quot;</span></span>
+<span data-line><span>            }</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>const compositionText =</span></span>
+<span data-line><span>    makeElement(</span></span>
+<span data-line><span>        &quot;div&quot;,</span></span>
+<span data-line><span>        matrixSection,</span></span>
+<span data-line><span>        {</span></span>
+<span data-line><span>            text:</span></span>
+<span data-line><span>                &quot;A = Rz · Ry · Rx · H · S&quot;,</span></span>
+<span data-line><span>            style: {</span></span>
+<span data-line><span>                fontFamily:</span></span>
+<span data-line><span>                    &quot;monospace&quot;,</span></span>
+<span data-line><span>                fontSize: &quot;13px&quot;,</span></span>
+<span data-line><span>                opacity: &quot;0.7&quot;,</span></span>
+<span data-line><span>                marginBottom: &quot;8px&quot;</span></span>
+<span data-line><span>            }</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>const matrixDisplay =</span></span>
+<span data-line><span>    makeElement(</span></span>
+<span data-line><span>        &quot;div&quot;,</span></span>
+<span data-line><span>        matrixSection,</span></span>
+<span data-line><span>        {</span></span>
+<span data-line><span>            style: {</span></span>
+<span data-line><span>                display: &quot;flex&quot;,</span></span>
+<span data-line><span>                alignItems: &quot;center&quot;,</span></span>
+<span data-line><span>                gap: &quot;10px&quot;,</span></span>
+<span data-line><span>                fontFamily:</span></span>
+<span data-line><span>                    &quot;monospace&quot;</span></span>
+<span data-line><span>            }</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>function formatNumber(</span></span>
+<span data-line><span>    value</span></span>
+<span data-line><span>) {</span></span>
+<span data-line> </span>
+<span data-line><span>    const n =</span></span>
+<span data-line><span>        Number(value);</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    if (</span></span>
+<span data-line><span>        Math.abs(n) &lt;</span></span>
+<span data-line><span>        0.00001</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        return &quot;0.00&quot;;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    return n.toFixed(2);</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>function updateMatrixDisplay() {</span></span>
+<span data-line> </span>
+<span data-line><span>    A =</span></span>
+<span data-line><span>        buildTransformationMatrix();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    matrixDisplay.innerHTML =</span></span>
+<span data-line><span>        &quot;&quot;;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const aText =</span></span>
+<span data-line><span>        document.createElement(</span></span>
+<span data-line><span>            &quot;span&quot;</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    aText.textContent =</span></span>
+<span data-line><span>        &quot;A =&quot;;</span></span>
+<span data-line> </span>
+<span data-line><span>    aText.style.fontSize =</span></span>
+<span data-line><span>        &quot;22px&quot;;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    matrixDisplay.appendChild(</span></span>
+<span data-line><span>        aText</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const matrixBox =</span></span>
+<span data-line><span>        document.createElement(</span></span>
+<span data-line><span>            &quot;div&quot;</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    Object.assign(</span></span>
+<span data-line><span>        matrixBox.style,</span></span>
+<span data-line><span>        {</span></span>
+<span data-line><span>            display: &quot;grid&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>            gridTemplateColumns:</span></span>
+<span data-line><span>                &quot;repeat(3, 78px)&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>            gap: &quot;5px 10px&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>            padding:</span></span>
+<span data-line><span>                &quot;7px 13px&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>            borderLeft:</span></span>
+<span data-line><span>                &quot;2px solid currentColor&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>            borderRight:</span></span>
+<span data-line><span>                &quot;2px solid currentColor&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>            fontSize:</span></span>
+<span data-line><span>                &quot;16px&quot;</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    for (</span></span>
+<span data-line><span>        let r = 0;</span></span>
+<span data-line><span>        r &lt; 3;</span></span>
+<span data-line><span>        r++</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        for (</span></span>
+<span data-line><span>            let c = 0;</span></span>
+<span data-line><span>            c &lt; 3;</span></span>
+<span data-line><span>            c++</span></span>
+<span data-line><span>        ) {</span></span>
+<span data-line> </span>
+<span data-line><span>            const cell =</span></span>
+<span data-line><span>                document.createElement(</span></span>
+<span data-line><span>                    &quot;span&quot;</span></span>
+<span data-line><span>                );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>            cell.textContent =</span></span>
+<span data-line><span>                formatNumber(</span></span>
+<span data-line><span>                    A[r][c]</span></span>
+<span data-line><span>                );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>            cell.style.textAlign =</span></span>
+<span data-line><span>                &quot;right&quot;;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>            matrixBox.appendChild(</span></span>
+<span data-line><span>                cell</span></span>
+<span data-line><span>            );</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    matrixDisplay.appendChild(</span></span>
+<span data-line><span>        matrixBox</span></span>
+<span data-line><span>    );</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Transformation Controls</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>const sliderArea =</span></span>
+<span data-line><span>    makeElement(</span></span>
+<span data-line><span>        &quot;div&quot;,</span></span>
+<span data-line><span>        root,</span></span>
+<span data-line><span>        {</span></span>
+<span data-line><span>            style: {</span></span>
+<span data-line><span>                display: &quot;grid&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>                gridTemplateColumns:</span></span>
+<span data-line><span>                    &quot;repeat(3, minmax(160px, 1fr))&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>                gap:</span></span>
+<span data-line><span>                    &quot;18px 28px&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>                maxWidth:</span></span>
+<span data-line><span>                    &quot;850px&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>                margin:</span></span>
+<span data-line><span>                    &quot;20px auto 0 auto&quot;</span></span>
+<span data-line><span>            }</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>const sliderObjects = {};</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Slider Definition</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function createTransformSlider({</span></span>
+<span data-line> </span>
+<span data-line><span>    key,</span></span>
+<span data-line> </span>
+<span data-line><span>    label,</span></span>
+<span data-line> </span>
+<span data-line><span>    description,</span></span>
+<span data-line> </span>
+<span data-line><span>    min,</span></span>
+<span data-line> </span>
+<span data-line><span>    max,</span></span>
+<span data-line> </span>
+<span data-line><span>    step</span></span>
+<span data-line> </span>
+<span data-line><span>}) {</span></span>
+<span data-line> </span>
+<span data-line><span>    const container =</span></span>
+<span data-line><span>        makeElement(</span></span>
+<span data-line><span>            &quot;div&quot;,</span></span>
+<span data-line><span>            sliderArea,</span></span>
+<span data-line><span>            {</span></span>
+<span data-line><span>                style: {</span></span>
+<span data-line><span>                    display:</span></span>
+<span data-line><span>                        &quot;flex&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>                    flexDirection:</span></span>
+<span data-line><span>                        &quot;column&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>                    alignItems:</span></span>
+<span data-line><span>                        &quot;center&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>                    minWidth:</span></span>
+<span data-line><span>                        &quot;0&quot;</span></span>
+<span data-line><span>                }</span></span>
+<span data-line><span>            }</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const labelElement =</span></span>
+<span data-line><span>        makeElement(</span></span>
+<span data-line><span>            &quot;div&quot;,</span></span>
+<span data-line><span>            container,</span></span>
+<span data-line><span>            {</span></span>
+<span data-line><span>                style: {</span></span>
+<span data-line><span>                    fontFamily:</span></span>
+<span data-line><span>                        &quot;monospace&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>                    fontSize:</span></span>
+<span data-line><span>                        &quot;13px&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>                    fontWeight:</span></span>
+<span data-line><span>                        &quot;600&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>                    marginBottom:</span></span>
+<span data-line><span>                        &quot;2px&quot;</span></span>
+<span data-line><span>                }</span></span>
+<span data-line><span>            }</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const descriptionElement =</span></span>
+<span data-line><span>        makeElement(</span></span>
+<span data-line><span>            &quot;div&quot;,</span></span>
+<span data-line><span>            container,</span></span>
+<span data-line><span>            {</span></span>
+<span data-line><span>                text:</span></span>
+<span data-line><span>                    description,</span></span>
+<span data-line> </span>
+<span data-line><span>                style: {</span></span>
+<span data-line><span>                    fontSize:</span></span>
+<span data-line><span>                        &quot;11px&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>                    opacity:</span></span>
+<span data-line><span>                        &quot;0.6&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>                    textAlign:</span></span>
+<span data-line><span>                        &quot;center&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>                    minHeight:</span></span>
+<span data-line><span>                        &quot;30px&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>                    marginBottom:</span></span>
+<span data-line><span>                        &quot;4px&quot;</span></span>
+<span data-line><span>                }</span></span>
+<span data-line><span>            }</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const slider =</span></span>
+<span data-line><span>        makeElement(</span></span>
+<span data-line><span>            &quot;input&quot;,</span></span>
+<span data-line><span>            container</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    slider.type =</span></span>
+<span data-line><span>        &quot;range&quot;;</span></span>
+<span data-line> </span>
+<span data-line><span>    slider.min =</span></span>
+<span data-line><span>        min;</span></span>
+<span data-line> </span>
+<span data-line><span>    slider.max =</span></span>
+<span data-line><span>        max;</span></span>
+<span data-line> </span>
+<span data-line><span>    slider.step =</span></span>
+<span data-line><span>        step;</span></span>
+<span data-line> </span>
+<span data-line><span>    slider.value =</span></span>
+<span data-line><span>        parameters[key];</span></span>
+<span data-line> </span>
+<span data-line><span>    slider.style.width =</span></span>
+<span data-line><span>        &quot;100%&quot;;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    function updateLabel() {</span></span>
+<span data-line> </span>
+<span data-line><span>        const value =</span></span>
+<span data-line><span>            Number(</span></span>
+<span data-line><span>                slider.value</span></span>
+<span data-line><span>            );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        const suffix =</span></span>
+<span data-line><span>            key.startsWith(</span></span>
+<span data-line><span>                &quot;rotate&quot;</span></span>
+<span data-line><span>            )</span></span>
+<span data-line><span>                ? &quot;°&quot;</span></span>
+<span data-line><span>                : &quot;&quot;;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        labelElement.textContent =</span></span>
+<span data-line><span>            `${label}: ${formatNumber(value)}${suffix}`;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    slider.addEventListener(</span></span>
+<span data-line><span>        &quot;input&quot;,</span></span>
+<span data-line><span>        () => {</span></span>
+<span data-line> </span>
+<span data-line><span>            parameters[key] =</span></span>
+<span data-line><span>                Number(</span></span>
+<span data-line><span>                    slider.value</span></span>
+<span data-line><span>                );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>            updateLabel();</span></span>
+<span data-line> </span>
+<span data-line><span>            updateMatrixDisplay();</span></span>
+<span data-line> </span>
+<span data-line><span>            scheduleRender();</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    updateLabel();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    sliderObjects[key] = {</span></span>
+<span data-line><span>        slider,</span></span>
+<span data-line><span>        updateLabel</span></span>
+<span data-line><span>    };</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Scale Controls</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>createTransformSlider({</span></span>
+<span data-line> </span>
+<span data-line><span>    key: &quot;scaleX&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    label: &quot;Scale X&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    description:</span></span>
+<span data-line><span>        &quot;Stretch or compress along the X axis&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    min: -3,</span></span>
+<span data-line><span>    max: 3,</span></span>
+<span data-line><span>    step: 0.05</span></span>
+<span data-line><span>});</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>createTransformSlider({</span></span>
+<span data-line> </span>
+<span data-line><span>    key: &quot;scaleY&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    label: &quot;Scale Y&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    description:</span></span>
+<span data-line><span>        &quot;Stretch or compress along the Y axis&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    min: -3,</span></span>
+<span data-line><span>    max: 3,</span></span>
+<span data-line><span>    step: 0.05</span></span>
+<span data-line><span>});</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>createTransformSlider({</span></span>
+<span data-line> </span>
+<span data-line><span>    key: &quot;scaleZ&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    label: &quot;Scale Z&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    description:</span></span>
+<span data-line><span>        &quot;Stretch or compress along the Z axis&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    min: -3,</span></span>
+<span data-line><span>    max: 3,</span></span>
+<span data-line><span>    step: 0.05</span></span>
+<span data-line><span>});</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Rotation Controls</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>createTransformSlider({</span></span>
+<span data-line> </span>
+<span data-line><span>    key: &quot;rotateX&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    label: &quot;Rotate X&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    description:</span></span>
+<span data-line><span>        &quot;Rotation around the X axis&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    min: -180,</span></span>
+<span data-line><span>    max: 180,</span></span>
+<span data-line><span>    step: 1</span></span>
+<span data-line><span>});</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>createTransformSlider({</span></span>
+<span data-line> </span>
+<span data-line><span>    key: &quot;rotateY&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    label: &quot;Rotate Y&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    description:</span></span>
+<span data-line><span>        &quot;Rotation around the Y axis&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    min: -180,</span></span>
+<span data-line><span>    max: 180,</span></span>
+<span data-line><span>    step: 1</span></span>
+<span data-line><span>});</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>createTransformSlider({</span></span>
+<span data-line> </span>
+<span data-line><span>    key: &quot;rotateZ&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    label: &quot;Rotate Z&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    description:</span></span>
+<span data-line><span>        &quot;Rotation around the Z axis&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    min: -180,</span></span>
+<span data-line><span>    max: 180,</span></span>
+<span data-line><span>    step: 1</span></span>
+<span data-line><span>});</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Shear Controls</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>createTransformSlider({</span></span>
+<span data-line> </span>
+<span data-line><span>    key: &quot;shearXY&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    label: &quot;Shear XY&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    description:</span></span>
+<span data-line><span>        &quot;X shifts proportionally to Y&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    min: -3,</span></span>
+<span data-line><span>    max: 3,</span></span>
+<span data-line><span>    step: 0.05</span></span>
+<span data-line><span>});</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>createTransformSlider({</span></span>
+<span data-line> </span>
+<span data-line><span>    key: &quot;shearXZ&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    label: &quot;Shear XZ&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    description:</span></span>
+<span data-line><span>        &quot;X shifts proportionally to Z&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    min: -3,</span></span>
+<span data-line><span>    max: 3,</span></span>
+<span data-line><span>    step: 0.05</span></span>
+<span data-line><span>});</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>createTransformSlider({</span></span>
+<span data-line> </span>
+<span data-line><span>    key: &quot;shearYZ&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    label: &quot;Shear YZ&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    description:</span></span>
+<span data-line><span>        &quot;Y shifts proportionally to Z&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>    min: -3,</span></span>
+<span data-line><span>    max: 3,</span></span>
+<span data-line><span>    step: 0.05</span></span>
+<span data-line><span>});</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Update All Sliders</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function setParameters(</span></span>
+<span data-line><span>    newParameters</span></span>
+<span data-line><span>) {</span></span>
+<span data-line> </span>
+<span data-line><span>    parameters = {</span></span>
+<span data-line><span>        ...newParameters</span></span>
+<span data-line><span>    };</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    for (</span></span>
+<span data-line><span>        const key</span></span>
+<span data-line><span>        of Object.keys(</span></span>
+<span data-line><span>            sliderObjects</span></span>
+<span data-line><span>        )</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        const object =</span></span>
+<span data-line><span>            sliderObjects[key];</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        object.slider.value =</span></span>
+<span data-line><span>            parameters[key];</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        object.updateLabel();</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    updateMatrixDisplay();</span></span>
+<span data-line> </span>
+<span data-line><span>    scheduleRender();</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Transform Point</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>//</span></span>
+<span data-line><span>// q = A · p</span></span>
+<span data-line><span>//</span></span>
+<span data-line><span>// p = [x, y, z]^T</span></span>
+<span data-line><span>//</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function transformPoint(</span></span>
+<span data-line><span>    x,</span></span>
+<span data-line><span>    y,</span></span>
+<span data-line><span>    z</span></span>
+<span data-line><span>) {</span></span>
+<span data-line> </span>
+<span data-line><span>    return [</span></span>
+<span data-line> </span>
+<span data-line><span>        A[0][0] * x +</span></span>
+<span data-line><span>        A[0][1] * y +</span></span>
+<span data-line><span>        A[0][2] * z,</span></span>
+<span data-line> </span>
+<span data-line><span>        A[1][0] * x +</span></span>
+<span data-line><span>        A[1][1] * y +</span></span>
+<span data-line><span>        A[1][2] * z,</span></span>
+<span data-line> </span>
+<span data-line><span>        A[2][0] * x +</span></span>
+<span data-line><span>        A[2][1] * y +</span></span>
+<span data-line><span>        A[2][2] * z</span></span>
+<span data-line><span>    ];</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Camera</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>const camera = {</span></span>
+<span data-line> </span>
+<span data-line><span>    yaw:</span></span>
+<span data-line><span>        -35 *</span></span>
+<span data-line><span>        Math.PI /</span></span>
+<span data-line><span>        180,</span></span>
+<span data-line> </span>
+<span data-line><span>    pitch:</span></span>
+<span data-line><span>        24 *</span></span>
+<span data-line><span>        Math.PI /</span></span>
+<span data-line><span>        180,</span></span>
+<span data-line> </span>
+<span data-line><span>    distance:</span></span>
+<span data-line><span>        7,</span></span>
+<span data-line> </span>
+<span data-line><span>    focal:</span></span>
+<span data-line><span>        600,</span></span>
+<span data-line> </span>
+<span data-line><span>    centerX:</span></span>
+<span data-line><span>        canvas.width *</span></span>
+<span data-line><span>        0.5,</span></span>
+<span data-line> </span>
+<span data-line><span>    centerY:</span></span>
+<span data-line><span>        canvas.height *</span></span>
+<span data-line><span>        0.53</span></span>
+<span data-line><span>};</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// 3D -> 2D Projection</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function projectPoint(</span></span>
+<span data-line><span>    point</span></span>
+<span data-line><span>) {</span></span>
+<span data-line> </span>
+<span data-line><span>    let [x, y, z] =</span></span>
+<span data-line><span>        point;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    // Camera yaw</span></span>
+<span data-line><span>    const cy =</span></span>
+<span data-line><span>        Math.cos(</span></span>
+<span data-line><span>            camera.yaw</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line><span>    const sy =</span></span>
+<span data-line><span>        Math.sin(</span></span>
+<span data-line><span>            camera.yaw</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const x1 =</span></span>
+<span data-line><span>        cy * x -</span></span>
+<span data-line><span>        sy * y;</span></span>
+<span data-line> </span>
+<span data-line><span>    const y1 =</span></span>
+<span data-line><span>        sy * x +</span></span>
+<span data-line><span>        cy * y;</span></span>
+<span data-line> </span>
+<span data-line><span>    const z1 =</span></span>
+<span data-line><span>        z;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    // Camera pitch</span></span>
+<span data-line><span>    const cp =</span></span>
+<span data-line><span>        Math.cos(</span></span>
+<span data-line><span>            camera.pitch</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line><span>    const sp =</span></span>
+<span data-line><span>        Math.sin(</span></span>
+<span data-line><span>            camera.pitch</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const x2 =</span></span>
+<span data-line><span>        x1;</span></span>
+<span data-line> </span>
+<span data-line><span>    const y2 =</span></span>
+<span data-line><span>        cp * y1 -</span></span>
+<span data-line><span>        sp * z1;</span></span>
+<span data-line> </span>
+<span data-line><span>    const z2 =</span></span>
+<span data-line><span>        sp * y1 +</span></span>
+<span data-line><span>        cp * z1;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    // Perspective projection</span></span>
+<span data-line><span>    const depth =</span></span>
+<span data-line><span>        camera.distance -</span></span>
+<span data-line><span>        z2;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    if (</span></span>
+<span data-line><span>        depth &lt;=</span></span>
+<span data-line><span>        0.15</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        return null;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const scale =</span></span>
+<span data-line><span>        camera.focal /</span></span>
+<span data-line><span>        depth;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    return [</span></span>
+<span data-line> </span>
+<span data-line><span>        camera.centerX +</span></span>
+<span data-line><span>        x2 * scale,</span></span>
+<span data-line> </span>
+<span data-line><span>        camera.centerY -</span></span>
+<span data-line><span>        y2 * scale,</span></span>
+<span data-line> </span>
+<span data-line><span>        depth</span></span>
+<span data-line><span>    ];</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Theme Color</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function getThemeColor(</span></span>
+<span data-line><span>    variable,</span></span>
+<span data-line><span>    fallback</span></span>
+<span data-line><span>) {</span></span>
+<span data-line> </span>
+<span data-line><span>    const value =</span></span>
+<span data-line><span>        getComputedStyle(</span></span>
+<span data-line><span>            root</span></span>
+<span data-line><span>        )</span></span>
+<span data-line><span>            .getPropertyValue(</span></span>
+<span data-line><span>                variable</span></span>
+<span data-line><span>            )</span></span>
+<span data-line><span>            .trim();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    return (</span></span>
+<span data-line><span>        value ||</span></span>
+<span data-line><span>        fallback</span></span>
+<span data-line><span>    );</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// World Line</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function drawWorldLine(</span></span>
+<span data-line><span>    p1,</span></span>
+<span data-line><span>    p2,</span></span>
+<span data-line><span>    color,</span></span>
+<span data-line><span>    width = 1,</span></span>
+<span data-line><span>    dash = []</span></span>
+<span data-line><span>) {</span></span>
+<span data-line> </span>
+<span data-line><span>    const a =</span></span>
+<span data-line><span>        projectPoint(</span></span>
+<span data-line><span>            p1</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line><span>    const b =</span></span>
+<span data-line><span>        projectPoint(</span></span>
+<span data-line><span>            p2</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    if (</span></span>
+<span data-line><span>        !a ||</span></span>
+<span data-line><span>        !b</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        return;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.save();</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.beginPath();</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.moveTo(</span></span>
+<span data-line><span>        a[0],</span></span>
+<span data-line><span>        a[1]</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.lineTo(</span></span>
+<span data-line><span>        b[0],</span></span>
+<span data-line><span>        b[1]</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.strokeStyle =</span></span>
+<span data-line><span>        color;</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.lineWidth =</span></span>
+<span data-line><span>        width;</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.setLineDash(</span></span>
+<span data-line><span>        dash</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.stroke();</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.restore();</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Axes</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function drawAxes() {</span></span>
+<span data-line> </span>
+<span data-line><span>    const axisLength =</span></span>
+<span data-line><span>        3.0;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    // X axis</span></span>
+<span data-line><span>    drawWorldLine(</span></span>
+<span data-line> </span>
+<span data-line><span>        [-axisLength, 0, 0],</span></span>
+<span data-line> </span>
+<span data-line><span>        [axisLength, 0, 0],</span></span>
+<span data-line> </span>
+<span data-line><span>        &quot;rgba(220,80,80,0.9)&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>        1.7</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    // Y axis</span></span>
+<span data-line><span>    drawWorldLine(</span></span>
+<span data-line> </span>
+<span data-line><span>        [0, -axisLength, 0],</span></span>
+<span data-line> </span>
+<span data-line><span>        [0, axisLength, 0],</span></span>
+<span data-line> </span>
+<span data-line><span>        &quot;rgba(70,170,90,0.9)&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>        1.7</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    // Z axis</span></span>
+<span data-line><span>    drawWorldLine(</span></span>
+<span data-line> </span>
+<span data-line><span>        [0, 0, -2],</span></span>
+<span data-line> </span>
+<span data-line><span>        [0, 0, axisLength],</span></span>
+<span data-line> </span>
+<span data-line><span>        &quot;rgba(70,120,230,0.9)&quot;,</span></span>
+<span data-line> </span>
+<span data-line><span>        1.7</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const xLabel =</span></span>
+<span data-line><span>        projectPoint(</span></span>
+<span data-line><span>            [</span></span>
+<span data-line><span>                axisLength +</span></span>
+<span data-line><span>                0.15,</span></span>
+<span data-line> </span>
+<span data-line><span>                0,</span></span>
+<span data-line> </span>
+<span data-line><span>                0</span></span>
+<span data-line><span>            ]</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const yLabel =</span></span>
+<span data-line><span>        projectPoint(</span></span>
+<span data-line><span>            [</span></span>
+<span data-line><span>                0,</span></span>
+<span data-line> </span>
+<span data-line><span>                axisLength +</span></span>
+<span data-line><span>                0.15,</span></span>
+<span data-line> </span>
+<span data-line><span>                0</span></span>
+<span data-line><span>            ]</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const zLabel =</span></span>
+<span data-line><span>        projectPoint(</span></span>
+<span data-line><span>            [</span></span>
+<span data-line><span>                0,</span></span>
+<span data-line> </span>
+<span data-line><span>                0,</span></span>
+<span data-line> </span>
+<span data-line><span>                axisLength +</span></span>
+<span data-line><span>                0.15</span></span>
+<span data-line><span>            ]</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.save();</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.font =</span></span>
+<span data-line><span>        &quot;15px sans-serif&quot;;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    if (xLabel) {</span></span>
+<span data-line> </span>
+<span data-line><span>        ctx.fillStyle =</span></span>
+<span data-line><span>            &quot;rgba(220,80,80,0.95)&quot;;</span></span>
+<span data-line> </span>
+<span data-line><span>        ctx.fillText(</span></span>
+<span data-line><span>            &quot;x&quot;,</span></span>
+<span data-line><span>            xLabel[0],</span></span>
+<span data-line><span>            xLabel[1]</span></span>
+<span data-line><span>        );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    if (yLabel) {</span></span>
+<span data-line> </span>
+<span data-line><span>        ctx.fillStyle =</span></span>
+<span data-line><span>            &quot;rgba(70,170,90,0.95)&quot;;</span></span>
+<span data-line> </span>
+<span data-line><span>        ctx.fillText(</span></span>
+<span data-line><span>            &quot;y&quot;,</span></span>
+<span data-line><span>            yLabel[0],</span></span>
+<span data-line><span>            yLabel[1]</span></span>
+<span data-line><span>        );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    if (zLabel) {</span></span>
+<span data-line> </span>
+<span data-line><span>        ctx.fillStyle =</span></span>
+<span data-line><span>            &quot;rgba(70,120,230,0.95)&quot;;</span></span>
+<span data-line> </span>
+<span data-line><span>        ctx.fillText(</span></span>
+<span data-line><span>            &quot;z&quot;,</span></span>
+<span data-line><span>            zLabel[0],</span></span>
+<span data-line><span>            zLabel[1]</span></span>
+<span data-line><span>        );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.restore();</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Texture</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>let texture = null;</span></span>
+<span data-line><span>let textureName = null;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Plane Size</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function getPlaneSize() {</span></span>
+<span data-line> </span>
+<span data-line><span>    if (!texture) {</span></span>
+<span data-line> </span>
+<span data-line><span>        return {</span></span>
+<span data-line><span>            width: 2.4,</span></span>
+<span data-line><span>            height: 1.6</span></span>
+<span data-line><span>        };</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const aspect =</span></span>
+<span data-line><span>        texture.width /</span></span>
+<span data-line><span>        texture.height;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    let width =</span></span>
+<span data-line><span>        2.5;</span></span>
+<span data-line> </span>
+<span data-line><span>    let height =</span></span>
+<span data-line><span>        width /</span></span>
+<span data-line><span>        aspect;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    if (</span></span>
+<span data-line><span>        height ></span></span>
+<span data-line><span>        2.0</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        height =</span></span>
+<span data-line><span>            2.0;</span></span>
+<span data-line> </span>
+<span data-line><span>        width =</span></span>
+<span data-line><span>            height *</span></span>
+<span data-line><span>            aspect;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    return {</span></span>
+<span data-line><span>        width,</span></span>
+<span data-line><span>        height</span></span>
+<span data-line><span>    };</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Original Image Plane</span></span>
+<span data-line><span>//</span></span>
+<span data-line><span>// The image lies on z = 1.</span></span>
+<span data-line><span>//</span></span>
+<span data-line><span>// This keeps all three coordinates non-trivial</span></span>
+<span data-line><span>// and allows the full 3D linear transformation</span></span>
+<span data-line><span>// to affect the plane.</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function localPlanePoint(</span></span>
+<span data-line><span>    u,</span></span>
+<span data-line><span>    v</span></span>
+<span data-line><span>) {</span></span>
+<span data-line> </span>
+<span data-line><span>    const size =</span></span>
+<span data-line><span>        getPlaneSize();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    return [</span></span>
+<span data-line> </span>
+<span data-line><span>        (u - 0.5) *</span></span>
+<span data-line><span>        size.width,</span></span>
+<span data-line> </span>
+<span data-line><span>        (0.5 - v) *</span></span>
+<span data-line><span>        size.height,</span></span>
+<span data-line> </span>
+<span data-line><span>        1</span></span>
+<span data-line><span>    ];</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Transformed Image Plane</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function transformedPlanePoint(</span></span>
+<span data-line><span>    u,</span></span>
+<span data-line><span>    v</span></span>
+<span data-line><span>) {</span></span>
+<span data-line> </span>
+<span data-line><span>    const p =</span></span>
+<span data-line><span>        localPlanePoint(</span></span>
+<span data-line><span>            u,</span></span>
+<span data-line><span>            v</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    return transformPoint(</span></span>
+<span data-line><span>        p[0],</span></span>
+<span data-line><span>        p[1],</span></span>
+<span data-line><span>        p[2]</span></span>
+<span data-line><span>    );</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Reference Plane</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function drawReferencePlane() {</span></span>
+<span data-line> </span>
+<span data-line><span>    const size =</span></span>
+<span data-line><span>        getPlaneSize();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const corners = [</span></span>
+<span data-line> </span>
+<span data-line><span>        [</span></span>
+<span data-line><span>            -size.width / 2,</span></span>
+<span data-line><span>            -size.height / 2,</span></span>
+<span data-line><span>            1</span></span>
+<span data-line><span>        ],</span></span>
+<span data-line> </span>
+<span data-line><span>        [</span></span>
+<span data-line><span>            size.width / 2,</span></span>
+<span data-line><span>            -size.height / 2,</span></span>
+<span data-line><span>            1</span></span>
+<span data-line><span>        ],</span></span>
+<span data-line> </span>
+<span data-line><span>        [</span></span>
+<span data-line><span>            size.width / 2,</span></span>
+<span data-line><span>            size.height / 2,</span></span>
+<span data-line><span>            1</span></span>
+<span data-line><span>        ],</span></span>
+<span data-line> </span>
+<span data-line><span>        [</span></span>
+<span data-line><span>            -size.width / 2,</span></span>
+<span data-line><span>            size.height / 2,</span></span>
+<span data-line><span>            1</span></span>
+<span data-line><span>        ]</span></span>
+<span data-line><span>    ];</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const projected =</span></span>
+<span data-line><span>        corners.map(</span></span>
+<span data-line><span>            projectPoint</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    if (</span></span>
+<span data-line><span>        projected.some(</span></span>
+<span data-line><span>            p => !p</span></span>
+<span data-line><span>        )</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        return;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.save();</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.beginPath();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.moveTo(</span></span>
+<span data-line> </span>
+<span data-line><span>        projected[0][0],</span></span>
+<span data-line> </span>
+<span data-line><span>        projected[0][1]</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    for (</span></span>
+<span data-line><span>        let i = 1;</span></span>
+<span data-line><span>        i &lt; projected.length;</span></span>
+<span data-line><span>        i++</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        ctx.lineTo(</span></span>
+<span data-line> </span>
+<span data-line><span>            projected[i][0],</span></span>
+<span data-line> </span>
+<span data-line><span>            projected[i][1]</span></span>
+<span data-line><span>        );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.closePath();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.strokeStyle =</span></span>
+<span data-line><span>        &quot;rgba(130,130,130,0.35)&quot;;</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.lineWidth =</span></span>
+<span data-line><span>        1;</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.setLineDash(</span></span>
+<span data-line><span>        [5, 5]</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.stroke();</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.restore();</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Triangle Texture Mapping</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function drawTexturedTriangle(</span></span>
+<span data-line><span>    source,</span></span>
+<span data-line><span>    src0,</span></span>
+<span data-line><span>    src1,</span></span>
+<span data-line><span>    src2,</span></span>
+<span data-line><span>    dst0,</span></span>
+<span data-line><span>    dst1,</span></span>
+<span data-line><span>    dst2</span></span>
+<span data-line><span>) {</span></span>
+<span data-line> </span>
+<span data-line><span>    if (</span></span>
+<span data-line><span>        !dst0 ||</span></span>
+<span data-line><span>        !dst1 ||</span></span>
+<span data-line><span>        !dst2</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        return;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const x0 =</span></span>
+<span data-line><span>        src0[0];</span></span>
+<span data-line> </span>
+<span data-line><span>    const y0 =</span></span>
+<span data-line><span>        src0[1];</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const x1 =</span></span>
+<span data-line><span>        src1[0];</span></span>
+<span data-line> </span>
+<span data-line><span>    const y1 =</span></span>
+<span data-line><span>        src1[1];</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const x2 =</span></span>
+<span data-line><span>        src2[0];</span></span>
+<span data-line> </span>
+<span data-line><span>    const y2 =</span></span>
+<span data-line><span>        src2[1];</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const dx1 =</span></span>
+<span data-line><span>        x1 - x0;</span></span>
+<span data-line> </span>
+<span data-line><span>    const dy1 =</span></span>
+<span data-line><span>        y1 - y0;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const dx2 =</span></span>
+<span data-line><span>        x2 - x0;</span></span>
+<span data-line> </span>
+<span data-line><span>    const dy2 =</span></span>
+<span data-line><span>        y2 - y0;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const determinant =</span></span>
+<span data-line><span>        dx1 * dy2 -</span></span>
+<span data-line><span>        dx2 * dy1;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    if (</span></span>
+<span data-line><span>        Math.abs(</span></span>
+<span data-line><span>            determinant</span></span>
+<span data-line><span>        ) &lt;</span></span>
+<span data-line><span>        1e-8</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        return;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const invDet =</span></span>
+<span data-line><span>        1 /</span></span>
+<span data-line><span>        determinant;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const a = (</span></span>
+<span data-line> </span>
+<span data-line><span>        (dst1[0] - dst0[0]) *</span></span>
+<span data-line><span>        dy2 -</span></span>
+<span data-line> </span>
+<span data-line><span>        (dst2[0] - dst0[0]) *</span></span>
+<span data-line><span>        dy1</span></span>
+<span data-line> </span>
+<span data-line><span>    ) * invDet;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const c = (</span></span>
+<span data-line> </span>
+<span data-line><span>        dx1 *</span></span>
+<span data-line><span>        (dst2[0] - dst0[0]) -</span></span>
+<span data-line> </span>
+<span data-line><span>        dx2 *</span></span>
+<span data-line><span>        (dst1[0] - dst0[0])</span></span>
+<span data-line> </span>
+<span data-line><span>    ) * invDet;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const e =</span></span>
+<span data-line><span>        dst0[0] -</span></span>
+<span data-line><span>        a * x0 -</span></span>
+<span data-line><span>        c * y0;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const b = (</span></span>
+<span data-line> </span>
+<span data-line><span>        (dst1[1] - dst0[1]) *</span></span>
+<span data-line><span>        dy2 -</span></span>
+<span data-line> </span>
+<span data-line><span>        (dst2[1] - dst0[1]) *</span></span>
+<span data-line><span>        dy1</span></span>
+<span data-line> </span>
+<span data-line><span>    ) * invDet;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const d = (</span></span>
+<span data-line> </span>
+<span data-line><span>        dx1 *</span></span>
+<span data-line><span>        (dst2[1] - dst0[1]) -</span></span>
+<span data-line> </span>
+<span data-line><span>        dx2 *</span></span>
+<span data-line><span>        (dst1[1] - dst0[1])</span></span>
+<span data-line> </span>
+<span data-line><span>    ) * invDet;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const f =</span></span>
+<span data-line><span>        dst0[1] -</span></span>
+<span data-line><span>        b * x0 -</span></span>
+<span data-line><span>        d * y0;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.save();</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.beginPath();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.moveTo(</span></span>
+<span data-line><span>        dst0[0],</span></span>
+<span data-line><span>        dst0[1]</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.lineTo(</span></span>
+<span data-line><span>        dst1[0],</span></span>
+<span data-line><span>        dst1[1]</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.lineTo(</span></span>
+<span data-line><span>        dst2[0],</span></span>
+<span data-line><span>        dst2[1]</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.closePath();</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.clip();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.setTransform(</span></span>
+<span data-line><span>        a,</span></span>
+<span data-line><span>        b,</span></span>
+<span data-line><span>        c,</span></span>
+<span data-line><span>        d,</span></span>
+<span data-line><span>        e,</span></span>
+<span data-line><span>        f</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.drawImage(</span></span>
+<span data-line><span>        source,</span></span>
+<span data-line><span>        0,</span></span>
+<span data-line><span>        0</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.restore();</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Draw Transformed Texture</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function drawTransformedTexture() {</span></span>
+<span data-line> </span>
+<span data-line><span>    if (!texture) {</span></span>
+<span data-line> </span>
+<span data-line><span>        drawPlaceholderPlane();</span></span>
+<span data-line> </span>
+<span data-line><span>        return;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const cols =</span></span>
+<span data-line><span>        24;</span></span>
+<span data-line> </span>
+<span data-line><span>    const rows =</span></span>
+<span data-line><span>        18;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    for (</span></span>
+<span data-line><span>        let row = 0;</span></span>
+<span data-line><span>        row &lt; rows;</span></span>
+<span data-line><span>        row++</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        for (</span></span>
+<span data-line><span>            let col = 0;</span></span>
+<span data-line><span>            col &lt; cols;</span></span>
+<span data-line><span>            col++</span></span>
+<span data-line><span>        ) {</span></span>
+<span data-line> </span>
+<span data-line><span>            const u0 =</span></span>
+<span data-line><span>                col /</span></span>
+<span data-line><span>                cols;</span></span>
+<span data-line> </span>
+<span data-line><span>            const u1 =</span></span>
+<span data-line><span>                (col + 1) /</span></span>
+<span data-line><span>                cols;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>            const v0 =</span></span>
+<span data-line><span>                row /</span></span>
+<span data-line><span>                rows;</span></span>
+<span data-line> </span>
+<span data-line><span>            const v1 =</span></span>
+<span data-line><span>                (row + 1) /</span></span>
+<span data-line><span>                rows;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>            const w00 =</span></span>
+<span data-line><span>                transformedPlanePoint(</span></span>
+<span data-line><span>                    u0,</span></span>
+<span data-line><span>                    v0</span></span>
+<span data-line><span>                );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>            const w10 =</span></span>
+<span data-line><span>                transformedPlanePoint(</span></span>
+<span data-line><span>                    u1,</span></span>
+<span data-line><span>                    v0</span></span>
+<span data-line><span>                );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>            const w01 =</span></span>
+<span data-line><span>                transformedPlanePoint(</span></span>
+<span data-line><span>                    u0,</span></span>
+<span data-line><span>                    v1</span></span>
+<span data-line><span>                );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>            const w11 =</span></span>
+<span data-line><span>                transformedPlanePoint(</span></span>
+<span data-line><span>                    u1,</span></span>
+<span data-line><span>                    v1</span></span>
+<span data-line><span>                );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>            const p00 =</span></span>
+<span data-line><span>                projectPoint(</span></span>
+<span data-line><span>                    w00</span></span>
+<span data-line><span>                );</span></span>
+<span data-line> </span>
+<span data-line><span>            const p10 =</span></span>
+<span data-line><span>                projectPoint(</span></span>
+<span data-line><span>                    w10</span></span>
+<span data-line><span>                );</span></span>
+<span data-line> </span>
+<span data-line><span>            const p01 =</span></span>
+<span data-line><span>                projectPoint(</span></span>
+<span data-line><span>                    w01</span></span>
+<span data-line><span>                );</span></span>
+<span data-line> </span>
+<span data-line><span>            const p11 =</span></span>
+<span data-line><span>                projectPoint(</span></span>
+<span data-line><span>                    w11</span></span>
+<span data-line><span>                );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>            if (</span></span>
+<span data-line><span>                !p00 ||</span></span>
+<span data-line><span>                !p10 ||</span></span>
+<span data-line><span>                !p01 ||</span></span>
+<span data-line><span>                !p11</span></span>
+<span data-line><span>            ) {</span></span>
+<span data-line> </span>
+<span data-line><span>                continue;</span></span>
+<span data-line><span>            }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>            const sx0 =</span></span>
+<span data-line><span>                u0 *</span></span>
+<span data-line><span>                texture.width;</span></span>
+<span data-line> </span>
+<span data-line><span>            const sx1 =</span></span>
+<span data-line><span>                u1 *</span></span>
+<span data-line><span>                texture.width;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>            const sy0 =</span></span>
+<span data-line><span>                v0 *</span></span>
+<span data-line><span>                texture.height;</span></span>
+<span data-line> </span>
+<span data-line><span>            const sy1 =</span></span>
+<span data-line><span>                v1 *</span></span>
+<span data-line><span>                texture.height;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>            drawTexturedTriangle(</span></span>
+<span data-line> </span>
+<span data-line><span>                texture,</span></span>
+<span data-line> </span>
+<span data-line><span>                [sx0, sy0],</span></span>
+<span data-line> </span>
+<span data-line><span>                [sx1, sy0],</span></span>
+<span data-line> </span>
+<span data-line><span>                [sx0, sy1],</span></span>
+<span data-line> </span>
+<span data-line><span>                p00,</span></span>
+<span data-line><span>                p10,</span></span>
+<span data-line><span>                p01</span></span>
+<span data-line><span>            );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>            drawTexturedTriangle(</span></span>
+<span data-line> </span>
+<span data-line><span>                texture,</span></span>
+<span data-line> </span>
+<span data-line><span>                [sx1, sy0],</span></span>
+<span data-line> </span>
+<span data-line><span>                [sx1, sy1],</span></span>
+<span data-line> </span>
+<span data-line><span>                [sx0, sy1],</span></span>
+<span data-line> </span>
+<span data-line><span>                p10,</span></span>
+<span data-line><span>                p11,</span></span>
+<span data-line><span>                p01</span></span>
+<span data-line><span>            );</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Placeholder Plane</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function drawPlaceholderPlane() {</span></span>
+<span data-line> </span>
+<span data-line><span>    const points = [</span></span>
+<span data-line> </span>
+<span data-line><span>        transformedPlanePoint(</span></span>
+<span data-line><span>            0,</span></span>
+<span data-line><span>            0</span></span>
+<span data-line><span>        ),</span></span>
+<span data-line> </span>
+<span data-line><span>        transformedPlanePoint(</span></span>
+<span data-line><span>            1,</span></span>
+<span data-line><span>            0</span></span>
+<span data-line><span>        ),</span></span>
+<span data-line> </span>
+<span data-line><span>        transformedPlanePoint(</span></span>
+<span data-line><span>            1,</span></span>
+<span data-line><span>            1</span></span>
+<span data-line><span>        ),</span></span>
+<span data-line> </span>
+<span data-line><span>        transformedPlanePoint(</span></span>
+<span data-line><span>            0,</span></span>
+<span data-line><span>            1</span></span>
+<span data-line><span>        )</span></span>
+<span data-line><span>    ];</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const projected =</span></span>
+<span data-line><span>        points.map(</span></span>
+<span data-line><span>            projectPoint</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    if (</span></span>
+<span data-line><span>        projected.some(</span></span>
+<span data-line><span>            p => !p</span></span>
+<span data-line><span>        )</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        return;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.save();</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.beginPath();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.moveTo(</span></span>
+<span data-line> </span>
+<span data-line><span>        projected[0][0],</span></span>
+<span data-line> </span>
+<span data-line><span>        projected[0][1]</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    for (</span></span>
+<span data-line><span>        let i = 1;</span></span>
+<span data-line><span>        i &lt; 4;</span></span>
+<span data-line><span>        i++</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        ctx.lineTo(</span></span>
+<span data-line> </span>
+<span data-line><span>            projected[i][0],</span></span>
+<span data-line> </span>
+<span data-line><span>            projected[i][1]</span></span>
+<span data-line><span>        );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.closePath();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.fillStyle =</span></span>
+<span data-line><span>        &quot;rgba(150,120,190,0.28)&quot;;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.strokeStyle =</span></span>
+<span data-line><span>        &quot;rgba(120,100,150,0.8)&quot;;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.lineWidth =</span></span>
+<span data-line><span>        2;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.fill();</span></span>
+<span data-line><span>    ctx.stroke();</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.restore();</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Plane Grid</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function drawPlaneGrid() {</span></span>
+<span data-line> </span>
+<span data-line><span>    const gridCount =</span></span>
+<span data-line><span>        6;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    for (</span></span>
+<span data-line><span>        let i = 0;</span></span>
+<span data-line><span>        i &lt;= gridCount;</span></span>
+<span data-line><span>        i++</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        const t =</span></span>
+<span data-line><span>            i /</span></span>
+<span data-line><span>            gridCount;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        drawProjectedPlaneLine(</span></span>
+<span data-line><span>            t,</span></span>
+<span data-line><span>            0,</span></span>
+<span data-line><span>            t,</span></span>
+<span data-line><span>            1</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        drawProjectedPlaneLine(</span></span>
+<span data-line><span>            0,</span></span>
+<span data-line><span>            t,</span></span>
+<span data-line><span>            1,</span></span>
+<span data-line><span>            t</span></span>
+<span data-line><span>        );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Grid Line</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function drawProjectedPlaneLine(</span></span>
+<span data-line><span>    u0,</span></span>
+<span data-line><span>    v0,</span></span>
+<span data-line><span>    u1,</span></span>
+<span data-line><span>    v1</span></span>
+<span data-line><span>) {</span></span>
+<span data-line> </span>
+<span data-line><span>    const segments =</span></span>
+<span data-line><span>        20;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.beginPath();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    let started =</span></span>
+<span data-line><span>        false;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    for (</span></span>
+<span data-line><span>        let i = 0;</span></span>
+<span data-line><span>        i &lt;= segments;</span></span>
+<span data-line><span>        i++</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        const t =</span></span>
+<span data-line><span>            i /</span></span>
+<span data-line><span>            segments;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        const u =</span></span>
+<span data-line><span>            u0 +</span></span>
+<span data-line><span>            (u1 - u0) *</span></span>
+<span data-line><span>            t;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        const v =</span></span>
+<span data-line><span>            v0 +</span></span>
+<span data-line><span>            (v1 - v0) *</span></span>
+<span data-line><span>            t;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        const world =</span></span>
+<span data-line><span>            transformedPlanePoint(</span></span>
+<span data-line><span>                u,</span></span>
+<span data-line><span>                v</span></span>
+<span data-line><span>            );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        const screen =</span></span>
+<span data-line><span>            projectPoint(</span></span>
+<span data-line><span>                world</span></span>
+<span data-line><span>            );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        if (!screen) {</span></span>
+<span data-line> </span>
+<span data-line><span>            started =</span></span>
+<span data-line><span>                false;</span></span>
+<span data-line> </span>
+<span data-line><span>            continue;</span></span>
+<span data-line><span>        }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        if (!started) {</span></span>
+<span data-line> </span>
+<span data-line><span>            ctx.moveTo(</span></span>
+<span data-line><span>                screen[0],</span></span>
+<span data-line><span>                screen[1]</span></span>
+<span data-line><span>            );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>            started =</span></span>
+<span data-line><span>                true;</span></span>
+<span data-line> </span>
+<span data-line><span>        } else {</span></span>
+<span data-line> </span>
+<span data-line><span>            ctx.lineTo(</span></span>
+<span data-line><span>                screen[0],</span></span>
+<span data-line><span>                screen[1]</span></span>
+<span data-line><span>            );</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.strokeStyle =</span></span>
+<span data-line><span>        texture</span></span>
+<span data-line><span>            ? &quot;rgba(255,255,255,0.32)&quot;</span></span>
+<span data-line><span>            : &quot;rgba(80,80,80,0.35)&quot;;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.lineWidth =</span></span>
+<span data-line><span>        0.8;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.stroke();</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Plane Border</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function drawPlaneBorder() {</span></span>
+<span data-line> </span>
+<span data-line><span>    const corners = [</span></span>
+<span data-line> </span>
+<span data-line><span>        transformedPlanePoint(</span></span>
+<span data-line><span>            0,</span></span>
+<span data-line><span>            0</span></span>
+<span data-line><span>        ),</span></span>
+<span data-line> </span>
+<span data-line><span>        transformedPlanePoint(</span></span>
+<span data-line><span>            1,</span></span>
+<span data-line><span>            0</span></span>
+<span data-line><span>        ),</span></span>
+<span data-line> </span>
+<span data-line><span>        transformedPlanePoint(</span></span>
+<span data-line><span>            1,</span></span>
+<span data-line><span>            1</span></span>
+<span data-line><span>        ),</span></span>
+<span data-line> </span>
+<span data-line><span>        transformedPlanePoint(</span></span>
+<span data-line><span>            0,</span></span>
+<span data-line><span>            1</span></span>
+<span data-line><span>        )</span></span>
+<span data-line><span>    ];</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const projected =</span></span>
+<span data-line><span>        corners.map(</span></span>
+<span data-line><span>            projectPoint</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    if (</span></span>
+<span data-line><span>        projected.some(</span></span>
+<span data-line><span>            p => !p</span></span>
+<span data-line><span>        )</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        return;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.save();</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.beginPath();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.moveTo(</span></span>
+<span data-line> </span>
+<span data-line><span>        projected[0][0],</span></span>
+<span data-line> </span>
+<span data-line><span>        projected[0][1]</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    for (</span></span>
+<span data-line><span>        let i = 1;</span></span>
+<span data-line><span>        i &lt; 4;</span></span>
+<span data-line><span>        i++</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        ctx.lineTo(</span></span>
+<span data-line> </span>
+<span data-line><span>            projected[i][0],</span></span>
+<span data-line> </span>
+<span data-line><span>            projected[i][1]</span></span>
+<span data-line><span>        );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.closePath();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.strokeStyle =</span></span>
+<span data-line><span>        &quot;rgba(40,40,40,0.9)&quot;;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.lineWidth =</span></span>
+<span data-line><span>        1.6;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.stroke();</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.restore();</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Render Scheduling</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>let renderPending =</span></span>
+<span data-line><span>    false;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>function scheduleRender() {</span></span>
+<span data-line> </span>
+<span data-line><span>    if (</span></span>
+<span data-line><span>        renderPending</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        return;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    renderPending =</span></span>
+<span data-line><span>        true;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    requestAnimationFrame(</span></span>
+<span data-line><span>        () => {</span></span>
+<span data-line> </span>
+<span data-line><span>            renderPending =</span></span>
+<span data-line><span>                false;</span></span>
+<span data-line> </span>
+<span data-line><span>            render();</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    );</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Render</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function render() {</span></span>
+<span data-line> </span>
+<span data-line><span>    A =</span></span>
+<span data-line><span>        buildTransformationMatrix();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const background =</span></span>
+<span data-line><span>        getThemeColor(</span></span>
+<span data-line><span>            &quot;--background-primary&quot;,</span></span>
+<span data-line><span>            &quot;#ffffff&quot;</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.save();</span></span>
+<span data-line> </span>
+<span data-line><span>    ctx.setTransform(</span></span>
+<span data-line><span>        1,</span></span>
+<span data-line><span>        0,</span></span>
+<span data-line><span>        0,</span></span>
+<span data-line><span>        1,</span></span>
+<span data-line><span>        0,</span></span>
+<span data-line><span>        0</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.clearRect(</span></span>
+<span data-line><span>        0,</span></span>
+<span data-line><span>        0,</span></span>
+<span data-line><span>        canvas.width,</span></span>
+<span data-line><span>        canvas.height</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.fillStyle =</span></span>
+<span data-line><span>        background;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.fillRect(</span></span>
+<span data-line><span>        0,</span></span>
+<span data-line><span>        0,</span></span>
+<span data-line><span>        canvas.width,</span></span>
+<span data-line><span>        canvas.height</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    ctx.restore();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    drawAxes();</span></span>
+<span data-line> </span>
+<span data-line><span>    drawReferencePlane();</span></span>
+<span data-line> </span>
+<span data-line><span>    drawTransformedTexture();</span></span>
+<span data-line> </span>
+<span data-line><span>    drawPlaneGrid();</span></span>
+<span data-line> </span>
+<span data-line><span>    drawPlaneBorder();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    if (</span></span>
+<span data-line><span>        textureName</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        ctx.save();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        ctx.font =</span></span>
+<span data-line><span>            &quot;13px sans-serif&quot;;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        ctx.fillStyle =</span></span>
+<span data-line><span>            getThemeColor(</span></span>
+<span data-line><span>                &quot;--text-muted&quot;,</span></span>
+<span data-line><span>                &quot;#777&quot;</span></span>
+<span data-line><span>            );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        ctx.fillText(</span></span>
+<span data-line><span>            textureName,</span></span>
+<span data-line><span>            15,</span></span>
+<span data-line><span>            canvas.height -</span></span>
+<span data-line><span>            15</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        ctx.restore();</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Texture Preprocessing</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function setTextureFromImage(</span></span>
+<span data-line><span>    image,</span></span>
+<span data-line><span>    name</span></span>
+<span data-line><span>) {</span></span>
+<span data-line> </span>
+<span data-line><span>    const maxSize =</span></span>
+<span data-line><span>        1200;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    let width =</span></span>
+<span data-line><span>        image.naturalWidth ||</span></span>
+<span data-line><span>        image.width;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    let height =</span></span>
+<span data-line><span>        image.naturalHeight ||</span></span>
+<span data-line><span>        image.height;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    if (</span></span>
+<span data-line><span>        width ></span></span>
+<span data-line><span>        maxSize ||</span></span>
+<span data-line><span>        height ></span></span>
+<span data-line><span>        maxSize</span></span>
+<span data-line><span>    ) {</span></span>
+<span data-line> </span>
+<span data-line><span>        const ratio =</span></span>
+<span data-line><span>            Math.min(</span></span>
+<span data-line> </span>
+<span data-line><span>                maxSize /</span></span>
+<span data-line><span>                width,</span></span>
+<span data-line> </span>
+<span data-line><span>                maxSize /</span></span>
+<span data-line><span>                height</span></span>
+<span data-line><span>            );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        width =</span></span>
+<span data-line><span>            Math.round(</span></span>
+<span data-line><span>                width *</span></span>
+<span data-line><span>                ratio</span></span>
+<span data-line><span>            );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        height =</span></span>
+<span data-line><span>            Math.round(</span></span>
+<span data-line><span>                height *</span></span>
+<span data-line><span>                ratio</span></span>
+<span data-line><span>            );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const offscreen =</span></span>
+<span data-line><span>        document.createElement(</span></span>
+<span data-line><span>            &quot;canvas&quot;</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    offscreen.width =</span></span>
+<span data-line><span>        width;</span></span>
+<span data-line> </span>
+<span data-line><span>    offscreen.height =</span></span>
+<span data-line><span>        height;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    const offCtx =</span></span>
+<span data-line><span>        offscreen.getContext(</span></span>
+<span data-line><span>            &quot;2d&quot;</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    offCtx.imageSmoothingEnabled =</span></span>
+<span data-line><span>        true;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    offCtx.imageSmoothingQuality =</span></span>
+<span data-line><span>        &quot;high&quot;;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    offCtx.drawImage(</span></span>
+<span data-line><span>        image,</span></span>
+<span data-line><span>        0,</span></span>
+<span data-line><span>        0,</span></span>
+<span data-line><span>        width,</span></span>
+<span data-line><span>        height</span></span>
+<span data-line><span>    );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    texture =</span></span>
+<span data-line><span>        offscreen;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    textureName =</span></span>
+<span data-line><span>        name;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    imageStatus.textContent =</span></span>
+<span data-line><span>        `Selected image: ${name}`;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    scheduleRender();</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Image Loader</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function loadImageSource(</span></span>
+<span data-line><span>    source,</span></span>
+<span data-line><span>    name</span></span>
+<span data-line><span>) {</span></span>
+<span data-line> </span>
+<span data-line><span>    const image =</span></span>
+<span data-line><span>        new Image();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    image.onload =</span></span>
+<span data-line><span>        () => {</span></span>
+<span data-line> </span>
+<span data-line><span>            setTextureFromImage(</span></span>
+<span data-line><span>                image,</span></span>
+<span data-line><span>                name</span></span>
+<span data-line><span>            );</span></span>
+<span data-line><span>        };</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    image.onerror =</span></span>
+<span data-line><span>        error => {</span></span>
+<span data-line> </span>
+<span data-line><span>            console.error(</span></span>
+<span data-line><span>                &quot;Image loading failed:&quot;,</span></span>
+<span data-line><span>                error</span></span>
+<span data-line><span>            );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>            imageStatus.textContent =</span></span>
+<span data-line><span>                &quot;Could not load the selected image.&quot;;</span></span>
+<span data-line><span>        };</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    image.src =</span></span>
+<span data-line><span>        source;</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Load Vault Image by Path</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>function loadVaultImage(</span></span>
+<span data-line><span>    path,</span></span>
+<span data-line><span>    save = true</span></span>
+<span data-line><span>) {</span></span>
+<span data-line> </span>
+<span data-line><span>    if (!path) {</span></span>
+<span data-line><span>        return;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>    try {</span></span>
+<span data-line> </span>
+<span data-line><span>        const file =</span></span>
+<span data-line><span>            app.vault</span></span>
+<span data-line><span>                .getAbstractFileByPath(</span></span>
+<span data-line><span>                    path</span></span>
+<span data-line><span>                );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        if (!file) {</span></span>
+<span data-line> </span>
+<span data-line><span>            imageStatus.textContent =</span></span>
+<span data-line><span>                &quot;The saved image no longer exists.&quot;;</span></span>
+<span data-line> </span>
+<span data-line><span>            return;</span></span>
+<span data-line><span>        }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        const resourcePath =</span></span>
+<span data-line><span>            app.vault</span></span>
+<span data-line><span>                .getResourcePath(</span></span>
+<span data-line><span>                    file</span></span>
+<span data-line><span>                );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        vaultSelect.value =</span></span>
+<span data-line><span>            path;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        loadImageSource(</span></span>
+<span data-line><span>            resourcePath,</span></span>
+<span data-line><span>            file.name</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        if (save) {</span></span>
+<span data-line> </span>
+<span data-line><span>            saveSelectedImagePath(</span></span>
+<span data-line><span>                path</span></span>
+<span data-line><span>            );</span></span>
+<span data-line><span>        }</span></span>
+<span data-line> </span>
+<span data-line><span>    } catch (error) {</span></span>
+<span data-line> </span>
+<span data-line><span>        console.error(</span></span>
+<span data-line><span>            &quot;Vault image loading failed:&quot;,</span></span>
+<span data-line><span>            error</span></span>
+<span data-line><span>        );</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        imageStatus.textContent =</span></span>
+<span data-line><span>            &quot;Could not load the selected Vault image.&quot;;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Vault Selection Event</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>vaultSelect.addEventListener(</span></span>
+<span data-line><span>    &quot;change&quot;,</span></span>
+<span data-line><span>    () => {</span></span>
+<span data-line> </span>
+<span data-line><span>        const path =</span></span>
+<span data-line><span>            vaultSelect.value;</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        if (!path) {</span></span>
+<span data-line><span>            return;</span></span>
+<span data-line><span>        }</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>        loadVaultImage(</span></span>
+<span data-line><span>            path,</span></span>
+<span data-line><span>            true</span></span>
+<span data-line><span>        );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>);</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Buttons</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>identityButton.addEventListener(</span></span>
+<span data-line><span>    &quot;click&quot;,</span></span>
+<span data-line><span>    () => {</span></span>
+<span data-line> </span>
+<span data-line><span>        setParameters(</span></span>
+<span data-line><span>            identityParameters</span></span>
+<span data-line><span>        );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>);</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>exampleButton.addEventListener(</span></span>
+<span data-line><span>    &quot;click&quot;,</span></span>
+<span data-line><span>    () => {</span></span>
+<span data-line> </span>
+<span data-line><span>        setParameters(</span></span>
+<span data-line><span>            exampleParameters</span></span>
+<span data-line><span>        );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>);</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Initial Render</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>updateMatrixDisplay();</span></span>
+<span data-line> </span>
+<span data-line><span>render();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line><span>// Restore Previously Selected Image</span></span>
+<span data-line><span>// ============================================================</span></span>
+<span data-line> </span>
+<span data-line><span>const savedImagePath =</span></span>
+<span data-line><span>    getSavedImagePath();</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>if (</span></span>
+<span data-line><span>    savedImagePath</span></span>
+<span data-line><span>) {</span></span>
+<span data-line> </span>
+<span data-line><span>    loadVaultImage(</span></span>
+<span data-line><span>        savedImagePath,</span></span>
+<span data-line><span>        false</span></span>
+<span data-line><span>    );</span></span>
+<span data-line><span>}</span></span></code></pre></figure></div></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:false,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v5.0.0</a> © 2026</p><ul><li><a href="https://github.com/jcy9066">GitHub</a></li><li><a href="https://www.linkedin.com/in/changwan-jeong-6666813a1/">LinkedIn</a></li></ul></footer></div></div></body><script src="../static/resource-after-e13fffa1.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-8b336f9a.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-baba652b.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-5eb75950.js" type="module" data-persist="true"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript" data-persist="true"></script><script src="../postscript-b6a6ef3c.js" type="module" data-persist="true"></script></html>

@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>데이터중심 AI 입문 - 14. Collecting Robot Data</title><meta charset="utf-8"/><link rel="preload" href="../index-1269a69c.css" as="style"/><link rel="preload" href="../prescript-2bfc6315.js" as="script"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans:wght@400;700&amp;family=Noto Sans:ital,wght@0,400;0,600;1,400;1,600&amp;family=Noto Sans Mono:wght@400;600&amp;display=swap"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans:wght@400;600&amp;text=Wan&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="Wan"/><meta property="og:title" content="데이터중심 AI 입문 - 14. Collecting Robot Data"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="데이터중심 AI 입문 - 14. Collecting Robot Data"/><meta name="twitter:description" content="Collecting Robot Data Robotics Foundatoin Model을 구축하려면, 방대한 데이터를 수집해야 함 수집 방식은 다양하고, 분류법이 확립되지 않았음 Action 생성 방법 Text Programming\cdotTextual Programming 인간이 text 형태로 프로그램을 작성하는 가정 원시적인 Action 생성 방법 코드 작성이 가능하다면, 모방 학습을 사용할 필요가 없음 단, Data Augmentatoin을 위한 보조 수단으로 사용 가능 Teleoperating Control Interfac..."/><meta property="og:description" content="Collecting Robot Data Robotics Foundatoin Model을 구축하려면, 방대한 데이터를 수집해야 함 수집 방식은 다양하고, 분류법이 확립되지 않았음 Action 생성 방법 Text Programming\cdotTextual Programming 인간이 text 형태로 프로그램을 작성하는 가정 원시적인 Action 생성 방법 코드 작성이 가능하다면, 모방 학습을 사용할 필요가 없음 단, Data Augmentatoin을 위한 보조 수단으로 사용 가능 Teleoperating Control Interfac..."/><meta property="og:image:alt" content="Collecting Robot Data Robotics Foundatoin Model을 구축하려면, 방대한 데이터를 수집해야 함 수집 방식은 다양하고, 분류법이 확립되지 않았음 Action 생성 방법 Text Programming\cdotTextual Programming 인간이 text 형태로 프로그램을 작성하는 가정 원시적인 Action 생성 방법 코드 작성이 가능하다면, 모방 학습을 사용할 필요가 없음 단, Data Augmentatoin을 위한 보조 수단으로 사용 가능 Teleoperating Control Interfac..."/><meta property="og:image" content="https://jcy9066.github.io/jeongs-note/static/og-image.png"/><meta property="og:image:url" content="https://jcy9066.github.io/jeongs-note/static/og-image.png"/><meta name="twitter:image" content="https://jcy9066.github.io/jeongs-note/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="jcy9066.github.io/jeongs-note"/><meta property="og:url" content="https://jcy9066.github.io/jeongs-note/06_인턴십/데이터중심-ai-입문---14.-collecting-robot-data"/><meta property="twitter:url" content="https://jcy9066.github.io/jeongs-note/06_인턴십/데이터중심-ai-입문---14.-collecting-robot-data"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="Collecting Robot Data Robotics Foundatoin Model을 구축하려면, 방대한 데이터를 수집해야 함 수집 방식은 다양하고, 분류법이 확립되지 않았음 Action 생성 방법 Text Programming\cdotTextual Programming 인간이 text 형태로 프로그램을 작성하는 가정 원시적인 Action 생성 방법 코드 작성이 가능하다면, 모방 학습을 사용할 필요가 없음 단, Data Augmentatoin을 위한 보조 수단으로 사용 가능 Teleoperating Control Interfac..."/><meta name="generator" content="Quartz"/><link href="../index-1269a69c.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-735924e0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-589c1cea.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-bbc3f7c0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-2911f5d1.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-7f220492.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-e427079e.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-53b25b2b.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-c93c6a44.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-8a06014f.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-77d6a441.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-6ee21cee.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-ebc1adcf.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-34bdfded.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-788c9ca3.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-642859cd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-4abc06bd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-274a3dfe.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-94cb6c84.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-58d5ff56.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-9f9b2774.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-7262b5a7.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-a5c806d2.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-6bd36952.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" data-persist="true"/><script src="../prescript-2bfc6315.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="06_인턴십/데이터중심-ai-입문---14.-collecting-robot-data" data-basepath="/jeongs-note"><div id="quartz-root" class="page" data-frame="default"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">Wan</a></h2><div class="mobile-only"><div class="spacer"></div></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 0.5rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button" aria-label="검색" aria-expanded="false"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true" data-field-priority="[&quot;title&quot;,&quot;content&quot;,&quot;tags&quot;]"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode" aria-label="다크 모드"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode" aria-label="리더 모드"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><nav class="tag-explorer" aria-label="List"><h2 class="tag-explorer-title">List</h2><ul class="tag-explorer-list"><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/3d">3d</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/usd">USD</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/viewpoint">Viewpoint</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/visual--and--lidar-descriptor">Visual &amp; LiDAR Descriptor</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/algorithm">algorithm</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/actor-critic">Actor-Critic</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dagger">DAgger</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/grid-search">Grid Search</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mappo">MAPPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ppo">PPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rrt">RRT</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/coding">coding</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/coding-agent">Coding Agent</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/context">Context</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/hook">Hook</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/matplotlib">Matplotlib</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mcp">MCP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/multi-agent">Multi-Agent</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/numpy">Numpy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/orchestration">Orchestration</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pandas">Pandas</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/skill">Skill</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/sub-agent">Sub-Agent</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/tool">Tool</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/torchvision">Torchvision</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/deeplearning">deeplearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/activation-function">Activation Function</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/backpropagation">Backpropagation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/batch--and--epoch">Batch &amp; Epoch</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/cnns">CNNs</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/crossentropyloss">CrossEntropyLoss</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/data-augmentation">Data Augmentation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dropout">Dropout</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/evaluation">Evaluation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/fashion-mnist">Fashion-MNIST</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gradient">Gradient</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loss-function">Loss Function</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mlp">MLP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/nlloss">NLLoss</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/normalization--and--standardization">Normalization &amp; Standardization</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/optimization">Optimization</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pixel-value">Pixel Value</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pooling">Pooling</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rag">RAG</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/residual-learning">Residual Learning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/softmax">Softmax</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/task-definition">Task Definition</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/training-loop">Training Loop</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/transformation">Transformation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/vllm">vLLM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/worker">Worker</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---1.-데이터중심ai란">데이터중심 AI 입문 - 1. 데이터중심AI란</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---2.-데이터셋의-크기와-모델-성능의-관계">데이터중심 AI 입문 - 2. 데이터셋의 크기와 모델 성능의 관계</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---4.-이미지-인식-모델의-기초-지식">데이터중심 AI 입문 - 4. 이미지 인식 모델의 기초 지식</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---5.-이미지-데이터를-확장-생성하는-기술">데이터중심 AI 입문 - 5. 이미지 데이터를 확장 생성하는 기술</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---7.-vlm">데이터중심 AI 입문 - 7. VLM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---9.-pre-train,-denoise-filtering">데이터중심 AI 입문 - 9. Pre-train, Denoise Filtering</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---11.-fine-tuing,-instruction-data,-preference-data">데이터중심 AI 입문 - 11. Fine-tuing, Instruction Data, Preference Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---12.-fine-tuning-model-evaluation">데이터중심 AI 입문 - 12. Fine-tuning Model Evaluation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---2.-텍스트-전처리">딥러닝 이론 - 2. 텍스트 전처리</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---7.-deeplearning">딥러닝 이론 - 7. DeepLearning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---8.-recurrent-neural-network">딥러닝 이론 - 8. Recurrent Neural Network</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---14.-encoder--and--decoder-using-rnn">딥러닝 이론 - 14. Encoder &amp; Decoder using RNN</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---15.-attention-mechanism">딥러닝 이론 - 15. Attention Mechanism</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---16.-transformer">딥러닝 이론 - 16. Transformer</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---20.-pretrained-encoder-decoder-model">딥러닝 이론 - 20. Pretrained Encoder-Decoder Model</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---24.-llm-fine-tuning">딥러닝 이론 - 24. LLM Fine-tuning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---25.-이미지를-인식하는-vlm-fine-tuning">딥러닝 이론 - 25. 이미지를 인식하는 VLM Fine-Tuning</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/equation">equation</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/bayes-error">Bayes Error</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/bellman-equation">Bellman Equation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/exponential">Exponential</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gaussian">Gaussian</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pd-controller">PD Controller</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/git">git</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/git">Git</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/git---cherry-pick">Git - Cherry-pick</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/git---worktree">Git - Worktree</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/imitationlearning">imitationlearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/behavioral-cloning">Behavioral Cloning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/compounding-error">Compounding Error</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dagger">DAgger</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---1.-introduction">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 1. Introduction</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gradient">Gradient</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/horizon">Horizon</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/kinestheitic-teaching">Kinestheitic Teaching</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/kl-divergence">KL Divergence</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mmp">MMP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/modeling">Modeling</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/movement-primitive">Movement Primitive</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/probability--and--likelihood">Probability &amp; Likelihood</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/trajectory">Trajectory</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/lecture">lecture</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---1.-introduction">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 1. Introduction</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-입문---1.기초">ROS 입문 - 1.기초</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---1.-데이터중심ai란">데이터중심 AI 입문 - 1. 데이터중심AI란</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---2.-데이터셋의-크기와-모델-성능의-관계">데이터중심 AI 입문 - 2. 데이터셋의 크기와 모델 성능의 관계</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---4.-이미지-인식-모델의-기초-지식">데이터중심 AI 입문 - 4. 이미지 인식 모델의 기초 지식</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---5.-이미지-데이터를-확장-생성하는-기술">데이터중심 AI 입문 - 5. 이미지 데이터를 확장 생성하는 기술</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---7.-vlm">데이터중심 AI 입문 - 7. VLM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---11.-fine-tuing,-instruction-data,-preference-data">데이터중심 AI 입문 - 11. Fine-tuing, Instruction Data, Preference Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---12.-fine-tuning-model-evaluation">데이터중심 AI 입문 - 12. Fine-tuning Model Evaluation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---13.-robot-data">데이터중심 AI 입문 - 13. Robot Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---14.-collecting-robot-data">데이터중심 AI 입문 - 14. Collecting Robot Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---2.-텍스트-전처리">딥러닝 이론 - 2. 텍스트 전처리</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---6.-machinelearning">딥러닝 이론 - 6. MachineLearning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---7.-deeplearning">딥러닝 이론 - 7. DeepLearning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---8.-recurrent-neural-network">딥러닝 이론 - 8. Recurrent Neural Network</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---14.-encoder--and--decoder-using-rnn">딥러닝 이론 - 14. Encoder &amp; Decoder using RNN</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---15.-attention-mechanism">딥러닝 이론 - 15. Attention Mechanism</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---16.-transformer">딥러닝 이론 - 16. Transformer</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---20.-pretrained-encoder-decoder-model">딥러닝 이론 - 20. Pretrained Encoder-Decoder Model</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---24.-llm-fine-tuning">딥러닝 이론 - 24. LLM Fine-tuning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---25.-이미지를-인식하는-vlm-fine-tuning">딥러닝 이론 - 25. 이미지를 인식하는 VLM Fine-Tuning</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/linearalgebra">linearalgebra</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/manifold">Manifold</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/projection">Projection</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/subspace">Subspace</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/llm">llm</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/rag">RAG</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/vllm">vLLM</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/machinelearning">machinelearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/episode">Episode</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ml-workflow">ML Workflow</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---6.-machinelearning">딥러닝 이론 - 6. MachineLearning</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/paper">paper</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/making-quadrupeds-learning-to-walk.-step-by-step-guide">Making quadrupeds Learning to walk. Step-by-Step Guide</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/perception">perception</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/visual--and--lidar-descriptor">Visual &amp; LiDAR Descriptor</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/practice">practice</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/fashion-mnist">Fashion-MNIST</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl_practice_cartpole">RL_Practice_CartPole</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl_practice_moutaincar">RL_Practice_MoutainCar</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/reinforcementlearning">reinforcementlearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/action-(rl)">Action (RL)</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/actor-critic">Actor-Critic</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/actuator">Actuator</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/bellman-equation">Bellman Equation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/curriculum-learning--and--scaffolding">Curriculum Learning &amp; Scaffolding</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---1.-introduction">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 1. Introduction</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dqn">DQN</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/e-greedy-policy">E-Greedy Policy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/environment">Environment</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/exploration--and--exploitation">Exploration &amp; Exploitation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gae">GAE</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gradient">Gradient</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/horizon">Horizon</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/making-quadrupeds-learning-to-walk.-step-by-step-guide">Making quadrupeds Learning to walk. Step-by-Step Guide</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mappo">MAPPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mdp">MDP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/modeling">Modeling</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/movement-primitive">Movement Primitive</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/policy">Policy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/potential-based-reward-shaping">Potential-Based Reward Shaping</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ppo">PPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/q-learning">Q-Learning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/replay-memory">Replay Memory</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/reward-shaping">Reward Shaping</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl_practice_cartpole">RL_Practice_CartPole</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl_practice_moutaincar">RL_Practice_MoutainCar</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rollout">Rollout</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/sensor">Sensor</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/target-network">Target Network</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/trajectory">Trajectory</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/robotics">robotics</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/dof">DoF</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-closure">Loop Closure</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-detection">Loop Detection</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/making-quadrupeds-learning-to-walk.-step-by-step-guide">Making quadrupeds Learning to walk. Step-by-Step Guide</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/movement-primitive">Movement Primitive</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pd-controller">PD Controller</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/primitive-behavior">Primitive Behavior</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-입문---1.기초">ROS 입문 - 1.기초</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rrt">RRT</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/trajectory">Trajectory</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/visual-odometry">Visual Odometry</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---13.-robot-data">데이터중심 AI 입문 - 13. Robot Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---14.-collecting-robot-data">데이터중심 AI 입문 - 14. Collecting Robot Data</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/ros">ros</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/action-(ros)">Action (ROS)</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/namespace">Namespace</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/nav2">Nav2</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/node">Node</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/occupancy-grid-map">Occupancy Grid Map</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-입문---1.기초">ROS 입문 - 1.기초</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros2">ROS2</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/service">Service</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/tf">TF</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/topic">Topic</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/urdf">URDF</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/slam">slam</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-closure">Loop Closure</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-detection">Loop Detection</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/scan-context">Scan Context</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/visual--and--lidar-descriptor">Visual &amp; LiDAR Descriptor</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/statistics">statistics</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/entropy">Entropy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/exponential">Exponential</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/kl-divergence">KL Divergence</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/lagrange-multiplier">Lagrange Multiplier</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/map">MAP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/posteriori">Posteriori</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/probability--and--likelihood">Probability &amp; Likelihood</a></li></ul></li></ul></nav></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../06_인턴십/">06_인턴십</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>데이터중심 AI 입문 - 14. Collecting Robot Data</a></div></nav><h1 class="article-title">데이터중심 AI 입문 - 14. Collecting Robot Data</h1><p show-comma="true" class="content-meta"><time datetime="2026-08-31T08:44:22.711Z">2026년 8월 31일</time><span>17 min read</span></p><ul class="tags"><li><a href="../tags/robotics" class="internal tag-link">robotics</a></li><li><a href="../tags/lecture" class="internal tag-link">lecture</a></li></ul></div></div><article class="popover-hint"><div class="markdown-preview-view markdown-rendered"><hr/>
+<h3 id="collecting-robot-data">Collecting Robot Data<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#collecting-robot-data" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>
+<p>Robotics Foundatoin Model을 구축하려면, 방대한 데이터를 수집해야 함</p>
+<ul>
+<li>수집 방식은 다양하고, 분류법이 확립되지 않았음</li>
+</ul>
+</li>
+<li>
+<p>Action 생성 방법</p>
+<ul>
+<li>
+<p><code>Text Programming</code><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span><code>Textual Programming</code></p>
+<ul>
+<li>
+<p>인간이 text 형태로 프로그램을 작성하는 가정 원시적인 Action 생성 방법</p>
+</li>
+<li>
+<p>코드 작성이 가능하다면, 모방 학습을 사용할 필요가 없음</p>
+<ul>
+<li>단, Data Augmentatoin을 위한 보조 수단으로 사용 가능</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Teleoperating</code></p>
+<ul>
+<li>Control Interface를 사용해, 실시간으로 로봇을 원격으로 조종하고 새로운 Action을 가르치는 방칙
+<ul>
+<li>Control Interface : 키보드<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span>마우스, 조이스틱 등</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Teaching by Guiding</code></p>
+<ul>
+<li>
+<p>사람이 Robot을 직접 잡고 움직이면서 실시간으로 Action을 가르치는 방식</p>
+</li>
+<li>
+<p>카메라 화면에 상시로 사람의 모습이 노출되므로, 거의 사용하지 않음</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Teaching by Showing</code></p>
+<ul>
+<li>사람이 시연한 동작을 Robot이 관찰 및 모방하는 형태</li>
+</ul>
+</li>
+<li>
+<p><code>Automatic Programming</code><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span><code>Off-line simulation-based Programming</code></p>
+<ul>
+<li>
+<p>시뮬레이션이나 Task 정보를 활용해 자동으로 Action을 생성하는 방식</p>
+</li>
+<li>
+<p>자동으로 프로그래밍이 가능한 수준이라면, 모방 학습이 필요 없는 경우일 수 있음</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Inductive Learning</code></p>
+<ul>
+<li>사람의 Action이 아닌, train data만으로 Action을 익히는 방법</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Unilateral Online Remote Teaching (일방적인 온라인 원격 교시)</p>
+<ul>
+<li>Control Interface로 인간 동작을 얻고, 실시간으로 로봇에 전달해 Action을 가르치는 방식
+<ul>
+<li>Trajectory와 Observation을 수집함</li>
+</ul>
+</li>
+<li>장치 구동이 비교적 간단함</li>
+</ul>
+<p><img src="../00_attachments/pasted-image-20260812162923.png" alt width="405" height="auto"/></p>
+<ul>
+<li>
+<p>3D Mouse</p>
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">6</span><span class="mord mathnormal" style="margin-right:0.0278em;">D</span></span></span></span>를 입력할 수 있음
+<ul>
+<li>Translation (<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">y</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.044em;">z</span></span></span></span>)</li>
+<li>Rotation (<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.0197em;">l</span><span class="mord mathnormal" style="margin-right:0.0197em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">p</span><span class="mord mathnormal">i</span><span class="mord mathnormal">t</span><span class="mord mathnormal">c</span><span class="mord mathnormal">h</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">y</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.0269em;">w</span></span></span></span>)</li>
+</ul>
+</li>
+<li>데이터 수집 시작<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span>종료, Gripper Opening도 조작 가능</li>
+</ul>
+</li>
+<li>
+<p>VR</p>
+<ol>
+<li>컨트롤러를 활용하는 경우
+<ul>
+<li>Traslation, Rotation 정보를 직접 로봇의 End-Effector와 pose에 대응 가능</li>
+</ul>
+</li>
+<li>컨트롤러를 활용하지 않는 경우
+<ul>
+<li>
+<p>VR 기능을 통해 손의 위치, 손가락의 각도 등을 추출해 로봇을 조종</p>
+</li>
+<li>
+<p>손가락의 joint angle까지 어느 정도 계산이 가능함</p>
+</li>
+<li>
+<p>정밀도가 떨어지고, 다양한 버튼을 이용하기 어려움</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>3D Mouse, VR에 대한 유의사항</p>
+<ul>
+<li>
+<p>End-Effector의 Orientation이나 Velocity를 지정해도, 로봇이 꼭 지령대로 움직인다는 정보가 없음</p>
+<ul>
+<li>
+<p>로봇의 구동계는 joint angle을 기반으로 하므로, 손 끝 조작을 joint angle에 Inverse Kinematics로 변환해야함</p>
+<ul>
+<li>Inverse Kinematics (역기구학)
+<ul>
+<li>
+<p>Kinematics : 로봇의 joint Movement와 End-Effector의 Position<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span>Orientation 사이 관계를 다루는 학문</p>
+</li>
+<li>
+<p>End-Effector의 Position<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span>Orientation을 입력으로 하여, 각 joint가 어떤 angle로 움직여야 하는지 계산하는 과정</p>
+<ul>
+<li>즉, End-Effector → Joint Angle</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>이는 해가 반드시 존재하는 것은 아니므로, 의도대로 움직이지 않을 수 있음</p>
+</li>
+</ul>
+</li>
+<li>
+<p>인간 동작에서 joint angle을 추출해 로봇을 구동시켜도, 사람과 로봇의 Joint Arrangement나 Link 길이가 달라 Retargeting을 고려해야 함</p>
+<ul>
+<li>Link : Joint와 Joint 사이를 연결하는 Rigid Body 구조
+<ul>
+<li>Rigid Body (강체) : 힘을 받아도 변형이 일어나지 않는 물체</li>
+</ul>
+</li>
+<li>Retargeting : 동작을 대상 로봇의 Kinetic Structure에 맞게 변환하는 과정</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Tiny Robot</p>
+<ul>
+<li>
+<p>ALOHA (A Low-cost Open Source Hardward System for Bimanual Teleoperation)</p>
+<ul>
+<li>사람이 조작하는 Learder Robot과, 실제 작업을 수행하는 Follower Robotd을 모두 포함한 종합 시스템
+<ul>
+<li>
+<p>Joint Arrangement가 거의 동일함</p>
+</li>
+<li>
+<p>moter 종류나, link 길이만 조금 다름</p>
+</li>
+<li>
+<p>Leader Robot</p>
+<ul>
+<li>6 DoF의 WidowX 250 사용</li>
+</ul>
+</li>
+<li>
+<p>Follower Robot</p>
+<ul>
+<li>6 DoF의 ViperX 300 사용</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="../00_attachments/pasted-image-20260812171527.png" alt width="auto" height="auto"/></p>
+<ul>
+<li>작업하는 로봇과 같은 구조의 로봇을 Control Interface로 사용하면, End-Effector의 Position을 joint angle로 바꾸는 문제나 retargeting 문제가 발생하지 않음</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Bilateral Online Remote Teaching</p>
+<ul>
+<li>
+<p>로봇에서 얻은 정보를, 인간에게 feedback하는 제어가 이루어진 경우</p>
+</li>
+<li>
+<p>장치나 제어 구성이 복잡해지지만, 로봇이 받는 힘을 인간이 feedback 가능</p>
+</li>
+<li>
+<p>GELLO<br/>
+<img src="../00_attachments/pasted-image-20260812171927.png" alt width="390" height="auto"/></p>
+<ul>
+<li>
+<p>다양한 Action을 Follow하도록 설계된 로봇</p>
+</li>
+<li>
+<p>ALOHA는 Learder와 Follower를 유사한 로봇으로 제한했으나, GELLO는 그렇지 않음</p>
+<ul>
+<li>Follower 로봇의 Joint Arrangement에 맞춰, leader 장치의 Joint Arrangement를 변경해 직관적 조종이 가능하게 함</li>
+<li>Link 길이도 Follow 로봇에 비례해 Scaling해 Leader 로봇의 Link 길이를 정함</li>
+</ul>
+</li>
+<li>
+<p>Task 수행 시간을 크게 감축 가능</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Haptic 기기를 활용한 Bilateral Online Remote Teaching<br/>
+<img src="../00_attachments/pasted-image-20260812173150.png" alt width="430" height="auto"/></p>
+<ul>
+<li>
+<p>3D System Touch</p>
+<ul>
+<li>펜 형태의 기기</li>
+<li>Translation (<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">y</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.044em;">z</span></span></span></span>), Rotation(<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.0197em;">l</span><span class="mord mathnormal" style="margin-right:0.0197em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">p</span><span class="mord mathnormal">i</span><span class="mord mathnormal">t</span><span class="mord mathnormal">c</span><span class="mord mathnormal">h</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">y</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.0269em;">w</span></span></span></span>)을 포함한 총 6 DoF의 움직임을 지원함</li>
+<li>Translation 각 방향에 대해, Force Feedback을 제공함
+<ul>
+<li>Force Feedback : 로봇이 환경과 접촉하면서 받는 힘을 Control Interface를 통해 사용자에게 전달하는 기능</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Force Dimension Omega 6</p>
+<ul>
+<li>Translation과 Rotation에 대한 Force Feedback 제공</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Offline Teaching</p>
+<ul>
+<li>
+<p>사람이 먼저 시범 Action을 수행하고, 이를 모방하는 2단계에 걸친 방법</p>
+</li>
+<li>
+<p>로봇을 실시간으로 조작하지 않으므로, 사람이 성공한 Task를 로봇이 성공한다는 보장이 없음</p>
+<ul>
+<li>이를 해결하기 위한 방법으로 Dobb-E와, UMI가 제안됨</li>
+</ul>
+</li>
+<li>
+<p>Dobb-E</p>
+<ul>
+<li>사람이 로봇과 똑같은 Gripper를 잡고, Task를 시연함</li>
+<li>Gripper에 iPhone이 부착되어 있어, End-Effector와 주변 환경 간 상호작용을 영상으로 기록할 수 있음
+<ul>
+<li>iPhone이 측정 장치를 대신하는 용도
+<ul>
+<li>
+<p>iPhone은 End-Effector만 촬영하므로, 사람이 시연할 때와 정확히 동일한 이미지를 얻을 수 있음</p>
+</li>
+<li>
+<p>iPhone 내 내장된 IMU나, RGB-D sensor를 통해, End-Effector의 Posistion<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span>Orientation을 계속 측정할 수 있음</p>
+</li>
+<li>
+<p>Gipper Opening 정보를 직접 측정할 수 없으므로, image 기반으로 추정하는 모델을 pre-train함</p>
+<ul>
+<li>신경망이 이미지를 입력 받아 End-Effector의 Position<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span>Orientation 변화량을 Action으로 출력함</li>
+<li>Inverse Kinematics를 통해 이를 각 joint의 목표 angle로 변환해 robot을 움직임<br/>
+→ 사람이 움직인 Gripper와 로봇의 Gripper를 완전히 동일시하면 정확히 재현 가능</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>UMI (Universal Manipulation Interface)<br/>
+<img src="../00_attachments/pasted-image-20260812175905.png" alt width="auto" height="auto"/></p>
+<ul>
+<li>
+<p>Dobb-E와 동일하게, 사람과 로봇이 동일한 형태의 Gripper를 사용해 Task를 지시함</p>
+</li>
+<li>
+<p>Dual-Arm에 초점을 맞춤</p>
+</li>
+<li>
+<p>GoPro가 장착되어, Gipper Opening을 AR Marker로 추적</p>
+<ul>
+<li>
+<p>Marker : Camera가 쉽게 인식할 수 있게 만든 시각적 기준 표식</p>
+</li>
+<li>
+<p>Camera Video와 IMU로부터 Visual SLAM을 수행해, Gripper의 Position과 Pose를 추적함</p>
+</li>
+<li>
+<p>Gripper 양 끝에 거울을 달아, 서로 다른 View에서 촬영해 Implicit Stereo Vision을 구현함</p>
+<ul>
+<li>실제 카메라를 1대만 사용함</li>
+<li>Stereo : 같은 장면을 서로 다른 2개의 Viewpoint에서 관측하는 것</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Gipper를 사람이 직접 조작해, data를 수집하고 모방 학습을 수행한 뒤, 같은 형태의 Gripper를 로봇에 장착해 Task를 실행함함</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="robot-dataset">Robot Dataset<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#robot-dataset" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>
+<p>QT-Opt</p>
+<ul>
+<li>
+<p>대량의 실제 기계 data를 모아 학습시킴</p>
+</li>
+<li>
+<p>높은 범용적 manipulation 능력을 부여하려는 시도</p>
+</li>
+<li>
+<p>Task는 LBR iiwa가 1대의 RGB Camera의 Video를 보면서, 상장 속 물체를 집어 올리는 것</p>
+</li>
+<li>
+<p>7대의 로봇을 4개월 간 운용해 약 1,000개의 Object를 약 580,000회 집는 시도를 포함함</p>
+<ul>
+<li>성공 여부를 나타내는 flag도 기록되어 있음</li>
+</ul>
+</li>
+<li>
+<p>Control Frequency는 10Hz, Language Annotation 미포함</p>
+<ul>
+<li>Control Frequency : 1초에 n번 Action을 갱신함</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>RoboNet<br/>
+<img src="../00_attachments/pasted-image-20260812190406.png" alt width="auto" height="auto"/></p>
+<ul>
+<li>
+<p>다양한 로봇에서 다양한 Task에 대한 data를 수집한 공개 Dataset</p>
+<ul>
+<li>Sawyer, Baxter, WidowX 250, LBR iiwa, Panda, Fetch, R3 등 포함</li>
+</ul>
+</li>
+<li>
+<p>Task는 Object를 밀거나, 집어 올리는 동작을 통해 위치를 이동시키는 것</p>
+</li>
+<li>
+<p>총 162,000회의 시도로 구성됨</p>
+</li>
+<li>
+<p>4개의 연구실 환경과, 다양한 Camera position에서 100개 이상의 Object를 다룸</p>
+</li>
+<li>
+<p>Action은 미리 정해진 움직임에, Gaussian Noise를 추가해 재생함</p>
+<ul>
+<li>따라서, 최적의 Action이 반드시 수집되는 것은 아님</li>
+</ul>
+</li>
+<li>
+<p>이미지 예측 모델의 train과, 이를 활용한 Model Predictive Control을 수행함</p>
+<ul>
+<li>MPC (Model Predictive Control) : 미래를 예측해 최적의 Conctrol input을 계산하고, 매 timestep마다 다시 최적화하는 방식</li>
+</ul>
+</li>
+<li>
+<p>Control Frequency는 1Hz, Language Annotation 미포함</p>
+</li>
+</ul>
+</li>
+<li>
+<p>BridgeData v2<br/>
+<img src="../00_attachments/pasted-image-20260812190419.png" alt width="auto" height="auto"/></p>
+<ul>
+<li>
+<p>Bridge Dataset을 확장한 Dataset</p>
+<ul>
+<li>WidowX 250을 사용해 다양한 환경에서 다양한 Skill을 시연함</li>
+</ul>
+</li>
+<li>
+<p>60,096회의 시도를 포함함</p>
+<ul>
+<li>50,365회는 VR 기기를 이용한 인간의 Teleopertaion data</li>
+<li>9,731회는, Randomized Parameter를 이용해 자동 생성한 Pick-and-Place data
+<ul>
+<li>Randomized Parameter : 초기 Object Position, Goal Position, Start Position 등 조건을 무작위로 설정한 것</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Skill</p>
+<ul>
+<li>Pick-and-Place</li>
+<li>Pushing</li>
+<li>Wiping</li>
+<li>Sweeping</li>
+<li>Stacking</li>
+<li>Folding Clothes</li>
+<li>Opening<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span>Closing drawers, doors, boxes</li>
+<li>Twisting knobs</li>
+<li>Flipping switches</li>
+<li>Zipping<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span>Unzipping</li>
+<li>Turning levers</li>
+</ul>
+</li>
+<li>
+<p>Environment</p>
+<ul>
+<li>작업 공간의 배치를 변경한 주방, 싱크대, 테이블 등 13종</li>
+</ul>
+</li>
+<li>
+<p>Object</p>
+<ul>
+<li>식기, 천, 식재료, 블록 등 100가지 이상</li>
+</ul>
+</li>
+<li>
+<p>Control Frequency는 5Hz, Language Annotation 포함</p>
+</li>
+</ul>
+</li>
+<li>
+<p>BC-Z<br/>
+<img src="../00_attachments/pasted-image-20260812192340.png" alt width="auto" height="auto"/></p>
+<ul>
+<li>
+<p>Language와 시연 Video를 모두 Instruction으로 해, 모방 학습을 수행하는 Framework</p>
+</li>
+<li>
+<p>25,877회의 로봇 시연과, 18,726회의 인간 시연 Video로 구성됨</p>
+</li>
+<li>
+<p>EDR 로봇 12대를 대상으로 7명의 Operator가 9가지 Skill이 요구되는 100개의 Task 수행</p>
+<ul>
+<li>Object 조합이나, 배경을 변경하면서 수집</li>
+</ul>
+</li>
+<li>
+<p>VR 기기를 통한 Remote Teaching으로 수집했으나, 타 연구와 차이가 존재함</p>
+<ul>
+<li>11,108회의 data를 직접 사람의 Remote Teaching으로 수집해 Policy를 train</li>
+<li>Shared Autonomy 방식을 사용함
+<ul>
+<li>Shared Autonomy : Policy를 실행하는 도중, Task가 실패할 것 같으면 사람이 VR을 통해 수정함<br/>
+→ 새로운 data를 낮은 비용으로 확보 가능</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Control Frequency가 10Hz, Language Instruction 포함</p>
+</li>
+</ul>
+</li>
+<li>
+<p>DROID<br/>
+<img src="../00_attachments/pasted-image-20260812193155.png" alt width="auto" height="auto"/></p>
+<ul>
+<li>
+<p>12개월에 걸쳐, 564개의 장면, 52개의 환경, 86개의 Skill에 대한 76,000 Episode를 수집함</p>
+</li>
+<li>
+<p>Robotiq 2F-85-Gripper가 장착된, Panda와 VR 기기 Oculus Quest2, 이동식 책상, 손목에 고정된 Camera, 위치 변경이 가능한 Camera 2대를 동일한 플랫폼에서 수집을 진행함</p>
+</li>
+<li>
+<p>타 연구와 차이점</p>
+<ul>
+<li>Task 수행 전 Camera 위치를 조정하고, Calibration을 진행함</li>
+</ul>
+</li>
+<li>
+<p>3개의 Camera의 Depth, Calibratoin 정보, 동작 궤적, Language Annotation이 포함됨</p>
+</li>
+<li>
+<p>Environment</p>
+<ul>
+<li>욕실, 식탁, 주방, 옷장 등 실내 환경에 가까움</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="robot-data-augmentation">Robot Data Augmentation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#robot-data-augmentation" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>
+<p>현실 세계의 data를 학습하는 것만으로 모든 상황에 범용적으로 대응할 수 있지 않음</p>
+<ul>
+<li>이를 Data Augmentation으로 해결하고자 함</li>
+<li>Image Data의 경우, 매우 쉽게 다양한 Augmentation 가능</li>
+<li>로봇의 경우, 다양한 Sensor가 합쳐져 연관되어 있기 때문에 Image data에서 사용되는 Augmentation을 적용할 수 없음</li>
+</ul>
+</li>
+<li>
+<p>Image Data Augmentation</p>
+<ul>
+<li>
+<p>GenAug<br/>
+<img src="../00_attachments/pasted-image-20260812210525.png" alt width="auto" height="auto"/></p>
+<ul>
+<li>
+<p>Generative 모델 중 하나인, Diffusion 모델을 로봇 학습에 어떻게 이용할 지에 대한 연구</p>
+</li>
+<li>
+<p>CLIPort의 train을 예시로 Data Augmentation을 수행함</p>
+</li>
+<li>
+<p>잡아야 할 Object나 놓을 용기 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span>, Distractor <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">2</span><span class="mclose">)</span></span></span></span>, 배경 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">3</span><span class="mclose">)</span></span></span></span> 총 3가지의 외관을 변형</p>
+<ul>
+<li>
+<p>Distractor : Task와 관련 없는 Object</p>
+</li>
+<li>
+<p>다양한 물체에 적용될 수 있게 함</p>
+</li>
+<li>
+<p>주변 물체에 모델이 혼란을 겪지 않게 함</p>
+</li>
+<li>
+<p>주변 환경 변화에 적용할 수 있게 함</p>
+</li>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span></p>
+<ol>
+<li>
+<p>대상 Object와 용기에 대해 Masking 된 이미지를 Annotation함</p>
+</li>
+<li>
+<p>depth image를 조건으로 한 pre-trained Stable Diffusion을 활용해 Object나 용기의 위치와 형태는 유지하되, 색상, 재질, 외관 변화를 Language로 입력해 다양한 이미지를 생성함</p>
+</li>
+<li>
+<p>다른 Object도 추가적으로 배치함</p>
+<ul>
+<li>미리 준비한, Object Mesh 중에서 무작위로 확대<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span>축소해 배치
+<ul>
+<li>Object Mesh : Object 3D 형상을 Polygon으로 표현한 3D 모델</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">2</span><span class="mclose">)</span></span></span></span></p>
+<ul>
+<li>Distractor 추가를 위해, 무작위 Object Mesh를 배치하고, 외관을 생성함
+<ul>
+<li>이때, Distractor가 대상 Object와 충돌하지 않게 충돌 판정을 수행함</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">3</span><span class="mclose">)</span></span></span></span></p>
+<ul>
+<li>배경만 동일한 방식으로 외관을 변화시킴</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>ROSIE<br/>
+<img src="../00_attachments/pasted-image-20260812212846.png" alt width="auto" height="auto"/></p>
+<ul>
+<li>GenAug에서 필요했던, Depth Image와 수동 Masking을 사용하지 않음</li>
+<li>어떤 영역을 바꿀지 자동으로 찾아 Image Augmentation을 수행하는 방법</li>
+</ul>
+<ol>
+<li>기존 Task의 Language Instruction에 대해, 새로운 Task의 Instruction을 만들고, 이에 맞는 Image를 자동으로 생성함
+<ul>
+<li>LLM을 이용해, 기존 Task의 Language Instruction과 앞으로 수행할 Task의 Instruction으로부터 이미지 내 어떤 영역을 변경할지, 어떤 영역은 변경하지 않을지, 어떻게 변경할지를 추출함</li>
+</ul>
+</li>
+<li>Open Vocabulary VLM을 활용해, Image에서 변경해야 하는 영역의 mask를 얻음
+<ul>
+<li>mask와 변경 사항 Instruction을 Imagen Editor에 입력해 새로운 이미지를 생성
+<ul>
+<li>Open Vocabulary : train으로 정해진 Class에 제한되지 않고, 자연어로 주어진 새로운 Object<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span>Concept도 인식할 수 있는 방식</li>
+<li>Imagen Editor : 원본 Image와 Mask, Text Instruction을 입력 받아 지정된 영역을 조건에 맞게 수정한 이미지를 생성하는 모델</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>Language Data Augmentation</p>
+<ul>
+<li>DIAL<br/>
+<img src="../00_attachments/pasted-image-20260812215809.png" alt width="533" height="auto"/>
+<ul>
+<li>
+<p>train 시 Language Instruction에 변화를 줌으로써, 다양한 Language Instruction에 대응 가능한 Policy를 구축할 수 있음</p>
+</li>
+<li>
+<p>Dataset A<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span>B<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span>C를 통해 다양한 Language Instruction에 대응 가능한 policy가 학습됨</p>
+<ul>
+<li>
+<p>Dataset A</p>
+<ul>
+<li>trajectory data 중 일부에, 사람이 Hindsight Language Annotation을 붙인 Dataset
+<ul>
+<li>
+<p>이를 통해, CLIP를 fine-tuning함</p>
+</li>
+<li>
+<p>Hindsight Language Annotation : Trajectory를 실행한 동작을 확인하고 자연어로 Task를 설명한 Annotation</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Dataset B</p>
+<ul>
+<li>Crowdsourcing으로 풍부한 Language Annotation이 붙지 않은 Robot Trajectory Dataset
+<ul>
+<li>즉, 사람들이 만든 Language Instruction가 부족함</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Dataset C</p>
+<ul>
+<li>Dataset B의 각 Trajectory에 대해, fine-tuned CLIP이 Language Instruction을 자동으로 찾아 Annotation한 Dataset</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:false,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc"><button type="button" class="toc-header" aria-controls="toc-52" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-0" class="toc-content overflow"><li class="depth-0"><a href="#collecting-robot-data" data-for="collecting-robot-data">Collecting Robot Data</a></li><li class="depth-0"><a href="#robot-dataset" data-for="robot-dataset">Robot Dataset</a></li><li class="depth-0"><a href="#robot-data-augmentation" data-for="robot-data-augmentation">Robot Data Augmentation</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v5.0.0</a> © 2026</p><ul><li><a href="https://github.com/jcy9066">GitHub</a></li><li><a href="https://www.linkedin.com/in/changwan-jeong-6666813a1/">LinkedIn</a></li></ul></footer></div></div></body><script src="../static/resource-after-e13fffa1.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-8b336f9a.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-baba652b.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-5eb75950.js" type="module" data-persist="true"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript" data-persist="true"></script><script src="../postscript-b6a6ef3c.js" type="module" data-persist="true"></script></html>
