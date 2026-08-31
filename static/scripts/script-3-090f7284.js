@@ -16,6 +16,7 @@
   function renameSidebarLabels() {
     setText(".toc h3", "Contents");
     setText(".graph h3", "Graph");
+    setText(".backlinks h3", "Backlink");
     document.querySelectorAll(".page-title a").forEach((el) => {
       el.textContent = "Wan";
     });
@@ -35,6 +36,7 @@
         cfg.depth = -1;
         cfg.scale = .9;
         cfg.centerForce = .2;
+        cfg.showTags = true;
         cfg.focusOnHover = true;
         cfg.enableRadial = true;
         container.dataset.cfg = JSON.stringify(cfg);
