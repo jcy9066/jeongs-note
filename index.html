@@ -13,20 +13,8 @@
                 </div>
 <div class="callout-content">
 <p><img src="./00_attachments/pasted-image-20260720163234.png" alt="Service"/><br/>
-Client가 Request를 보내면, Server가 Response하는 node들의 통신하는 방법 동기식 통신 방법 동기식 통신 방법 : Request와 Response의 순서가 보장됨 ros2 service list : 현재 활성화된 Service 목록 Clien…<br/>
+Client가 Request를 보내면, Server가 Response하는 node들의 동기식 통신 방법 동기식 통신 방법 : Request와 Response의 순서가 보장됨 ros2 service list : 현재 활성화된 Service 목록 Client와 Serve…<br/>
 <code>ROS</code></p>
-</div>
-</blockquote>
-<blockquote class="callout note" data-callout="note">
-<div class="callout-title">
-                  <div class="callout-icon"></div>
-                  <div class="callout-title-inner"><p> <a href="./06_인턴십/ros-입문---1.기초" class="internal internal-link alias" data-slug="06_인턴십/ros-입문---1.기초">ROS 입문 - 1.기초</a></p></div>
-                  
-                </div>
-<div class="callout-content">
-<p><img src="./00_attachments/pasted-image-20260718003714.png" alt="ROS 입문 - 1.기초"/><br/>
-환경 설정 Ubuntu 22.04 ROS2 터미널 명령 Python으로 ROS2 Topic, Service 다루기 alias 명령어를 간소화해 다른 이름으로 사용할 수 있게 해주는 명령어 alias {name}=“{command}” ROSDOMAINID 설정 동일한…<br/>
-<code>Robotics</code> <code>Lecture</code> <code>ROS</code></p>
 </div>
 </blockquote>
 <blockquote class="callout note" data-callout="note">
@@ -40,6 +28,18 @@ Client가 Request를 보내면, Server가 Response하는 node들의 통신하는
 ros2 run turtlesim turtlesimnode ros2 node list 현재 실행 중인 node 확인 ros2 service list 또는 ros2 interface show {path} 사용 가능 service 목록 turtlesim의 service…<br/>
 <code>ROS</code></p>
 </div>
+</blockquote>
+<blockquote class="callout note" data-callout="note">
+<div class="callout-title">
+                  <div class="callout-icon"></div>
+                  <div class="callout-title-inner"><p> <a href="./06_인턴십/topic" class="internal internal-link alias" data-slug="06_인턴십/topic">Topic</a></p></div>
+                  
+                </div>
+<div class="callout-content">
+<p><img src="./00_attachments/pasted-image-20260720202050.png" alt="Topic"/><br/>
+node들이 message를 지속적으로 주고 받는 비동기 통신 채널 비동기 통신 : Request와 Response의 순서가 보장되지 않음 Publisher : message를 보내는 node Subscriber : message를 받는 node Message typ…<br/>
+<code>ROS</code></p>
+</div>
 </blockquote></div></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:false,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
                 s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
                 c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
@@ -50,4 +50,4 @@ ros2 run turtlesim turtlesimnode ros2 node list 현재 실행 중인 node 확인
                 C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
                 S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
                 s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
-                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc"><button type="button" class="toc-header" aria-controls="toc-67" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-0" class="toc-content overflow"><li class="depth-0"><a href="#jeongs-note" data-for="jeongs-note">Jeong’s Note</a></li><li class="depth-1"><a href="#topics" data-for="topics">Topics</a></li><li class="depth-1"><a href="#latest-notes" data-for="latest-notes">Latest Notes</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v5.0.0</a> © 2026</p><ul><li><a href="https://github.com/jcy9066">GitHub</a></li><li><a href="https://www.linkedin.com/in/changwan-jeong-6666813a1/">LinkedIn</a></li></ul></footer></div></div></body><script src="./static/resource-after-e13fffa1.js" type="application/javascript" data-persist="true"></script><script src="./static/resource-after-8b336f9a.js" type="application/javascript" data-persist="true"></script><script src="./static/resource-after-baba652b.js" type="application/javascript" data-persist="true"></script><script src="./static/resource-after-5eb75950.js" type="module" data-persist="true"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript" data-persist="true"></script><script src="./postscript-c938a480.js" type="module" data-persist="true"></script></html>
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc"><button type="button" class="toc-header" aria-controls="toc-68" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-0" class="toc-content overflow"><li class="depth-0"><a href="#jeongs-note" data-for="jeongs-note">Jeong’s Note</a></li><li class="depth-1"><a href="#topics" data-for="topics">Topics</a></li><li class="depth-1"><a href="#latest-notes" data-for="latest-notes">Latest Notes</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v5.0.0</a> © 2026</p><ul><li><a href="https://github.com/jcy9066">GitHub</a></li><li><a href="https://www.linkedin.com/in/changwan-jeong-6666813a1/">LinkedIn</a></li></ul></footer></div></div></body><script src="./static/resource-after-e13fffa1.js" type="application/javascript" data-persist="true"></script><script src="./static/resource-after-8b336f9a.js" type="application/javascript" data-persist="true"></script><script src="./static/resource-after-baba652b.js" type="application/javascript" data-persist="true"></script><script src="./static/resource-after-5eb75950.js" type="module" data-persist="true"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript" data-persist="true"></script><script src="./postscript-c938a480.js" type="module" data-persist="true"></script></html>
