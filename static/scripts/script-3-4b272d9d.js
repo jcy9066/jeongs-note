@@ -22,6 +22,30 @@
     });
   }
 
+  function fixHomepageTopicLinks() {
+    const slug = document.body?.dataset?.slug || "";
+    if (slug !== "index") return;
+
+    const heading =
+      document.querySelector("h2#topics") ||
+      Array.from(document.querySelectorAll("h2")).find(
+        (el) => (el.textContent || "").trim() === "Topics",
+      );
+    const topicBlock = heading?.nextElementSibling;
+    if (!topicBlock) return;
+
+    const basePath = document.body?.dataset?.basepath || "";
+    topicBlock.querySelectorAll("a").forEach((anchor) => {
+      const tag = (anchor.textContent || "").trim();
+      if (!tag) return;
+      const encodedTag = tag
+        .split("/")
+        .map((segment) => encodeURIComponent(segment))
+        .join("/");
+      anchor.setAttribute("href", basePath + "/tags/" + encodedTag);
+    });
+  }
+
   function configureHomepageGraph() {
     const slug = document.body?.dataset?.slug || "";
     if (slug !== "index") return;
@@ -54,6 +78,71 @@
         );
       }, 80);
     }
+  }
+
+  function sizeTagExplorer() {
+    document.querySelectorAll(".tag-explorer").forEach((explorer) => {
+      const top = explorer.getBoundingClientRect().top;
+      const available = Math.max(140, window.innerHeight - top - 12);
+      explorer.style.height = available + "px";
+      explorer.style.maxHeight = available + "px";
+    });
+  }
+
+  function installTagExplorerResizeHandler() {
+    if (window.__wanTagExplorerResizeInstalled) return;
+    window.__wanTagExplorerResizeInstalled = true;
+    window.addEventListener("resize", sizeTagExplorer, { passive: true });
+  }
+
+  function emitThemeChange(theme) {
+    document.dispatchEvent(
+      new CustomEvent("themechange", { detail: { theme } }),
+    );
+  }
+
+  function emitReaderModeChange(mode) {
+    document.dispatchEvent(
+      new CustomEvent("readermodechange", { detail: { mode } }),
+    );
+  }
+
+  function installSpaModeControls() {
+    if (window.__wanSpaModeControlsInstalled) return;
+    window.__wanSpaModeControlsInstalled = true;
+
+    document.addEventListener("click", (event) => {
+      const rawTarget = event.target;
+      const target = rawTarget instanceof Element
+        ? rawTarget.closest(".darkmode, .readermode")
+        : null;
+      if (!target) return;
+
+      // Quartz v5 re-executes component scripts during SPA navigation. The
+      // bundled mode plugins can therefore accumulate duplicate click
+      // handlers. Handle these two controls once, at document capture phase,
+      // and stop the duplicated target handlers from toggling twice.
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      if (target.classList.contains("darkmode")) {
+        const root = document.documentElement;
+        const newTheme = root.getAttribute("saved-theme") === "dark" ? "light" : "dark";
+        root.setAttribute("saved-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+        document.body?.classList.remove("theme-dark", "theme-light");
+        document.body?.classList.add("theme-" + newTheme);
+        emitThemeChange(newTheme);
+        return;
+      }
+
+      if (target.classList.contains("readermode")) {
+        const root = document.documentElement;
+        const newMode = root.getAttribute("reader-mode") === "on" ? "off" : "on";
+        root.setAttribute("reader-mode", newMode);
+        emitReaderModeChange(newMode);
+      }
+    }, true);
   }
 
   function setupTagPage() {
@@ -216,7 +305,11 @@
 
   function apply() {
     renameSidebarLabels();
+    fixHomepageTopicLinks();
     configureHomepageGraph();
+    installTagExplorerResizeHandler();
+    sizeTagExplorer();
+    installSpaModeControls();
     setupTagPage();
   }
 
