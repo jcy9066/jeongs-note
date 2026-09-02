@@ -1,6 +1,16 @@
 const MOBILE_BREAKPOINT = 800
 const DRAWER_DISTANCE = 60
 const DRAWER_FLICK_VELOCITY = 0.55
+const TAG_PAGE_SIZE = 10
+const STATE_TTL_MS = 24 * 60 * 60 * 1000
+const SORT_STATE_KEY = "wan:tag-page:sort:v1"
+const TAG_STATE_PREFIX = "wan:tag-page:state:v1:"
+
+const titleCollator = new Intl.Collator(["ko-KR", "en-US"], {
+  numeric: true,
+  sensitivity: "variant",
+  caseFirst: "upper",
+})
 
 const MOBILE_CSS = String.raw`
 .wan-mobile-header,
@@ -12,6 +22,172 @@ const MOBILE_CSS = String.raw`
 .wan-mobile-graph-modal,
 .wan-mobile-tag-meta {
   display: none;
+}
+
+.wan-tag-toolbar {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  width: 100%;
+  margin: 1.1rem 0 .9rem;
+}
+
+.wan-tag-search {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 40px;
+  box-sizing: border-box;
+  padding: 0 .95rem;
+  border: 1px solid var(--gray);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--dark);
+  font: inherit;
+}
+
+.wan-tag-search:focus,
+.wan-tag-sort:focus {
+  outline: none;
+  border-color: var(--darkgray);
+}
+
+.wan-tag-sort {
+  flex: 0 0 auto;
+  height: 40px;
+  min-width: 106px;
+  box-sizing: border-box;
+  padding: 0 2rem 0 .85rem;
+  border: 1px solid var(--gray);
+  border-radius: 999px;
+  background: var(--light);
+  color: var(--dark);
+  font: inherit;
+  cursor: pointer;
+}
+
+.wan-tag-pagination {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 40px;
+  min-height: 40px;
+  margin-top: 1rem;
+}
+
+.wan-tag-pagination.is-hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.wan-tag-nav-side {
+  position: absolute;
+  top: 0;
+  width: 120px;
+  height: 38px;
+}
+
+.wan-tag-nav-side.is-left {
+  left: 0;
+  text-align: left;
+}
+
+.wan-tag-nav-side.is-right {
+  right: 0;
+  text-align: right;
+}
+
+.wan-tag-page-numbers {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  width: min(52%, 480px);
+  height: 38px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.wan-tag-page-numbers::-webkit-scrollbar {
+  display: none;
+}
+
+.wan-tag-prev,
+.wan-tag-next,
+.wan-tag-page-number {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 .8rem;
+  border: 1px solid var(--gray);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--darkgray);
+  font: inherit;
+  cursor: pointer;
+}
+
+.wan-tag-page-number {
+  flex: 0 0 36px;
+  padding: 0 .55rem;
+}
+
+.wan-tag-page-number.is-active {
+  border-color: var(--dark);
+  color: var(--dark);
+  font-weight: 700;
+}
+
+.wan-tag-prev:disabled,
+.wan-tag-next:disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+.wan-recent-marker {
+  position: relative;
+  display: inline-block;
+  margin-left: .22rem;
+  color: var(--secondary);
+  font-size: .62em;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: super;
+  cursor: default;
+  user-select: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .wan-recent-marker {
+    cursor: help;
+  }
+
+  .wan-recent-marker:hover::after,
+  .wan-recent-marker:focus-visible::after {
+    content: "New or updated within 24 hours";
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + .55rem);
+    z-index: 50;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: 240px;
+    padding: .4rem .55rem;
+    border: 1px solid var(--lightgray);
+    border-radius: .45rem;
+    background: var(--light);
+    color: var(--dark);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .12);
+    font-size: .72rem;
+    font-weight: 500;
+    line-height: 1.3;
+    white-space: nowrap;
+  }
 }
 
 @media (max-width: 800px) {
@@ -488,22 +664,27 @@ const MOBILE_CSS = String.raw`
     user-select: none;
   }
 
-  .tag-page-nav-side {
-    width: 92px !important;
+  .wan-tag-toolbar {
+    gap: .5rem;
   }
 
-  .tag-page-number-group {
-    width: calc(100% - 192px) !important;
+  .wan-tag-sort {
+    min-width: 96px;
+    padding-left: .72rem;
   }
 
-  .tag-page-prev,
-  .tag-page-next {
-    padding-inline: .5rem !important;
-    font-size: .78rem !important;
+  .wan-tag-nav-side {
+    width: 92px;
   }
 
-  .tag-page-title-search {
-    width: 100% !important;
+  .wan-tag-page-numbers {
+    width: calc(100% - 192px);
+  }
+
+  .wan-tag-prev,
+  .wan-tag-next {
+    padding-inline: .5rem;
+    font-size: .78rem;
   }
 
   .center {
@@ -514,6 +695,29 @@ const MOBILE_CSS = String.raw`
 
 function isMobile() {
   return window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`).matches
+}
+
+function safeRead(key) {
+  try {
+    const raw = localStorage.getItem(key)
+    if (!raw) return null
+    const data = JSON.parse(raw)
+    if (!data || typeof data.updatedAt !== "number" || Date.now() - data.updatedAt > STATE_TTL_MS) {
+      localStorage.removeItem(key)
+      return null
+    }
+    data.updatedAt = Date.now()
+    localStorage.setItem(key, JSON.stringify(data))
+    return data
+  } catch {
+    return null
+  }
+}
+
+function safeWrite(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify({ ...value, updatedAt: Date.now() }))
+  } catch {}
 }
 
 function ensureStyles() {
@@ -906,7 +1110,7 @@ function formatDate(time) {
   return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, "0")}.${String(date.getDate()).padStart(2, "0")}`
 }
 
-function enhanceTagPageRows() {
+function enhanceMobileTagRows() {
   const slug = document.body?.dataset?.slug || ""
   if (!slug.startsWith("tags/") || slug === "tags/index") return
 
@@ -947,6 +1151,217 @@ function enhanceTagPageRows() {
   })
 }
 
+function itemTitle(item) {
+  return item.querySelector(".desc h3 a")?.textContent?.trim() || item.querySelector("h3 a")?.textContent?.trim() || ""
+}
+
+function itemModifiedAt(item) {
+  const raw = item.querySelector(".meta time")?.getAttribute("datetime") || ""
+  const timestamp = Date.parse(raw)
+  return Number.isFinite(timestamp) ? timestamp : 0
+}
+
+function addRecentMarker(item, modifiedAt) {
+  const heading = item.querySelector(".desc h3") || item.querySelector("h3")
+  if (!heading) return
+  heading.querySelector(":scope > .wan-recent-marker")?.remove()
+
+  const age = Date.now() - modifiedAt
+  if (!modifiedAt || age < 0 || age > STATE_TTL_MS) return
+
+  const marker = document.createElement("sup")
+  marker.className = "wan-recent-marker"
+  marker.textContent = "*"
+  marker.tabIndex = 0
+  marker.setAttribute("aria-label", "New or updated within 24 hours")
+  heading.appendChild(marker)
+}
+
+function tagStateKey(slug) {
+  return `${TAG_STATE_PREFIX}${slug}`
+}
+
+function loadSortState() {
+  const saved = safeRead(SORT_STATE_KEY)
+  const sort = ["az", "za", "newest", "oldest"].includes(saved?.sort) ? saved.sort : "az"
+  safeWrite(SORT_STATE_KEY, { sort })
+  return sort
+}
+
+function loadTagState(slug) {
+  const saved = safeRead(tagStateKey(slug))
+  const state = {
+    query: typeof saved?.query === "string" ? saved.query : "",
+    page: Number.isInteger(saved?.page) && saved.page > 0 ? saved.page : 1,
+  }
+  safeWrite(tagStateKey(slug), state)
+  return state
+}
+
+function buildTagPageControls(listing, list, records, slug) {
+  listing.querySelector(":scope > .tag-page-controls")?.remove()
+  listing.querySelector(":scope > .wan-tag-toolbar")?.remove()
+  listing.querySelector(":scope > .wan-tag-pagination")?.remove()
+  list.style.removeProperty("height")
+  list.style.removeProperty("min-height")
+
+  let sort = loadSortState()
+  const restored = loadTagState(slug)
+  let query = restored.query
+  let page = restored.page
+
+  const toolbar = document.createElement("div")
+  toolbar.className = "wan-tag-toolbar"
+
+  const search = document.createElement("input")
+  search.type = "search"
+  search.className = "wan-tag-search"
+  search.placeholder = "Search title"
+  search.setAttribute("aria-label", "Search title")
+  search.autocomplete = "off"
+  search.value = query
+
+  const sortSelect = document.createElement("select")
+  sortSelect.className = "wan-tag-sort"
+  sortSelect.setAttribute("aria-label", "Sort pages")
+  for (const [value, label] of [["az", "A–Z"], ["za", "Z–A"], ["newest", "Newest"], ["oldest", "Oldest"]]) {
+    const option = document.createElement("option")
+    option.value = value
+    option.textContent = label
+    sortSelect.appendChild(option)
+  }
+  sortSelect.value = sort
+  toolbar.append(search, sortSelect)
+
+  const pagination = document.createElement("div")
+  pagination.className = "wan-tag-pagination"
+
+  const prevWrap = document.createElement("div")
+  prevWrap.className = "wan-tag-nav-side is-left"
+  const nextWrap = document.createElement("div")
+  nextWrap.className = "wan-tag-nav-side is-right"
+  const numbers = document.createElement("div")
+  numbers.className = "wan-tag-page-numbers"
+
+  const prev = document.createElement("button")
+  prev.type = "button"
+  prev.className = "wan-tag-prev"
+  prev.textContent = "‹ Previous"
+
+  const next = document.createElement("button")
+  next.type = "button"
+  next.className = "wan-tag-next"
+  next.textContent = "Next ›"
+
+  prevWrap.appendChild(prev)
+  nextWrap.appendChild(next)
+  pagination.append(prevWrap, numbers, nextWrap)
+
+  listing.insertBefore(toolbar, list)
+  list.insertAdjacentElement("afterend", pagination)
+
+  const saveTag = () => safeWrite(tagStateKey(slug), { query, page })
+  const saveSort = () => safeWrite(SORT_STATE_KEY, { sort })
+
+  const sortedFiltered = () => {
+    const needle = query.toLocaleLowerCase().replace(/\s+/g, " ").trim()
+    const filtered = needle
+      ? records.filter((record) => record.title.toLocaleLowerCase().replace(/\s+/g, " ").trim().includes(needle))
+      : [...records]
+
+    filtered.sort((a, b) => {
+      if (sort === "newest" || sort === "oldest") {
+        const delta = a.modifiedAt - b.modifiedAt
+        if (delta !== 0) return sort === "newest" ? -delta : delta
+      }
+      const titleDelta = titleCollator.compare(a.title, b.title)
+      return sort === "za" ? -titleDelta : titleDelta
+    })
+    return filtered
+  }
+
+  const render = () => {
+    const filtered = sortedFiltered()
+    const pageCount = Math.max(1, Math.ceil(filtered.length / TAG_PAGE_SIZE))
+    page = Math.min(Math.max(1, page), pageCount)
+    saveTag()
+    saveSort()
+
+    for (const record of records) record.item.hidden = true
+    for (const record of filtered) list.appendChild(record.item)
+
+    const start = (page - 1) * TAG_PAGE_SIZE
+    for (const record of filtered.slice(start, start + TAG_PAGE_SIZE)) record.item.hidden = false
+
+    pagination.classList.toggle("is-hidden", filtered.length <= TAG_PAGE_SIZE)
+    prev.disabled = page <= 1
+    next.disabled = page >= pageCount
+    numbers.replaceChildren()
+
+    for (let index = 1; index <= pageCount; index += 1) {
+      const button = document.createElement("button")
+      button.type = "button"
+      button.className = `wan-tag-page-number${index === page ? " is-active" : ""}`
+      button.textContent = String(index)
+      if (index === page) button.setAttribute("aria-current", "page")
+      button.addEventListener("click", () => {
+        page = index
+        render()
+      })
+      numbers.appendChild(button)
+    }
+  }
+
+  search.addEventListener("input", () => {
+    query = search.value
+    page = 1
+    render()
+  })
+
+  sortSelect.addEventListener("change", () => {
+    sort = sortSelect.value
+    page = 1
+    render()
+  })
+
+  prev.addEventListener("click", () => {
+    if (page <= 1) return
+    page -= 1
+    render()
+  })
+
+  next.addEventListener("click", () => {
+    page += 1
+    render()
+  })
+
+  render()
+}
+
+function enhanceTagPage() {
+  const slug = document.body?.dataset?.slug || ""
+  if (!slug.startsWith("tags/") || slug === "tags/index") return
+
+  const listing = document.querySelector(".center .page-listing")
+  const list = listing?.querySelector(":scope > .section-ul")
+  if (!listing || !list) return
+
+  const items = Array.from(list.querySelectorAll(":scope > .section-li"))
+  if (items.length === 0) return
+
+  const records = items.map((item) => {
+    const record = {
+      item,
+      title: itemTitle(item),
+      modifiedAt: itemModifiedAt(item),
+    }
+    addRecentMarker(item, record.modifiedAt)
+    return record
+  })
+
+  buildTagPageControls(listing, list, records, slug)
+}
+
 function prepareDrawers() {
   const left = drawer("left")
   const right = drawer("right")
@@ -966,7 +1381,7 @@ function resetForNavigation() {
   closeDrawers(true)
 }
 
-function applyMobileUI() {
+function applyUI() {
   ensureStyles()
   resetForNavigation()
   ensureHeader()
@@ -975,7 +1390,8 @@ function applyMobileUI() {
   enhanceTagExplorer()
   ensureGraphButton()
   ensureGraphModal()
-  enhanceTagPageRows()
+  enhanceMobileTagRows()
+  enhanceTagPage()
   syncDrawerState()
 }
 
@@ -1042,15 +1458,19 @@ function installHandlers() {
     }
     syncDrawerState()
   }, { passive: true })
+
+  window.addEventListener("pageshow", () => {
+    window.setTimeout(applyUI, 0)
+  })
 }
 
 ensureStyles()
 installHandlers()
 
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", applyMobileUI, { once: true })
+  document.addEventListener("DOMContentLoaded", applyUI, { once: true })
 } else {
-  applyMobileUI()
+  applyUI()
 }
 
-document.addEventListener("nav", applyMobileUI, true)
+document.addEventListener("nav", applyUI, true)
