@@ -12,4 +12,3 @@ await Promise.all([
   import("./static/scripts/script-10-296b30c3.js")
 ]);
 await import("./static/scripts/script-11-7ca62114.js");
-await import("./static/scripts/mobile-ui-20260902.js");
