@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr"><head><title>Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 3. Behavioral Cloning</title><meta charset="utf-8"/><link rel="preload" href="../index-1269a69c.css" as="style"/><link rel="preload" href="../prescript-2bfc6315.js" as="script"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans:wght@400;700&amp;family=Noto Sans:ital,wght@0,400;0,600;1,400;1,600&amp;family=Noto Sans Mono:wght@400;600&amp;display=swap"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans:wght@400;600&amp;text=Wan&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="Wan"/><meta property="og:title" content="Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 3. Behavioral Cloning"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 3. Behavioral Cloning"/><meta name="twitter:description" content="| 참고 : 요약본 BC에선, Reward Function을 복구하지 않고, state/context에서 trajectory, behavior를 직접 mapping하는 것을 학습함 문제 정의 로봇 시스템의 controller는 대부분 계층적 구조를 가짐 Expert의 behavior를 보여주면서 Dataset 생성 Upper-level controller에선, Dataset과 현재 context, system state를 통해 trajectory를 생성함 Lower-level controller에선, feedback을 활용해 tr..."/><meta property="og:description" content="| 참고 : 요약본 BC에선, Reward Function을 복구하지 않고, state/context에서 trajectory, behavior를 직접 mapping하는 것을 학습함 문제 정의 로봇 시스템의 controller는 대부분 계층적 구조를 가짐 Expert의 behavior를 보여주면서 Dataset 생성 Upper-level controller에선, Dataset과 현재 context, system state를 통해 trajectory를 생성함 Lower-level controller에선, feedback을 활용해 tr..."/><meta property="og:image:alt" content="| 참고 : 요약본 BC에선, Reward Function을 복구하지 않고, state/context에서 trajectory, behavior를 직접 mapping하는 것을 학습함 문제 정의 로봇 시스템의 controller는 대부분 계층적 구조를 가짐 Expert의 behavior를 보여주면서 Dataset 생성 Upper-level controller에선, Dataset과 현재 context, system state를 통해 trajectory를 생성함 Lower-level controller에선, feedback을 활용해 tr..."/><meta property="og:image" content="https://jcy9066.github.io/jeongs-note/static/og-image.png"/><meta property="og:image:url" content="https://jcy9066.github.io/jeongs-note/static/og-image.png"/><meta name="twitter:image" content="https://jcy9066.github.io/jeongs-note/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="jcy9066.github.io/jeongs-note"/><meta property="og:url" content="https://jcy9066.github.io/jeongs-note/06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---3.-behavioral-cloning"/><meta property="twitter:url" content="https://jcy9066.github.io/jeongs-note/06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---3.-behavioral-cloning"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="| 참고 : 요약본 BC에선, Reward Function을 복구하지 않고, state/context에서 trajectory, behavior를 직접 mapping하는 것을 학습함 문제 정의 로봇 시스템의 controller는 대부분 계층적 구조를 가짐 Expert의 behavior를 보여주면서 Dataset 생성 Upper-level controller에선, Dataset과 현재 context, system state를 통해 trajectory를 생성함 Lower-level controller에선, feedback을 활용해 tr..."/><meta name="generator" content="Quartz"/><link href="../index-1269a69c.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-735924e0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-589c1cea.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-bbc3f7c0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-2911f5d1.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-7f220492.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-e427079e.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-53b25b2b.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-c93c6a44.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-8a06014f.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-77d6a441.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-6ee21cee.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-fcbfb174.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-34bdfded.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-788c9ca3.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-642859cd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-4abc06bd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-274a3dfe.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-94cb6c84.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-58d5ff56.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-9f9b2774.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-7262b5a7.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-a5c806d2.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-6bd36952.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" data-persist="true"/><script src="../prescript-2bfc6315.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---3.-behavioral-cloning" data-basepath="/jeongs-note"><div id="quartz-root" class="page" data-frame="default"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">Wan</a></h2><div class="mobile-only"><div class="spacer"></div></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 0.5rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button" aria-label="검색" aria-expanded="false"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true" data-field-priority="[&quot;title&quot;,&quot;content&quot;,&quot;tags&quot;]"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode" aria-label="다크 모드"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode" aria-label="리더 모드"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><nav class="tag-explorer" aria-label="List"><h2 class="tag-explorer-title">List</h2><ul class="tag-explorer-list"><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/3D">3D</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/usd">USD</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/viewpoint">Viewpoint</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/visual--and--lidar-descriptor">Visual &amp; LiDAR Descriptor</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Algorithm">Algorithm</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/actor-critic">Actor-Critic</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/amcl">AMCL</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dagger">DAgger</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/grid-search">Grid Search</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mappo">MAPPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/online-learning">Online Learning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ppo">PPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rrt">RRT</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Coding">Coding</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/coding-agent">Coding Agent</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/context">Context</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/hook">Hook</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/matplotlib">Matplotlib</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mcp">MCP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/multi-agent">Multi-Agent</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/numpy">Numpy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/orchestration">Orchestration</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pandas">Pandas</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/skill">Skill</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/sub-agent">Sub-Agent</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/tool">Tool</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/torchvision">Torchvision</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/DeepLearning">DeepLearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/activation-function">Activation Function</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/backpropagation">Backpropagation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/batch--and--epoch">Batch &amp; Epoch</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/cnns">CNNs</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/crossentropyloss">CrossEntropyLoss</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/data-augmentation">Data Augmentation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dropout">Dropout</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/evaluation">Evaluation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/fashion-mnist">Fashion-MNIST</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gradient">Gradient</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loss-function">Loss Function</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mlp">MLP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/nlloss">NLLoss</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/normalization--and--standardization">Normalization &amp; Standardization</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/optimization">Optimization</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pixel-value">Pixel Value</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pooling">Pooling</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rag">RAG</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/residual-learning">Residual Learning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/softmax">Softmax</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/task-definition">Task Definition</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/training-loop">Training Loop</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/transformation">Transformation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/vllm">vLLM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/worker">Worker</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---1.-데이터중심ai란">데이터중심 AI 입문 - 1. 데이터중심AI란</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---2.-데이터셋의-크기와-모델-성능의-관계">데이터중심 AI 입문 - 2. 데이터셋의 크기와 모델 성능의 관계</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---4.-이미지-인식-모델의-기초-지식">데이터중심 AI 입문 - 4. 이미지 인식 모델의 기초 지식</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---5.-이미지-데이터를-확장-생성하는-기술">데이터중심 AI 입문 - 5. 이미지 데이터를 확장 생성하는 기술</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---7.-vlm">데이터중심 AI 입문 - 7. VLM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---9.-pre-train,-denoise-filtering">데이터중심 AI 입문 - 9. Pre-train, Denoise Filtering</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---11.-fine-tuing,-instruction-data,-preference-data">데이터중심 AI 입문 - 11. Fine-tuing, Instruction Data, Preference Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---12.-fine-tuning-model-evaluation">데이터중심 AI 입문 - 12. Fine-tuning Model Evaluation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---2.-텍스트-전처리">딥러닝 이론 - 2. 텍스트 전처리</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---7.-deeplearning">딥러닝 이론 - 7. DeepLearning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---8.-recurrent-neural-network">딥러닝 이론 - 8. Recurrent Neural Network</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---14.-encoder--and--decoder-using-rnn">딥러닝 이론 - 14. Encoder &amp; Decoder using RNN</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---15.-attention-mechanism">딥러닝 이론 - 15. Attention Mechanism</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---16.-transformer">딥러닝 이론 - 16. Transformer</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---20.-pretrained-encoder-decoder-model">딥러닝 이론 - 20. Pretrained Encoder-Decoder Model</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---24.-llm-fine-tuning">딥러닝 이론 - 24. LLM Fine-tuning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---25.-이미지를-인식하는-vlm-fine-tuning">딥러닝 이론 - 25. 이미지를 인식하는 VLM Fine-Tuning</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Equation">Equation</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/bayes-error">Bayes Error</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/bellman-equation">Bellman Equation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/exponential">Exponential</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gaussian">Gaussian</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pd-controller">PD Controller</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Git">Git</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/git">Git</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/git---cherry-pick">Git - Cherry-pick</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/git---worktree">Git - Worktree</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/ImitationLearning">ImitationLearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/behavioral-cloning">Behavioral Cloning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/compounding-error">Compounding Error</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dagger">DAgger</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---1.-introduction">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 1. Introduction</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---3.-behavioral-cloning">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 3. Behavioral Cloning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dmp">DMP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gradient">Gradient</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/hmm">HMM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/horizon">Horizon</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/kinestheitic-teaching">Kinestheitic Teaching</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/kl-divergence">KL Divergence</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mmp">MMP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/modeling">Modeling</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/movement-primitive">Movement Primitive</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/probability--and--likelihood">Probability &amp; Likelihood</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/promp">ProMP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/seds">SEDS</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/time-invariant-dynamical-system">Time-Invariant Dynamical System</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/trajectory">Trajectory</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Lecture">Lecture</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---1.-introduction">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 1. Introduction</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-입문---1.기초">ROS 입문 - 1.기초</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---1.-데이터중심ai란">데이터중심 AI 입문 - 1. 데이터중심AI란</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---2.-데이터셋의-크기와-모델-성능의-관계">데이터중심 AI 입문 - 2. 데이터셋의 크기와 모델 성능의 관계</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---4.-이미지-인식-모델의-기초-지식">데이터중심 AI 입문 - 4. 이미지 인식 모델의 기초 지식</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---5.-이미지-데이터를-확장-생성하는-기술">데이터중심 AI 입문 - 5. 이미지 데이터를 확장 생성하는 기술</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---7.-vlm">데이터중심 AI 입문 - 7. VLM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---11.-fine-tuing,-instruction-data,-preference-data">데이터중심 AI 입문 - 11. Fine-tuing, Instruction Data, Preference Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---12.-fine-tuning-model-evaluation">데이터중심 AI 입문 - 12. Fine-tuning Model Evaluation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---13.-robot-data">데이터중심 AI 입문 - 13. Robot Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---14.-collecting-robot-data">데이터중심 AI 입문 - 14. Collecting Robot Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---2.-텍스트-전처리">딥러닝 이론 - 2. 텍스트 전처리</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---6.-machinelearning">딥러닝 이론 - 6. MachineLearning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---7.-deeplearning">딥러닝 이론 - 7. DeepLearning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---8.-recurrent-neural-network">딥러닝 이론 - 8. Recurrent Neural Network</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---14.-encoder--and--decoder-using-rnn">딥러닝 이론 - 14. Encoder &amp; Decoder using RNN</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---15.-attention-mechanism">딥러닝 이론 - 15. Attention Mechanism</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---16.-transformer">딥러닝 이론 - 16. Transformer</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---20.-pretrained-encoder-decoder-model">딥러닝 이론 - 20. Pretrained Encoder-Decoder Model</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---24.-llm-fine-tuning">딥러닝 이론 - 24. LLM Fine-tuning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---25.-이미지를-인식하는-vlm-fine-tuning">딥러닝 이론 - 25. 이미지를 인식하는 VLM Fine-Tuning</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/LinearAlgebra">LinearAlgebra</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/manifold">Manifold</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/projection">Projection</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/subspace">Subspace</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/transformation">Transformation</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/LLM">LLM</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/rag">RAG</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/vllm">vLLM</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/MachineLearning">MachineLearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/episode">Episode</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ml-workflow">ML Workflow</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---6.-machinelearning">딥러닝 이론 - 6. MachineLearning</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Paper">Paper</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/making-quadrupeds-learning-to-walk.-step-by-step-guide">Making quadrupeds Learning to walk. Step-by-Step Guide</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Perception">Perception</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/visual--and--lidar-descriptor">Visual &amp; LiDAR Descriptor</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Practice">Practice</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/fashion-mnist">Fashion-MNIST</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl_practice_cartpole">RL_Practice_CartPole</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl_practice_moutaincar">RL_Practice_MoutainCar</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/실습---ros2-turtlesim">실습 - ROS2 Turtlesim</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/ReinforcementLearning">ReinforcementLearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/action-(rl)">Action (RL)</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/actor-critic">Actor-Critic</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/actuator">Actuator</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/amcl">AMCL</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/bellman-equation">Bellman Equation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/curriculum-learning--and--scaffolding">Curriculum Learning &amp; Scaffolding</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---1.-introduction">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 1. Introduction</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dqn">DQN</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/e-greedy-policy">E-Greedy Policy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/environment">Environment</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/exploration--and--exploitation">Exploration &amp; Exploitation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gae">GAE</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gradient">Gradient</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/horizon">Horizon</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/making-quadrupeds-learning-to-walk.-step-by-step-guide">Making quadrupeds Learning to walk. Step-by-Step Guide</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mappo">MAPPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mdp">MDP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/modeling">Modeling</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/movement-primitive">Movement Primitive</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/policy">Policy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/potential-based-reward-shaping">Potential-Based Reward Shaping</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ppo">PPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/q-learning">Q-Learning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/replay-memory">Replay Memory</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/reward-shaping">Reward Shaping</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl_practice_cartpole">RL_Practice_CartPole</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl_practice_moutaincar">RL_Practice_MoutainCar</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rollout">Rollout</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/sensor">Sensor</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/target-network">Target Network</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/trajectory">Trajectory</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Robotics">Robotics</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/dof">DoF</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-closure">Loop Closure</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-detection">Loop Detection</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/making-quadrupeds-learning-to-walk.-step-by-step-guide">Making quadrupeds Learning to walk. Step-by-Step Guide</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/movement-primitive">Movement Primitive</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pd-controller">PD Controller</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/primitive-behavior">Primitive Behavior</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-입문---1.기초">ROS 입문 - 1.기초</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rrt">RRT</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/trajectory">Trajectory</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/visual-odometry">Visual Odometry</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---13.-robot-data">데이터중심 AI 입문 - 13. Robot Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---14.-collecting-robot-data">데이터중심 AI 입문 - 14. Collecting Robot Data</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/ROS">ROS</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/action-(ros)">Action (ROS)</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/namespace">Namespace</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/nav2">Nav2</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/node">Node</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/occupancy-grid-map">Occupancy Grid Map</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-입문---1.기초">ROS 입문 - 1.기초</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros2">ROS2</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/service">Service</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/topic">Topic</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/transformation">Transformation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/urdf">URDF</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/실습---ros2-turtlesim">실습 - ROS2 Turtlesim</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/SLAM">SLAM</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/amcl">AMCL</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-closure">Loop Closure</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-detection">Loop Detection</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/scan-context">Scan Context</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/visual--and--lidar-descriptor">Visual &amp; LiDAR Descriptor</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Statistics">Statistics</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/entropy">Entropy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/exponential">Exponential</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/kl-divergence">KL Divergence</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/lagrange-multiplier">Lagrange Multiplier</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/map">MAP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/posteriori">Posteriori</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/probability--and--likelihood">Probability &amp; Likelihood</a></li></ul></li></ul></nav></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../06_인턴십/">06_인턴십</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 3. Behavioral Cloning</a></div></nav><h1 class="article-title">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 3. Behavioral Cloning</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-08T01:57:40.077Z">2026년 9월 08일</time><span>21 min read</span></p><ul class="tags"><li><a href="../tags/ImitationLearning" class="internal tag-link">ImitationLearning</a></li></ul></div></div><article class="popover-hint"><div class="markdown-preview-view markdown-rendered"><hr/>
+<p>| 참고 : 요약본</p>
+<hr/>
+<p>BC에선, Reward Function을 복구하지 않고, state/context에서 trajectory, behavior를 직접 mapping하는 것을 학습함</p>
+<h3 id="문제-정의">문제 정의<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#문제-정의" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>로봇 시스템의 controller는 대부분 계층적 구조를 가짐<br/>
+<img src="../00_attachments/pasted-image-20260907160217.png" alt width="auto" height="auto"/></p>
+<ul>
+<li>
+<p>Expert의 behavior를 보여주면서 Dataset 생성</p>
+</li>
+<li>
+<p>Upper-level controller에선, Dataset과 현재 context, system state를 통해 trajectory를 생성함</p>
+</li>
+<li>
+<p>Lower-level controller에선, feedback을 활용해 trajectory를 따라가려고 시도함. 이때, system state를 변경하는 control <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span>를 생성함</p>
+</li>
+<li>
+<p>모방 학습의 목표는 원하는 trajectory를 생성하는 policy를 학습하는 것</p>
+<ol>
+<li>
+<p>Trajectory를 생성하는 Policy</p>
+<ul>
+<li>
+<p>Policy가 전체 Desired Trajectory를 생성하고, Controller가 이를 추종하는 방식</p>
+<ul>
+<li>Desired Trajectory : 로봇이 시간에 따라 따라가야 하는 목표 state들의 연속적인 경로</li>
+</ul>
+</li>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">d</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">π</span><span class="mopen">(</span><span class="mord mathnormal">s</span><span class="mclose">)</span></span></span></span></p>
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span> (context) :</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Control Input을 직접 생성하는 Policy</p>
+<ul>
+<li>
+<p>Policy가 현재 State를 보고 매 순간 Control Input을 직접 결정하는 방식</p>
+</li>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">u</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">π</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">s</span><span class="mclose">)</span></span></span></span></p>
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> : 현재 시점 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">t</span></span></span></span>의 system state</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>모방 학습에서는 Expert의 Demonstration dataset을 활용할 수 있다고 가정함</p>
+<ol>
+<li>
+<p>Trajectory를 학습하는 경우</p>
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">D</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">s</span><span class="mclose">)</span></span></span></span></span></li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span></span></span></span>를 학습함</li>
+</ul>
+</li>
+<li>
+<p>Action을 직접 학습하는 경우</p>
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">D</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">u</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">u</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>를 학습함</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>모방 학습은 Regression 문제로 정의할 수 있음</p>
+<ul>
+<li>
+<p>입력이 주어졌을 때, Expert가 했던 출력을 예측하는 문제이므로</p>
+</li>
+<li>
+<p>단, 출력값이 연속적인 경우</p>
+<ul>
+<li>discrete인 경우, classification으로 정의할 수 있음</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>Expert의 Data 수집</li>
+<li>Policy 구조 선택</li>
+<li>Loss Function 선택</li>
+<li>Policy Parameter 최적화</li>
+</ol>
+</li>
+</ul>
+<h3 id="bc를-위한-설계-선택">BC를 위한 설계 선택<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#bc를-위한-설계-선택" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol>
+<li>
+<p>BC를 위한 Surrogate Loss Function</p>
+<ol>
+<li>
+<p>Quaratic Loss Function (2차 손실 함수)</p>
+<ul>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord">ℓ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> Loss Function이라고도 불림</p>
+</li>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1274em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord">ℓ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0359em;">q</span><span class="mord mathnormal mtight">u</span><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">L</span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="mord mathnormal mtight">e</span><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">o</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0913em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">L</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0991em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="mord mathnormal mtight">e</span><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">o</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">⊤</span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">L</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="mord mathnormal mtight">e</span><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">o</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord">.</span></span></span></span></p>
+<ul>
+<li>Learner의 Policy에 유도된 state <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8413em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">L</span></span></span></span></span></span></span></span></span></span></span>과 Expert가 Demonstration한 state <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="mord mathnormal mtight">e</span><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">o</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 사이 차이</li>
+</ul>
+</li>
+<li>
+<p>Quaratic Loss Function를 최소화하는 것은, log likelihood를 최대화하는 것과 관련이 있음</p>
+<ul>
+<li>장점
+<ul>
+<li>계산이 용이함</li>
+<li>수치적 안정성
+<ul>
+<li>언더플로우 방지</li>
+</ul>
+</li>
+<li>미분이 용이함</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord">ℓ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> Loss Function</p>
+<ul>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord">ℓ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> Loss Function을 최소화하는 것보다 이상치에 더 강한 저항력을 가짐</p>
+</li>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord">ℓ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ab</span><span class="mord mathnormal mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0497em;vertical-align:-0.2997em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:0em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.162em;"><span style="top:-2.4003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2997em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">∣</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mord">∣</span></span></span></span></p>
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span> : <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>의 i번째 요소</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Log Loss Function</p>
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord">ℓ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0197em;">l</span><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight" style="margin-right:0.0359em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">p</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0497em;vertical-align:-0.2997em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:0em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.162em;"><span style="top:-2.4003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2997em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0359em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop">ln</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">.</span></span></span></span>
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span> : 예측 확률</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span></span></span></span> : 실제 확률</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Hinge Loss Function</p>
+<ul>
+<li>
+<p>SVM과 같은 Classifier에서 최대 margin 최적화를 위해 자주 사용되는 Loss Function</p>
+<ul>
+<li>분류가 정확할 경우, 0</li>
+<li>잘못 분류한 경우, 선형적으로 증가</li>
+</ul>
+</li>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord">ℓ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">hin</span><span class="mord mathnormal mtight" style="margin-right:0.0359em;">g</span><span class="mord mathnormal mtight">e</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Kullback-Libler Divergence<br/>
+참고 : <a href="../06_인턴십/kl-divergence" class="internal internal-link alias" data-slug="06_인턴십/kl-divergence">KL Divergence</a></p>
+<ul>
+<li>두 distribution의 차이를 측정하는 데 사용됨</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>BC를 위한 Regression 선택</p>
+<ul>
+<li>Linear Regression을 사용하면, train은 쉽지만 충분한 정보를 제공하지 못할 수 있음</li>
+<li>신경망 등 복잡한 모델을 사용하면, Non-linear mapping을 나타낼 수 있지만 많은 양의 data가 필요함</li>
+</ul>
+</li>
+</ol>
+<h3 id="model-free-and-model-based-behavioral-cloning-method">Model-Free and Model-Based Behavioral Cloning Method<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#model-free-and-model-based-behavioral-cloning-method" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>
+<p>Model-Free</p>
+<ul>
+<li>동역학 모델을 학습하지 않고 data에서 policy를 직접 학습함</li>
+<li>알고리즘이, trajectory와 action 생성 사이를 반복할 필요가 없음</li>
+</ul>
+</li>
+<li>
+<p>Model-Based</p>
+<ul>
+<li>System Dynamics에 대한 정보를 사용해 Policy를 학습함</li>
+<li>Underactuated System에서 작동할 수 있지만, 실제 모델을 학습하는 것은 대부분 어려움
+<ul>
+<li>Underactuated System : DoF보다 제어할 수 있는 Actuator 수가 적은 System</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th></th><th>Model-free</th><th>Model-based</th></tr></thead><tbody><tr><td>장점</td><td>일반적으로 반복 학습 없이 정책을 학습할 수 있습니다.</td><td>활성화되지 않은 시스템에 적용 가능.</td></tr><tr><td>단점</td><td>활성화되지 않은 시스템에 적용하기 어려움.  <br/>미래 상태를 예측하기 어려움.</td><td>모델 학습이 매우 어려울 수 있음.  <br/>반복적인 학습 과정이 필요한 경우가 많습니다.</td></tr></tbody></table></div>
+<h3 id="action-state-space에서-model-free-bc-방법">Action-State Space에서 Model-Free BC 방법<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#action-state-space에서-model-free-bc-방법" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol>
+<li>
+<p>지도 학습에서 Model-Free BC</p>
+<ul>
+<li>모방 학습 연구 초기엔 지도 학습을 사용했음<br/>
+ex)ALVINN</li>
+</ul>
+</li>
+<li>
+<p>신경망을 사용한 지도 학습으로서의 모방 학습</p>
+<ol>
+<li>
+<p>성공 사례<br/>
+ex)바둑, 손글씨 생성, 자연어 생성, 이미지 캡션 생성 등</p>
+</li>
+<li>
+<p>RNN을 사용한 학습</p>
+<ul>
+<li>순환 신경망의 지도 학습을 통해 복잡한 시계열 예측에 대한 모방 학습이 가능해짐</li>
+</ul>
+</li>
+<li>
+<p>BC 중 teacher-student 상호작용</p>
+<ul>
+<li>
+<p>학습된 policy도 가끔씩 실수함</p>
+<ul>
+<li>이는 연쇄적인 오류를 발생할 수 있음</li>
+</ul>
+</li>
+<li>
+<p>모방 학습에서, Learner가 자신의 Policy를 통해 경험할 Feature Distribution Demo Dataset의 Feature Distribution과 다를 수 있음</p>
+</li>
+<li>
+<p>모든 상황에서 demo를 수집하는 것은 불가능함</p>
+<ul>
+<li>따라서, Policy가 잘 못하는 중요한 상황에 집중해서 data를 추가함</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>
+<p>구조적 예측을 단순 분류의 반복 학습으로 줄이기<br/>
+ex) SEARN</p>
+<ul>
+<li>SEARN
+<ul>
+<li>반복적인 과정을 통해, Dataset의 각 state에 대해 Multi-Class Cost-Sensitive Classifier를 학습함</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>신뢰 기반 접근법</p>
+<ul>
+<li>Policy가 현재 state에서 신뢰도가 Threshold보다 낮으면, Expert의 추가 Demo가 요청됨
+<ul>
+<li>또는, Expert가 Learner의 잘못된 Behavior를 관찰하면, Expert가 해당 Behavior를 수정하고 train dataset에 추가함</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>DAgger<br/>
+참고 : <a href="../06_인턴십/dagger" class="internal internal-link" data-slug="06_인턴십/dagger">DAgger</a></p>
+<ul>
+<li>모방 학습에서 학습된 Poicy에 의해 유도되는 State Distribution에서 Expert의 Demonstration을 수집하는 것</li>
+</ul>
+<ol>
+<li>Expert Demo의 BC를 통해 policy <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0894em;vertical-align:-0.2481em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0359em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-2.4519em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">L</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2481em;"><span></span></span></span></span></span></span></span></span></span> 생성</li>
+<li>Trajectory Dataset 수집</li>
+<li>새로 얻은 Trajectory와 Demo Trajetroy를 합쳐 Policy <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0894em;vertical-align:-0.2481em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0359em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-2.4519em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">L</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2481em;"><span></span></span></span></span></span></span></span></span></span>를 훈련함</li>
+<li>반복</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="trajectory-train을-위한-model-free-bc">Trajectory Train을 위한 Model-Free BC<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#trajectory-train을-위한-model-free-bc" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>System이 거의 완전히 작동하고 원하는 State를 달성하기 위한 Lower-Controller를 사용할 수 있다고 가정하면, System Dynamics를 명시적으로 추정하지 않고 주어진 Task에 대한 Trajectory를 학습할 수 있음</li>
+</ul>
+<ol>
+<li>
+<p>Trajectory 표현</p>
+<ul>
+<li>
+<p>Trajectroy Representation을 정해야 함</p>
+<ul>
+<li>Trajectroy Representation : Trajectory 학습 전, 어떤 형태로 표현할 것인지 정하는 것</li>
+</ul>
+</li>
+<li>
+<p>context <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span>에 따라 Trajectory <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span></span></span></span>를 출력하는 Policy를 학습함</p>
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">π</span><span class="mopen">(</span><span class="mord mathnormal">s</span><span class="mclose">)</span></span></span></span></li>
+</ul>
+</li>
+<li>
+<p>Poicy가 실제로 예측해야 하는 값 자체가 달라짐</p>
+</li>
+<li>
+<p>단, 물리적으로 실현할 수 있는 Trajectory여야 함</p>
+<ul>
+<li>DMP, SEDS</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>
+<p>Keyframe / Via-Point 기반 접근 방식</p>
+<ul>
+<li>
+<p>Keyframe-based Trajectory Representation</p>
+<ul>
+<li>
+<p>Keyframe : 주어진 Task를 수행하는데 필요한 중요한 State를 표현하는데 사용됨</p>
+</li>
+<li>
+<p>Trajectory를 표현하는 방법 중 하나</p>
+</li>
+<li>
+<p>Trajectory의 수치값을 모두 저장하는 대신, 중요한 시점의 State 수치값만 선택해 Trajectory를 표현하는 방법<br/>
+<img src="../00_attachments/pasted-image-20260907183052.png" alt width="469" height="auto"/></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Via-point</p>
+<ul>
+<li>Trajectory 전체가 아닌, 반드시 지나가야 하는 몇 개의 중감 점만 지정해서 전체 Trajectory를 만드는 방식</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Hidden Markov Model Representation<br/>
+참고 : <a href="../06_인턴십/hmm" class="internal internal-link" data-slug="06_인턴십/hmm">HMM</a></p>
+<ul>
+<li>HMM을 이용해 Trajectory를 여러 개의 Discrete Behavorial 단계와, 사이 단계를 Transition Probability로 표현할 수 있음<br/>
+ex)로봇팔의 컵 집기 : 접근 → 잡기 → 들어올리기 → 이동
+<ul>
+<li>Trajectory를, 어떤 State와 어떤 순서와 확률로 거쳐가는 지를 표현함</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Dynamic Movement Primitives<br/>
+참고 : <a href="../06_인턴십/dmp" class="internal internal-link" data-slug="06_인턴십/dmp">DMP</a></p>
+</li>
+<li>
+<p>Probabilistic Movement Primitives (ProMP)<br/>
+| 참고 : <a href="../06_인턴십/promp" class="internal internal-link" data-slug="06_인턴십/promp">ProMP</a></p>
+<ul>
+<li>하나의 Trajectory를 결정론적으로 표현함</li>
+</ul>
+</li>
+<li>
+<p>Time-Invariant Dynamical System<br/>
+| 참고 : <a href="../06_인턴십/time-invariant-dynamical-system" class="internal internal-link alias" data-slug="06_인턴십/time-invariant-dynamical-system">Time-Invariant Dynamical System</a></p>
+<ul>
+<li>Trajectroy를 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6679em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6679em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">x</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.1111em;"><span class="mord">˙</span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.1076em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span> 형태의 Dynamical System으로 표현함
+<ul>
+<li><code>Dynamical System</code> : 시간에 따라 System의 State가 어떻게 변하는지 나타내는 모델<br/>
+ex) <a href="../06_인턴십/seds" class="internal internal-link" data-slug="06_인턴십/seds">SEDS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>Comparison of Trajectory Representation</p>
+<ul>
+<li>앞선 Trajectory Representation을 비교함</li>
+</ul>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>방법</th><th>핵심 표현</th><th>장점</th><th>단점</th><th>적합한 경우</th></tr></thead><tbody><tr><td><strong>DMP</strong></td><td>Goal Attractor + Nonlinear Forcing Term</td><td>Goal로 안정적 수렴, Start/Goal 변경에 유연</td><td>시연 간 Variation 표현이 약함</td><td>Point-to-Point Motion, 목표 수렴이 중요한 작업</td></tr><tr><td><strong>ProMP</strong></td><td>Weight의 확률분포 (p(\omega))</td><td>여러 시연의 Variation·Uncertainty 표현 가능</td><td>Goal 수렴 안정성 보장 어려움</td><td>여러 시연의 차이와 불확실성을 모델링할 때</td></tr><tr><td><strong>SEDS</strong></td><td>(\dot{x}=f(x))</td><td>Goal로 안정적 수렴, State 기반 Motion 표현</td><td>Time-Variant Motion 표현이 어려움</td><td>현재 State에 따라 안정적으로 Goal에 수렴해야 할 때</td></tr></tbody></table></div>
+<ol start="3">
+<li>
+<p>Generalization of Demonstrated Trajectories</p>
+<ul>
+<li>Trajectory Generalization
+<ul>
+<li>
+<p>Expert의 Trajectory를 그대로 반복하는 것이 아니라, 더 Robust한 환경에서 사용할 수 있도록 변형하는 것</p>
+</li>
+<li>
+<p>DMP</p>
+<ul>
+<li>Start<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span>Goal Parameter를 바꿈</li>
+</ul>
+</li>
+<li>
+<p>ProMP</p>
+<ul>
+<li>Start<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span>Goal<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span>Via-Point 등 새로운 조건을 Observation으로 주고, 이를 만족할 가능성이 높은 Weight들의 확률을 높이는 방식으로 전체 Trajectory를 변형함<br/>
+ex) 새로운 Start<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span>Goal Position, 반드시 지나야 하는 point, 특정 시점의 Position<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span>Velocity 등</li>
+</ul>
+</li>
+<li>
+<p>SEDS</p>
+<ul>
+<li>State → Motion 관계를 학습함</li>
+</ul>
+</li>
+<li>
+<p>Geometrical Warping</p>
+<ul>
+<li>
+<p>기존 환경의 형태 자체를 새로운 환경에 맞게 변형하면서, Trajectory도 같이 변형함</p>
+</li>
+<li>
+<p>Non-rigid Registration</p>
+<ul>
+<li>비강체 등록을 이용해 기존 Trajectory를 새로운 Scene으로 옮기는 장면<br/>
+<img src="../00_attachments/pasted-image-20260907210229.png" alt width="auto" height="auto"/></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Information Theoretic Understanding of Model-Free BC</p>
+<ul>
+<li>
+<p>앞선 방식에선 Expert Trajectroy와 예측 Trajectory의 차이를 최소화했음</p>
+<ul>
+<li>MLE와 동일하게 볼 수 있음<br/>
+| 참고 : <a href="../mle" class="internal internal-link" data-slug="mle">MLE</a></li>
+<li>Least Squares ↔ Maximum Likelihood
+<ul>
+<li>Least Squares : 오차를 제곱한 뒤, 합이 가장 작아지도록 Parameter를 찾는 방법</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Expert와 Learner의 분포 차이를 KL Divergence로 볼 수도 있음<br/>
+| 참고 : <a href="../06_인턴십/kl-divergence" class="internal internal-link alias" data-slug="06_인턴십/kl-divergence">KL Divergence</a></p>
+<ul>
+<li>Least Squares ↔ MLE ↔ KL Divergence 최소화</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Time Alignment of Multiple Demonstrations</p>
+<ul>
+<li>
+<p>Expert가 동일한 Behavior를 여러 번 시연해도, 실행 속도는 매번 다를 수 있음</p>
+</li>
+<li>
+<p>이때 단순히 동일한 시간 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">t</span></span></span></span>끼리 비교하면, 서로 다른 동작 단계를 비교할 수 있기 때문에, 시간축을 정렬해야 함</p>
+</li>
+<li>
+<p>Dynamic Time Warping</p>
+<ul>
+<li>
+<p>두 Trajectory에서 서로 대응되는 Behavior 단계가 같은 위치에 오도록, 시간축을 늘리거나 줄여 정렬하는 방법</p>
+</li>
+<li>
+<p>정렬 방법</p>
+<ul>
+<li>
+<p>두 개의 Sequence를 정렬함</p>
+</li>
+<li>
+<p>하나의 Reference Trajectory를 두고, 각 Demonstration의 시간축을 Reference에 Mapping하는 방법도 있음</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Learning Coupled Movements</p>
+<ul>
+<li>
+<p>Coupled Movements</p>
+<ul>
+<li>여러 DoF 또는 여러 Agent의 움직임이 서로 연관되어 있는 경우</li>
+</ul>
+</li>
+<li>
+<p>움직임 사이의 상관 관계까지 함께 학습함</p>
+<ul>
+<li>한쪽 움직임을 일부 관측하면, 나머지 움직임을 추정함</li>
+</ul>
+</li>
+<li>
+<p>DMP 기반</p>
+<ul>
+<li>각 움직임을 DMP로 표현한 뒤, 서로 다른 DMP 사이에 Coupling Term을 추가함</li>
+<li>기존 DMP의 Forcing Term에 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord hangul_fallback">외부</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">움직임의</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">실제값</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord hangul_fallback">예상값</span></span></span></span>을 반영해 다른 움직임에 맞춰 자신의 Trajectory를 수정함</li>
+<li>즉, 다른 Agent나 외부 변수의 움직임에 따라 DMP Trajectory를 실시간으로 보정</li>
+</ul>
+</li>
+<li>
+<p>Gaussian Conditioning <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span> Interaction ProMP</p>
+<ul>
+<li>사람과 로봇의 ProMP Weight를 하나로 묶어, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0991em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0359em;">ω</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">h</span><span class="mord mathnormal mtight">u</span><span class="mord mathnormal mtight">man</span></span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0359em;">ω</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0278em;">r</span><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight">b</span><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight">t</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>이란 Joint Distribution을 학습함</li>
+<li>사람의 움직임이 관측되면, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0991em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0359em;">ω</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0278em;">r</span><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight">b</span><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight">t</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">∣</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0359em;">ω</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">h</span><span class="mord mathnormal mtight">u</span><span class="mord mathnormal mtight">man</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>을 계산해, 그 사람 움직임에 맞는 로봇 움직임을 예측함</li>
+</ul>
+</li>
+<li>
+<p>Time-Invariant DS 기반</p>
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6679em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6679em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">x</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.1111em;"><span class="mord">˙</span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.1076em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span> 형태의 Dynamical System을 여러 Agent에 적용학, Agent 사이 관계까지 모델링<br/>
+→ <code>CDS</code> (Coupled Dynamical System)이라고 함</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>
+<p>with DMPs</p>
+<ul>
+<li>서로 다른 움직임을 각각 DMP로 학습한 뒤, 한 움직임의 변화가 다른 움직임에 반영되도록 Coupling Term을 추가하는 방법
+<ul>
+<li>즉, 상대 움직임이 예상과 달라지면 그 차이만큼 자신의 DMP Trajectory를 수정함</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>with Gaussian Conditioning</p>
+<ul>
+<li>
+<p>두 움직임의 상관 관계를 Distribution으로 학습한 뒤, 한쪽 움직임을 관측하면 다른 쪽 움직임을 조건부 확률로 예측하는 방법</p>
+<ul>
+<li>즉, 사람이 이렇게 움직이면 보통 로봇은 이렇게 움직이는 것을 학습함</li>
+</ul>
+</li>
+<li>
+<p>Interaction ProMP</p>
+<ul>
+<li>
+<p>조건을, 다른 Agent의 움직임 예측에 사용함</p>
+<ul>
+<li>움직임이 관측되면, 이와 가장 잘 맞는 Motion Distribution을 얻음</li>
+</ul>
+</li>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5678em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.5678em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">ω</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">ˉ</span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0991em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0359em;">ω</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">h</span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0359em;">ω</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.0278em;">r</span></span></span></span></span></span></span></span><span class="mclose"><span class="mclose">]</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.1389em;">T</span></span></span></span></span></span></span></span></span></span></span></p>
+<ul>
+<li>사람과 로봇의 Weight를 하나로 합침</li>
+</ul>
+</li>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.5678em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">ω</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">ˉ</span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathcal" style="margin-right:0.1474em;">N</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">μ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2474em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord accent mtight"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.5678em;"><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord mathnormal mtight" style="margin-right:0.0359em;">ω</span></span><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord mtight">ˉ</span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord">Σ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2474em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord accent mtight"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.5678em;"><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord mathnormal mtight" style="margin-right:0.0359em;">ω</span></span><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord mtight">ˉ</span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
+<ul>
+<li>여러 Demonstartion에서 Joint Distribution을 학습함</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>장점</p>
+<ul>
+<li>Human-Robot Motion 간 상관 관계 학습 가능</li>
+<li>일부 Motion만 관측해도 나머지 Motion 예측 가능</li>
+<li>확률적 모델이므로, Noise가 있는 관측에도 비교적 강함</li>
+<li>여러 Agent의 Coupled Motion 표현 가능</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>with Time-Invariant Dynamical System</p>
+<ul>
+<li>
+<p>CDS 방식</p>
+<ul>
+<li>여러 <code>GMM</code>을 사용해, Master의 State, Slave의 State, Slave의 Desired State, 각 State의 변화율 사이의 Joint Distribution을 학습함
+<ul>
+<li>GMM (Gaussian Mixture Model) : 하나의 복잡한 데이터 분포를 여러 개의 Gaussian Distiribution을 가중합해 근사하는 확률 모델</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>두 Agent의 움직임을 각각 Dynamical System으로 표현하고, 둘 사이의 상태 관계까지 학습해 한쪽 움직임에 맞춰 다른 쪽이 움직이도록 하는 방법</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>Incremetal Trajectory Learning</p>
+<ul>
+<li>
+<p>Expert의 Demonstration만으로 처음부터 완벽한 Trajectory를 얻기 어렵기 때문에, 로봇이 실행한 결과를 사람이 수정하고, 수정한 Trajectory를 다시 학습에 반영해 Trajectory를 점진적으로 개선하는 방법</p>
+</li>
+<li>
+<p>과정</p>
+<ol>
+<li>Initial Demonstration</li>
+<li>Trajectory 학습</li>
+<li>Robot 실행</li>
+<li>Human Correction</li>
+<li>새 Trajectory 추가</li>
+<li>모델 업데이트</li>
+<li>반복</li>
+</ol>
+</li>
+<li>
+<p>GMM 기반</p>
+<ul>
+<li>초기 Expert Trajectory로 GMM을 학습한 뒤, 로봇이 실행한 동작을 사람이 Kinesthtic Teaching으로 직접 수정함<br/>
+| 참고 : <a href="../06_인턴십/kinestheitic-teaching" class="internal internal-link alias" data-slug="06_인턴십/kinestheitic-teaching">Kinestheitic Teaching</a>
+<ul>
+<li>수정한 Trajectory를 다시 GMM에 반영하면서 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="mclose">)</span></span></span></span>를 개선함</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Context까지 고려한 ProMP</p>
+<ul>
+<li>
+<p>GMM 기반 방식은, Context 변화에 약함</p>
+</li>
+<li>
+<p>Trajectory Parameter <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0269em;">w</span></span></span></span>와 Context <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span>의 관계를 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.0269em;">w</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">s</span><span class="mclose">)</span></span></span></span>로 학습함</p>
+</li>
+<li>
+<p>새로운 Context <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6644em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mord mathnormal mtight">e</span><span class="mord mathnormal mtight" style="margin-right:0.0269em;">w</span></span></span></span></span></span></span></span></span></span></span></span>가 주어지면, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">∣</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mord mathnormal mtight">e</span><span class="mord mathnormal mtight" style="margin-right:0.0269em;">w</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>를 이용해 적절한 Trajectory를 생성함</p>
+</li>
+<li>
+<p>사람이 수정하면, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0269em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mord mathnormal mtight">e</span><span class="mord mathnormal mtight" style="margin-right:0.0269em;">w</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mord mathnormal mtight">e</span><span class="mord mathnormal mtight" style="margin-right:0.0269em;">w</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>를 추가해 업데이트함</p>
+</li>
+<li>
+<p>새로운 Context → Trajectory 생성 → Human Correction → 모델 개선</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Local Modulation</p>
+<ul>
+<li>Time-Invariant Dynamical System에선, 전체 Trajectory를 다시 학습하지 않고 문제가 있는 부분만 수정할 수 있음
+<ul>
+<li>즉, 전체 움직임은 유지하면서 필요한 부분만 교정하는 방식</li>
+</ul>
+</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8179em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6679em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">x</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.1111em;"><span class="mord">˙</span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ini</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> → <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8179em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6679em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">x</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.1111em;"><span class="mord">˙</span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.109em;">M</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mord"><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6679em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">x</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.1111em;"><span class="mord">˙</span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ini</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.109em;">M</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span>는 Scaling<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span>Rotation을 이용해 특정 구간의 움직임만 변경함</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Combining Multiple Expert Policies</p>
+<ul>
+<li>
+<p>여러 개의 Expert Policy 또는 Movement Primitive를 각각 따로 학습한 뒤, 상황에 맞게 조합해 하나의 최종 Policy를 만드는 방법</p>
+</li>
+<li>
+<p>Mixture of Experts</p>
+<ul>
+<li>
+<p>현재 상황에 더 잘 맞는 Expert의 비중을 크게 주어 여러 Policy를 섞는 방식</p>
+</li>
+<li>
+<p>여러 Policy에 Weight <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">o</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>를 주고 가중합</p>
+</li>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">π</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.833em;vertical-align:-0.6547em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.1784em;"><span style="top:-2.5703em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight"><span class="mop op-symbol small-op mtight" style="position:relative;top:0em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8852em;"><span style="top:-2.1786em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-2.8971em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.109em;">N</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3214em;"><span></span></span></span></span></span></span><span class="mspace mtight" style="margin-right:0.1952em;"></span><span class="mord mtight"><span class="mord mathnormal mtight">o</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3281em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.535em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight"><span class="mop op-symbol small-op mtight" style="position:relative;top:0em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9191em;"><span style="top:-2.1786em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-2.931em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.109em;">N</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3214em;"><span></span></span></span></span></span></span><span class="mspace mtight" style="margin-right:0.1952em;"></span><span class="mord mtight"><span class="mord mathnormal mtight">o</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3281em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0359em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3281em;"><span style="top:-2.357em;margin-left:-0.0359em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mopen mtight">(</span><span class="mord mathnormal mtight">x</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.6547em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></p>
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0359em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span> : i번째 Expert Policy의 출력</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">o</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> : 해당 Expert를 얼마나 반영할지 나타내는 Weight</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Product of Experts</p>
+<ul>
+<li>Policy들을 곱해서 결합
+<ul>
+<li>즉, 여러 Expert가 동시에 가능하다고 판단하는 영역을 강조하는 방식</li>
+</ul>
+</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">π</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.6585em;vertical-align:-0.5985em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.06em;"><span style="top:-2.6265em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop op-symbol small-op mtight" style="margin-right:0.1945em;position:relative;top:-0.0006em;">∫</span><span class="mspace mtight" style="margin-right:0.1952em;"></span><span class="mop mtight"><span class="mop op-symbol small-op mtight" style="position:relative;top:0em;">∏</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1496em;"><span style="top:-2.1786em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3214em;"><span></span></span></span></span></span></span><span class="mspace mtight" style="margin-right:0.1952em;"></span><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0359em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3281em;"><span style="top:-2.357em;margin-left:-0.0359em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mopen mtight">(</span><span class="mord mathnormal mtight">x</span><span class="mclose mtight">)</span><span class="mspace mtight" style="margin-right:0.1952em;"></span><span class="mord mathnormal mtight">d</span><span class="mord mathnormal mtight">x</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.535em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight"><span class="mop op-symbol small-op mtight" style="position:relative;top:0em;">∏</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1496em;"><span style="top:-2.1786em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3214em;"><span></span></span></span></span></span></span><span class="mspace mtight" style="margin-right:0.1952em;"></span><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0359em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3281em;"><span style="top:-2.357em;margin-left:-0.0359em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mopen mtight">(</span><span class="mord mathnormal mtight">x</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.5985em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></li>
+</ul>
+</li>
+<li>
+<p>ProMP에 적용</p>
+<ul>
+<li>여러 개의 ProMP를 생성해, 서로 다른 Iteration Pattern을 표현하고, Gaussian Mixture 형태로 결합
+<ul>
+<li>서로 다른 움직임 Pattern은 각각 별도의 ProMP로 학습한 뒤, 상황에 따라 선택하거나 혼합함</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="model-free-behavioral-cloning-for-task-level-planning">Model-Free Behavioral Cloning for Task-Level Planning<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#model-free-behavioral-cloning-for-task-level-planning" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>
+<p>복잡한 Task를 여러 Primitive Motion의 Sequence로 나누고, 어떤 순서로 수행할지 학습함</p>
+<ul>
+<li>
+<p><code>Primitive Motion</code></p>
+<ul>
+<li>복잡한 Task를 구성하는 기본적인 단위 동작</li>
+</ul>
+</li>
+<li>
+<p>Task-Level Planning</p>
+<ul>
+<li>현재 Task를 수행하기 위한 어떤 Primitive Motion을 어떤 순서로 실행할지 결정하는 High-Level Planning</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>
+<p>Segmentation and Clustering for Task-Level Planning</p>
+<ul>
+<li>
+<p>실제 Expert Demonstration 하나엔, 여러 Primitive Motion이 연속해서 들어갈 수 있음</p>
+<ul>
+<li>따라서, 긴 Demonstration을 각 Primitive Motion 단위로 분할해야 함</li>
+</ul>
+</li>
+<li>
+<p>Segmentation</p>
+<ul>
+<li>
+<p>긴 Trajectory에서 Behavior이 바뀌는 지점을 찾아 여러 구간으로 나누는 것</p>
+</li>
+<li>
+<p><code>Change Point</code>를 찾아야 함</p>
+<ul>
+<li><code>Change Point</code> : Behavior 특성이 바뀌는 지점</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Clustering</p>
+<ul>
+<li>같은 종류의 Primitive Motion들을 하나의 그룹으로 묶는 것</li>
+</ul>
+</li>
+<li>
+<p>Unsupervised Learning, HMM, Change-Point Detection 등으로 자동으로 Segmentation<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span>Clustering을 수행함</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Learning a Sequence of Primitive Motions</p>
+<ul>
+<li>
+<p>분할된 Primitive Motion들을 어떤 순서로 실행할지 학습</p>
+</li>
+<li>
+<p>Skill Tree</p>
+<ul>
+<li>여러 Demonstration에서 얻은 Primitive Sequence를 Tree 형태로 합침
+<ul>
+<li>여러 Demonstration에서 비슷한 Skill은 하나로 합치고, 다음 동작을 Branch로 표현함</li>
+</ul>
+</li>
+<li>Skill : Primitive Motion과 같은 수준의 재사용 가능한 기본 동작 단위</li>
+</ul>
+</li>
+<li>
+<p>Transition Model</p>
+<ul>
+<li>현재 Primitive로 다음 Primitive를 예측하도록 학습함</li>
+</ul>
+</li>
+<li>
+<p>HMM 기반 확률적 Transition</p>
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.1389em;">P</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">m</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">∣</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">m</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">o</span><span class="mord mathnormal">b</span><span class="mord mathnormal" style="margin-right:0.0278em;">ser</span><span class="mord mathnormal" style="margin-right:0.0359em;">v</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></li>
+<li>확률적으로 Transition을 모델링할 수 있음<br/>
+ex) 여러 DMP가 하나의 Task Sequence를 구성</li>
+</ul>
+</li>
+<li>
+<p>Incremental 방식</p>
+<ul>
+<li>
+<p>처음 Demonstration만으로 Sequence를 완벽하게 학습하지 못하면, 지속적으로 개선할 수 있음<br/>
+ex) 잘못된 Primitive Sequence → Expert 수정 → Transition Model 업데이트</p>
+</li>
+<li>
+<p>BPAR-HMM → Demonstration Segmentation</p>
+</li>
+<li>
+<p>DMP → 각 Primitive 표현</p>
+</li>
+<li>
+<p>FSA/FSM → Primitive 간 Transition 표현</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="model-based-behavioral-cloning-methods">Model-Based Behavioral Cloning Methods<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#model-based-behavioral-cloning-methods" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>
+<p>로봇의 Dynamics를 학습함</p>
+<ul>
+<li>
+<p>즉, 현재 State <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>에서 Action <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">u</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>를 하면 다음 State <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6389em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span></span></span></span>가 어떻게 될지 예측하는 Forward Dynamics Model <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.1076em;">f</span></span></span></span></p>
+<ul>
+<li>Forward Dynamics Model
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6389em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.1076em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">u</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></li>
+<li>현재 State와 Action이 주어졌을 때, 다음 State가 어떻게 될지 예측하는 모델</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>로봇의 Dynamics를 고려했을 때, Expert의 Behavior과 가장 비슷한 Behavior를 하려면 어떤 Action을 해야하는가</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Model을 사용하는 이유</p>
+<ul>
+<li><code>Correspondence Problem</code>이 발생할 수 있음
+<ul>
+<li><code>Correspondence Problem</code>
+<ul>
+<li>Expert와 Learner의 구현이나 Dynamics가 다를 수 있는 문제<br/>
+ex) Joint 구조 상이, Actuator 성능 상이, 속도<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span>가속도 제한, Underactuated인 경우 등</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:false,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc"><button type="button" class="toc-header" aria-controls="toc-12" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-0" class="toc-content overflow"><li class="depth-0"><a href="#문제-정의" data-for="문제-정의">문제 정의</a></li><li class="depth-0"><a href="#bc를-위한-설계-선택" data-for="bc를-위한-설계-선택">BC를 위한 설계 선택</a></li><li class="depth-0"><a href="#model-free-and-model-based-behavioral-cloning-method" data-for="model-free-and-model-based-behavioral-cloning-method">Model-Free and Model-Based Behavioral Cloning Method</a></li><li class="depth-0"><a href="#action-state-space에서-model-free-bc-방법" data-for="action-state-space에서-model-free-bc-방법">Action-State Space에서 Model-Free BC 방법</a></li><li class="depth-0"><a href="#trajectory-train을-위한-model-free-bc" data-for="trajectory-train을-위한-model-free-bc">Trajectory Train을 위한 Model-Free BC</a></li><li class="depth-0"><a href="#model-free-behavioral-cloning-for-task-level-planning" data-for="model-free-behavioral-cloning-for-task-level-planning">Model-Free Behavioral Cloning for Task-Level Planning</a></li><li class="depth-0"><a href="#model-based-behavioral-cloning-methods" data-for="model-based-behavioral-cloning-methods">Model-Based Behavioral Cloning Methods</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v5.0.0</a> © 2026</p><ul><li><a href="https://github.com/jcy9066">GitHub</a></li><li><a href="https://www.linkedin.com/in/changwan-jeong-6666813a1/">LinkedIn</a></li></ul></footer></div></div></body><script src="../static/resource-after-e13fffa1.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-8b336f9a.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-baba652b.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-5eb75950.js" type="module" data-persist="true"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript" data-persist="true"></script><script src="../postscript-a3359fe8.js" type="module" data-persist="true"></script></html>
