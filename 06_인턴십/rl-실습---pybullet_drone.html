@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" dir="ltr"><head><title>RL 실습 - PyBullet_drone</title><meta charset="utf-8"/><link rel="preload" href="../index-1269a69c.css" as="style"/><link rel="preload" href="../prescript-2bfc6315.js" as="script"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans:wght@400;700&amp;family=Noto Sans:ital,wght@0,400;0,600;1,400;1,600&amp;family=Noto Sans Mono:wght@400;600&amp;display=swap"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans:wght@400;600&amp;text=Wan&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="Wan"/><meta property="og:title" content="RL 실습 - PyBullet_drone"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="RL 실습 - PyBullet_drone"/><meta name="twitter:description" content="| 참고 : github.com/learnsyslab/gym-pybullet-drones learn.py PyBullet Drone Hover 환경에서 PPO를 학습시키는 예제 | 참고 : PPO 환경 생성 → PPO 학습 → 주기적 평가 \cdot best model 저장 → 학습된 policy 실행 즉, RL 학습 파이프라인을 한 파일에서 보여주는 최소 예제 Multiagent 한 환경에서 여러 대의 Drone을 동시에 사용할지 선택하는 옵션 DEFAULT_AGENTS = n DEFAULT_MA = {boolean} stabl..."/><meta property="og:description" content="| 참고 : github.com/learnsyslab/gym-pybullet-drones learn.py PyBullet Drone Hover 환경에서 PPO를 학습시키는 예제 | 참고 : PPO 환경 생성 → PPO 학습 → 주기적 평가 \cdot best model 저장 → 학습된 policy 실행 즉, RL 학습 파이프라인을 한 파일에서 보여주는 최소 예제 Multiagent 한 환경에서 여러 대의 Drone을 동시에 사용할지 선택하는 옵션 DEFAULT_AGENTS = n DEFAULT_MA = {boolean} stabl..."/><meta property="og:image:alt" content="| 참고 : github.com/learnsyslab/gym-pybullet-drones learn.py PyBullet Drone Hover 환경에서 PPO를 학습시키는 예제 | 참고 : PPO 환경 생성 → PPO 학습 → 주기적 평가 \cdot best model 저장 → 학습된 policy 실행 즉, RL 학습 파이프라인을 한 파일에서 보여주는 최소 예제 Multiagent 한 환경에서 여러 대의 Drone을 동시에 사용할지 선택하는 옵션 DEFAULT_AGENTS = n DEFAULT_MA = {boolean} stabl..."/><meta property="og:image" content="https://jcy9066.github.io/jeongs-note/static/og-image.png"/><meta property="og:image:url" content="https://jcy9066.github.io/jeongs-note/static/og-image.png"/><meta name="twitter:image" content="https://jcy9066.github.io/jeongs-note/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="jcy9066.github.io/jeongs-note"/><meta property="og:url" content="https://jcy9066.github.io/jeongs-note/06_인턴십/rl-실습---pybullet_drone"/><meta property="twitter:url" content="https://jcy9066.github.io/jeongs-note/06_인턴십/rl-실습---pybullet_drone"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="| 참고 : github.com/learnsyslab/gym-pybullet-drones learn.py PyBullet Drone Hover 환경에서 PPO를 학습시키는 예제 | 참고 : PPO 환경 생성 → PPO 학습 → 주기적 평가 \cdot best model 저장 → 학습된 policy 실행 즉, RL 학습 파이프라인을 한 파일에서 보여주는 최소 예제 Multiagent 한 환경에서 여러 대의 Drone을 동시에 사용할지 선택하는 옵션 DEFAULT_AGENTS = n DEFAULT_MA = {boolean} stabl..."/><meta name="generator" content="Quartz"/><link href="../index-1269a69c.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-735924e0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-589c1cea.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-bbc3f7c0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-2911f5d1.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-7f220492.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-e427079e.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-53b25b2b.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-c93c6a44.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-8a06014f.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-77d6a441.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-6ee21cee.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-fcbfb174.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-34bdfded.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-788c9ca3.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-642859cd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-4abc06bd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-274a3dfe.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-94cb6c84.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-58d5ff56.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-9f9b2774.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-7262b5a7.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-a5c806d2.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-6bd36952.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" data-persist="true"/><script src="../prescript-2bfc6315.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="06_인턴십/rl-실습---pybullet_drone" data-basepath="/jeongs-note"><div id="quartz-root" class="page" data-frame="default"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">Wan</a></h2><div class="mobile-only"><div class="spacer"></div></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 0.5rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button" aria-label="검색" aria-expanded="false"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true" data-field-priority="[&quot;title&quot;,&quot;content&quot;,&quot;tags&quot;]"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode" aria-label="다크 모드"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode" aria-label="리더 모드"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><nav class="tag-explorer" aria-label="List"><h2 class="tag-explorer-title">List</h2><ul class="tag-explorer-list"><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/3D">3D</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/usd">USD</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/viewpoint">Viewpoint</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/visual--and--lidar-descriptor">Visual &amp; LiDAR Descriptor</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Algorithm">Algorithm</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/actor-critic">Actor-Critic</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/amcl">AMCL</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dagger">DAgger</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ddpg">DDPG</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dpg">DPG</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/grid-search">Grid Search</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mappo">MAPPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/online-learning">Online Learning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pilco">PILCO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ppo">PPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rrt">RRT</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Coding">Coding</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/coding-agent">Coding Agent</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/context-(agent-coding)">Context (Agent Coding)</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/hook">Hook</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/matplotlib">Matplotlib</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mcp">MCP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/multi-agent">Multi-Agent</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/numpy">Numpy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/orchestration">Orchestration</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pandas">Pandas</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/skill">Skill</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/sub-agent">Sub-Agent</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/tool">Tool</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/torchvision">Torchvision</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/DeepLearning">DeepLearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---1.-데이터중심ai란">데이터중심 AI 입문 - 1. 데이터중심AI란</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---2.-데이터셋의-크기와-모델-성능의-관계">데이터중심 AI 입문 - 2. 데이터셋의 크기와 모델 성능의 관계</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---4.-이미지-인식-모델의-기초-지식">데이터중심 AI 입문 - 4. 이미지 인식 모델의 기초 지식</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---5.-이미지-데이터를-확장-생성하는-기술">데이터중심 AI 입문 - 5. 이미지 데이터를 확장 생성하는 기술</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---7.-vlm">데이터중심 AI 입문 - 7. VLM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---9.-pre-train,-denoise-filtering">데이터중심 AI 입문 - 9. Pre-train, Denoise Filtering</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---11.-fine-tuing,-instruction-data,-preference-data">데이터중심 AI 입문 - 11. Fine-tuing, Instruction Data, Preference Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---12.-fine-tuning-model-evaluation">데이터중심 AI 입문 - 12. Fine-tuning Model Evaluation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---2.-텍스트-전처리">딥러닝 이론 - 2. 텍스트 전처리</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---7.-deeplearning">딥러닝 이론 - 7. DeepLearning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---8.-recurrent-neural-network">딥러닝 이론 - 8. Recurrent Neural Network</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---14.-encoder--and--decoder-using-rnn">딥러닝 이론 - 14. Encoder &amp; Decoder using RNN</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---15.-attention-mechanism">딥러닝 이론 - 15. Attention Mechanism</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---16.-transformer">딥러닝 이론 - 16. Transformer</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---20.-pretrained-encoder-decoder-model">딥러닝 이론 - 20. Pretrained Encoder-Decoder Model</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---24.-llm-fine-tuning">딥러닝 이론 - 24. LLM Fine-tuning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---25.-이미지를-인식하는-vlm-fine-tuning">딥러닝 이론 - 25. 이미지를 인식하는 VLM Fine-Tuning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/activation-function">Activation Function</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/backpropagation">Backpropagation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/batch--and--epoch">Batch &amp; Epoch</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/cnns">CNNs</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/crossentropyloss">CrossEntropyLoss</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/data-augmentation">Data Augmentation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dropout">Dropout</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/evaluation">Evaluation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/fashion-mnist">Fashion-MNIST</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gradient">Gradient</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loss-function">Loss Function</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mlp">MLP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/nlloss">NLLoss</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/normalization--and--standardization">Normalization &amp; Standardization</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/optimization">Optimization</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/02_랩미팅-자료/parameter-sharing">Parameter Sharing</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pixel-value">Pixel Value</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pooling">Pooling</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rag">RAG</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/residual-learning">Residual Learning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/softmax">Softmax</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/task-definition">Task Definition</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/training-loop">Training Loop</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/transformation">Transformation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/vllm">vLLM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/worker">Worker</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Equation">Equation</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/bellman-equation">Bellman Equation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/exponential">Exponential</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gaussian">Gaussian</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pd-controller">PD Controller</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Git">Git</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/git">Git</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/git---cherry-pick">Git - Cherry-pick</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/git---worktree">Git - Worktree</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/ImitationLearning">ImitationLearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/behavioral-cloning">Behavioral Cloning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/compounding-error">Compounding Error</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/conditioning">Conditioning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dagger">DAgger</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---1.-introduction">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 1. Introduction</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---3.-behavioral-cloning">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 3. Behavioral Cloning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dmp">DMP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gradient">Gradient</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/hmm">HMM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/horizon">Horizon</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/kinestheitic-teaching">Kinestheitic Teaching</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/kl-divergence">KL Divergence</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mmp">MMP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/modeling">Modeling</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/movement-primitive">Movement Primitive</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/probability--and--likelihood">Probability &amp; Likelihood</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/promp">ProMP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/seds">SEDS</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/time-invariant-dynamical-system">Time-Invariant Dynamical System</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/trajectory">Trajectory</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Lecture">Lecture</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---1.-데이터중심ai란">데이터중심 AI 입문 - 1. 데이터중심AI란</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---2.-데이터셋의-크기와-모델-성능의-관계">데이터중심 AI 입문 - 2. 데이터셋의 크기와 모델 성능의 관계</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---4.-이미지-인식-모델의-기초-지식">데이터중심 AI 입문 - 4. 이미지 인식 모델의 기초 지식</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---5.-이미지-데이터를-확장-생성하는-기술">데이터중심 AI 입문 - 5. 이미지 데이터를 확장 생성하는 기술</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---7.-vlm">데이터중심 AI 입문 - 7. VLM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---11.-fine-tuing,-instruction-data,-preference-data">데이터중심 AI 입문 - 11. Fine-tuing, Instruction Data, Preference Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---12.-fine-tuning-model-evaluation">데이터중심 AI 입문 - 12. Fine-tuning Model Evaluation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---13.-robot-data">데이터중심 AI 입문 - 13. Robot Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---14.-collecting-robot-data">데이터중심 AI 입문 - 14. Collecting Robot Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---2.-텍스트-전처리">딥러닝 이론 - 2. 텍스트 전처리</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---6.-machinelearning">딥러닝 이론 - 6. MachineLearning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---7.-deeplearning">딥러닝 이론 - 7. DeepLearning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---8.-recurrent-neural-network">딥러닝 이론 - 8. Recurrent Neural Network</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---14.-encoder--and--decoder-using-rnn">딥러닝 이론 - 14. Encoder &amp; Decoder using RNN</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---15.-attention-mechanism">딥러닝 이론 - 15. Attention Mechanism</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---16.-transformer">딥러닝 이론 - 16. Transformer</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---20.-pretrained-encoder-decoder-model">딥러닝 이론 - 20. Pretrained Encoder-Decoder Model</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---24.-llm-fine-tuning">딥러닝 이론 - 24. LLM Fine-tuning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---25.-이미지를-인식하는-vlm-fine-tuning">딥러닝 이론 - 25. 이미지를 인식하는 VLM Fine-Tuning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---1.-introduction">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 1. Introduction</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-입문---1.기초">ROS 입문 - 1.기초</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/LinearAlgebra">LinearAlgebra</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/manifold">Manifold</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/projection">Projection</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/subspace">Subspace</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/transformation">Transformation</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/LLM">LLM</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/rag">RAG</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/vllm">vLLM</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/MachineLearning">MachineLearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---6.-machinelearning">딥러닝 이론 - 6. MachineLearning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/episode">Episode</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ml-workflow">ML Workflow</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Paper">Paper</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/making-quadrupeds-learning-to-walk.-step-by-step-guide">Making quadrupeds Learning to walk. Step-by-Step Guide</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Perception">Perception</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/visual--and--lidar-descriptor">Visual &amp; LiDAR Descriptor</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Practice">Practice</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/fashion-mnist">Fashion-MNIST</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl-실습---cartpole">RL 실습 - CartPole</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl-실습---moutaincar">RL 실습 - MoutainCar</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl-실습---pybullet_drone">RL 실습 - PyBullet_drone</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-실습---ros2-turtlesim">ROS 실습 - ROS2 Turtlesim</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/ReinforcementLearning">ReinforcementLearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/action-(rl)">Action (RL)</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/actor-critic">Actor-Critic</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/actuator">Actuator</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/amcl">AMCL</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/bellman-equation">Bellman Equation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/curriculum-learning--and--scaffolding">Curriculum Learning &amp; Scaffolding</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ddpg">DDPG</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---1.-introduction">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 1. Introduction</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dpg">DPG</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dqn">DQN</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/e-greedy-policy">E-Greedy Policy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/environment">Environment</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/exploration--and--exploitation">Exploration &amp; Exploitation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gae">GAE</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gradient">Gradient</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/her">HER</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/horizon">Horizon</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/making-quadrupeds-learning-to-walk.-step-by-step-guide">Making quadrupeds Learning to walk. Step-by-Step Guide</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mappo">MAPPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mdp">MDP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/modeling">Modeling</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/movement-primitive">Movement Primitive</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pilco">PILCO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/policy">Policy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/potential-based-reward-shaping">Potential-Based Reward Shaping</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ppo">PPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/q-learning">Q-Learning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/replay-memory">Replay Memory</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/reward-shaping">Reward Shaping</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl-실습---cartpole">RL 실습 - CartPole</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl-실습---moutaincar">RL 실습 - MoutainCar</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl-실습---pybullet_drone">RL 실습 - PyBullet_drone</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rollout">Rollout</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/sensor">Sensor</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/target-network">Target Network</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/trajectory">Trajectory</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Robotics">Robotics</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---13.-robot-data">데이터중심 AI 입문 - 13. Robot Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---14.-collecting-robot-data">데이터중심 AI 입문 - 14. Collecting Robot Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dof">DoF</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-closure">Loop Closure</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-detection">Loop Detection</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/making-quadrupeds-learning-to-walk.-step-by-step-guide">Making quadrupeds Learning to walk. Step-by-Step Guide</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/movement-primitive">Movement Primitive</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pd-controller">PD Controller</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/primitive-behavior">Primitive Behavior</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-입문---1.기초">ROS 입문 - 1.기초</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rrt">RRT</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/trajectory">Trajectory</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/visual-odometry">Visual Odometry</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/ROS">ROS</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/action-(ros)">Action (ROS)</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/namespace">Namespace</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/nav2">Nav2</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/node">Node</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/occupancy-grid-map">Occupancy Grid Map</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/qosprofile">QoSProfile</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rclpy">rclpy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-실습---ros2-turtlesim">ROS 실습 - ROS2 Turtlesim</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-입문---1.기초">ROS 입문 - 1.기초</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros2">ROS2</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/sensor_msgs--and--image.msg">sensor_msgs &amp; Image.msg</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/service">Service</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/topic">Topic</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/transformation">Transformation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/urdf">URDF</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/SLAM">SLAM</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/amcl">AMCL</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-closure">Loop Closure</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-detection">Loop Detection</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/scan-context">Scan Context</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/visual--and--lidar-descriptor">Visual &amp; LiDAR Descriptor</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Statistics">Statistics</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/bayesian">Bayesian</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/entropy">Entropy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/exponential">Exponential</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/kl-divergence">KL Divergence</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/lagrange-multiplier">Lagrange Multiplier</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/map">MAP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/posteriori">Posteriori</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/probability--and--likelihood">Probability &amp; Likelihood</a></li></ul></li></ul></nav></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../06_인턴십/">06_인턴십</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>RL 실습 - PyBullet_drone</a></div></nav><h1 class="article-title">RL 실습 - PyBullet_drone</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-15T05:37:13.784Z">2026년 9월 15일</time><span>10 min read</span></p><ul class="tags"><li><a href="../tags/ReinforcementLearning" class="internal tag-link">ReinforcementLearning</a></li><li><a href="../tags/Practice" class="internal tag-link">Practice</a></li></ul></div></div><article class="popover-hint"><div class="markdown-preview-view markdown-rendered"><hr/>
-<p>| 참고 : <a href="https://github.com/learnsyslab/gym-pybullet-drones" class="external external-link">https://github.com/learnsyslab/gym-pybullet-drones<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></p>
+<html lang="ko" dir="ltr"><head><title>RL 실습 - PyBullet_drone</title><meta charset="utf-8"/><link rel="preload" href="../index-1269a69c.css" as="style"/><link rel="preload" href="../prescript-2bfc6315.js" as="script"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans:wght@400;700&amp;family=Noto Sans:ital,wght@0,400;0,600;1,400;1,600&amp;family=Noto Sans Mono:wght@400;600&amp;display=swap"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto Sans:wght@400;600&amp;text=Wan&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="Wan"/><meta property="og:title" content="RL 실습 - PyBullet_drone"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="RL 실습 - PyBullet_drone"/><meta name="twitter:description" content="| 참고 : github.com/learnsyslab/gym-pybullet-drones, wandb.ai/jcy9066_wandb/gym-pybullet-drones-pointreach/workspace learn.py PyBullet Drone Hover 환경에서 PPO를 학습시키는 예제 | 참고 : PPO 환경 생성 → PPO 학습 → 주기적 평가 \cdot best model 저장 → 학습된 policy 실행 즉, RL 학습 파이프라인을 한 파일에서 보여주는 최소 예제 Multiagent 한 환경에서 여러 대의 Drone을..."/><meta property="og:description" content="| 참고 : github.com/learnsyslab/gym-pybullet-drones, wandb.ai/jcy9066_wandb/gym-pybullet-drones-pointreach/workspace learn.py PyBullet Drone Hover 환경에서 PPO를 학습시키는 예제 | 참고 : PPO 환경 생성 → PPO 학습 → 주기적 평가 \cdot best model 저장 → 학습된 policy 실행 즉, RL 학습 파이프라인을 한 파일에서 보여주는 최소 예제 Multiagent 한 환경에서 여러 대의 Drone을..."/><meta property="og:image:alt" content="| 참고 : github.com/learnsyslab/gym-pybullet-drones, wandb.ai/jcy9066_wandb/gym-pybullet-drones-pointreach/workspace learn.py PyBullet Drone Hover 환경에서 PPO를 학습시키는 예제 | 참고 : PPO 환경 생성 → PPO 학습 → 주기적 평가 \cdot best model 저장 → 학습된 policy 실행 즉, RL 학습 파이프라인을 한 파일에서 보여주는 최소 예제 Multiagent 한 환경에서 여러 대의 Drone을..."/><meta property="og:image" content="https://jcy9066.github.io/jeongs-note/static/og-image.png"/><meta property="og:image:url" content="https://jcy9066.github.io/jeongs-note/static/og-image.png"/><meta name="twitter:image" content="https://jcy9066.github.io/jeongs-note/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="jcy9066.github.io/jeongs-note"/><meta property="og:url" content="https://jcy9066.github.io/jeongs-note/06_인턴십/rl-실습---pybullet_drone"/><meta property="twitter:url" content="https://jcy9066.github.io/jeongs-note/06_인턴십/rl-실습---pybullet_drone"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="| 참고 : github.com/learnsyslab/gym-pybullet-drones, wandb.ai/jcy9066_wandb/gym-pybullet-drones-pointreach/workspace learn.py PyBullet Drone Hover 환경에서 PPO를 학습시키는 예제 | 참고 : PPO 환경 생성 → PPO 학습 → 주기적 평가 \cdot best model 저장 → 학습된 policy 실행 즉, RL 학습 파이프라인을 한 파일에서 보여주는 최소 예제 Multiagent 한 환경에서 여러 대의 Drone을..."/><meta name="generator" content="Quartz"/><link href="../index-1269a69c.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-735924e0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-589c1cea.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-bbc3f7c0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-2911f5d1.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-7f220492.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-e427079e.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-53b25b2b.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-c93c6a44.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-8a06014f.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-77d6a441.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-6ee21cee.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-fcbfb174.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-34bdfded.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-788c9ca3.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-642859cd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-4abc06bd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-274a3dfe.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-94cb6c84.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-58d5ff56.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-9f9b2774.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-7262b5a7.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-a5c806d2.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-6bd36952.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" data-persist="true"/><script src="../prescript-2bfc6315.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="06_인턴십/rl-실습---pybullet_drone" data-basepath="/jeongs-note"><div id="quartz-root" class="page" data-frame="default"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">Wan</a></h2><div class="mobile-only"><div class="spacer"></div></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 0.5rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button" aria-label="검색" aria-expanded="false"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>검색</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="검색어를 입력하세요" placeholder="검색어를 입력하세요"/><div class="search-layout" data-preview="true" data-field-priority="[&quot;title&quot;,&quot;content&quot;,&quot;tags&quot;]"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode" aria-label="다크 모드"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="다크 모드"><title>다크 모드</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="라이트 모드"><title>라이트 모드</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode" aria-label="리더 모드"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="리더 모드"><title>리더 모드</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><nav class="tag-explorer" aria-label="List"><h2 class="tag-explorer-title">List</h2><ul class="tag-explorer-list"><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/3D">3D</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/usd">USD</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/viewpoint">Viewpoint</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/visual--and--lidar-descriptor">Visual &amp; LiDAR Descriptor</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Algorithm">Algorithm</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/actor-critic">Actor-Critic</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/amcl">AMCL</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dagger">DAgger</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ddpg">DDPG</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dpg">DPG</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/grid-search">Grid Search</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mappo">MAPPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/online-learning">Online Learning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pilco">PILCO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ppo">PPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rrt">RRT</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Coding">Coding</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/coding-agent">Coding Agent</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/context-(agent-coding)">Context (Agent Coding)</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/hook">Hook</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/matplotlib">Matplotlib</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mcp">MCP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/multi-agent">Multi-Agent</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/numpy">Numpy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/orchestration">Orchestration</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pandas">Pandas</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/skill">Skill</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/sub-agent">Sub-Agent</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/tool">Tool</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/torchvision">Torchvision</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/DeepLearning">DeepLearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/3blue1brown_딥러닝---5.-transformer">3Blue1Brown_딥러닝 - 5.Transformer</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/3blue1brown_딥러닝---1.-신경망이란">3Blue1Brown_딥러닝 - 신경망이란?</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---1.-데이터중심ai란">데이터중심 AI 입문 - 1. 데이터중심AI란</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---2.-데이터셋의-크기와-모델-성능의-관계">데이터중심 AI 입문 - 2. 데이터셋의 크기와 모델 성능의 관계</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---4.-이미지-인식-모델의-기초-지식">데이터중심 AI 입문 - 4. 이미지 인식 모델의 기초 지식</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---5.-이미지-데이터를-확장-생성하는-기술">데이터중심 AI 입문 - 5. 이미지 데이터를 확장 생성하는 기술</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---7.-vlm">데이터중심 AI 입문 - 7. VLM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---9.-pre-train,-denoise-filtering">데이터중심 AI 입문 - 9. Pre-train, Denoise Filtering</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---11.-fine-tuing,-instruction-data,-preference-data">데이터중심 AI 입문 - 11. Fine-tuing, Instruction Data, Preference Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---12.-fine-tuning-model-evaluation">데이터중심 AI 입문 - 12. Fine-tuning Model Evaluation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---2.-텍스트-전처리">딥러닝 이론 - 2. 텍스트 전처리</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---7.-deeplearning">딥러닝 이론 - 7. DeepLearning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---8.-recurrent-neural-network">딥러닝 이론 - 8. Recurrent Neural Network</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---14.-encoder--and--decoder-using-rnn">딥러닝 이론 - 14. Encoder &amp; Decoder using RNN</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---15.-attention-mechanism">딥러닝 이론 - 15. Attention Mechanism</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---16.-transformer">딥러닝 이론 - 16. Transformer</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---20.-pretrained-encoder-decoder-model">딥러닝 이론 - 20. Pretrained Encoder-Decoder Model</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---24.-llm-fine-tuning">딥러닝 이론 - 24. LLM Fine-tuning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---25.-이미지를-인식하는-vlm-fine-tuning">딥러닝 이론 - 25. 이미지를 인식하는 VLM Fine-Tuning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/activation-function">Activation Function</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/backpropagation">Backpropagation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/batch--and--epoch">Batch &amp; Epoch</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/cnns">CNNs</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/crossentropyloss">CrossEntropyLoss</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/data-augmentation">Data Augmentation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dropout">Dropout</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/evaluation">Evaluation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/fashion-mnist">Fashion-MNIST</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gradient">Gradient</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loss-function">Loss Function</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mlp">MLP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/nlloss">NLLoss</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/normalization--and--standardization">Normalization &amp; Standardization</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/optimization">Optimization</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/02_랩미팅-자료/parameter-sharing">Parameter Sharing</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pixel-value">Pixel Value</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pooling">Pooling</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rag">RAG</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/residual-learning">Residual Learning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/softmax">Softmax</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/task-definition">Task Definition</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/training-loop">Training Loop</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/transformation">Transformation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/vllm">vLLM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/worker">Worker</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Equation">Equation</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/bellman-equation">Bellman Equation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/exponential">Exponential</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gaussian">Gaussian</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pd-controller">PD Controller</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Git">Git</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/git">Git</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/git---cherry-pick">Git - Cherry-pick</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/git---worktree">Git - Worktree</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/ImitationLearning">ImitationLearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/behavioral-cloning">Behavioral Cloning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/compounding-error">Compounding Error</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/conditioning">Conditioning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dagger">DAgger</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---1.-introduction">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 1. Introduction</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---3.-behavioral-cloning">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 3. Behavioral Cloning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dmp">DMP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gradient">Gradient</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/hmm">HMM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/horizon">Horizon</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/kinestheitic-teaching">Kinestheitic Teaching</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/kl-divergence">KL Divergence</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mmp">MMP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/modeling">Modeling</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/movement-primitive">Movement Primitive</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/probability--and--likelihood">Probability &amp; Likelihood</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/promp">ProMP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/seds">SEDS</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/time-invariant-dynamical-system">Time-Invariant Dynamical System</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/trajectory">Trajectory</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/IsaacSim">IsaacSim</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/isaac-sim-실습---환경-익히기">Isaac Sim 실습 - 환경 익히기</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Lecture">Lecture</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/3blue1brown_딥러닝---1.-신경망이란">3Blue1Brown_딥러닝 - 신경망이란?</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---1.-데이터중심ai란">데이터중심 AI 입문 - 1. 데이터중심AI란</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---2.-데이터셋의-크기와-모델-성능의-관계">데이터중심 AI 입문 - 2. 데이터셋의 크기와 모델 성능의 관계</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---4.-이미지-인식-모델의-기초-지식">데이터중심 AI 입문 - 4. 이미지 인식 모델의 기초 지식</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---5.-이미지-데이터를-확장-생성하는-기술">데이터중심 AI 입문 - 5. 이미지 데이터를 확장 생성하는 기술</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---7.-vlm">데이터중심 AI 입문 - 7. VLM</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---11.-fine-tuing,-instruction-data,-preference-data">데이터중심 AI 입문 - 11. Fine-tuing, Instruction Data, Preference Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---12.-fine-tuning-model-evaluation">데이터중심 AI 입문 - 12. Fine-tuning Model Evaluation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---13.-robot-data">데이터중심 AI 입문 - 13. Robot Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---14.-collecting-robot-data">데이터중심 AI 입문 - 14. Collecting Robot Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---2.-텍스트-전처리">딥러닝 이론 - 2. 텍스트 전처리</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---6.-machinelearning">딥러닝 이론 - 6. MachineLearning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---7.-deeplearning">딥러닝 이론 - 7. DeepLearning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---8.-recurrent-neural-network">딥러닝 이론 - 8. Recurrent Neural Network</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---14.-encoder--and--decoder-using-rnn">딥러닝 이론 - 14. Encoder &amp; Decoder using RNN</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---15.-attention-mechanism">딥러닝 이론 - 15. Attention Mechanism</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---16.-transformer">딥러닝 이론 - 16. Transformer</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---20.-pretrained-encoder-decoder-model">딥러닝 이론 - 20. Pretrained Encoder-Decoder Model</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---24.-llm-fine-tuning">딥러닝 이론 - 24. LLM Fine-tuning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---25.-이미지를-인식하는-vlm-fine-tuning">딥러닝 이론 - 25. 이미지를 인식하는 VLM Fine-Tuning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---1.-introduction">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 1. Introduction</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-입문---1.기초">ROS 입문 - 1.기초</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/LinearAlgebra">LinearAlgebra</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/manifold">Manifold</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/projection">Projection</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/subspace">Subspace</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/transformation">Transformation</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/LLM">LLM</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/3blue1brown_딥러닝---5.-transformer">3Blue1Brown_딥러닝 - 5.Transformer</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rag">RAG</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/vllm">vLLM</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/MachineLearning">MachineLearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/딥러닝-이론---6.-machinelearning">딥러닝 이론 - 6. MachineLearning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/episode">Episode</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ml-workflow">ML Workflow</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Paper">Paper</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/making-quadrupeds-learning-to-walk.-step-by-step-guide">Making quadrupeds Learning to walk. Step-by-Step Guide</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Perception">Perception</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/visual--and--lidar-descriptor">Visual &amp; LiDAR Descriptor</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Practice">Practice</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/fashion-mnist">Fashion-MNIST</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/isaac-sim-실습---환경-익히기">Isaac Sim 실습 - 환경 익히기</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl-실습---cartpole">RL 실습 - CartPole</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl-실습---moutaincar">RL 실습 - MoutainCar</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl-실습---pybullet_drone">RL 실습 - PyBullet_drone</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-실습---ros2-turtlesim">ROS 실습 - ROS2 Turtlesim</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/ReinforcementLearning">ReinforcementLearning</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/action-(rl)">Action (RL)</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/actor-critic">Actor-Critic</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/actuator">Actuator</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/amcl">AMCL</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/bellman-equation">Bellman Equation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/curriculum-learning--and--scaffolding">Curriculum Learning &amp; Scaffolding</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ddpg">DDPG</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---1.-introduction">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 1. Introduction</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/deep-learning-bible---5.-reinforcement-learning---part-h.-imitation-and-inverse-reinforcement-learning---2.-design-of-imitation-learning-algorithm">Deep Learning Bible - 5. Reinforcement Learning - Part H. Imitation and Inverse Reinforcement Learning - 2. Design of Imitation Learning Algorithm</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dpg">DPG</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dqn">DQN</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/e-greedy-policy">E-Greedy Policy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/environment">Environment</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/exploration--and--exploitation">Exploration &amp; Exploitation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gae">GAE</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/gradient">Gradient</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/her">HER</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/horizon">Horizon</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/making-quadrupeds-learning-to-walk.-step-by-step-guide">Making quadrupeds Learning to walk. Step-by-Step Guide</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mappo">MAPPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/mdp">MDP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/modeling">Modeling</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/movement-primitive">Movement Primitive</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pilco">PILCO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/policy">Policy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/potential-based-reward-shaping">Potential-Based Reward Shaping</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ppo">PPO</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/q-learning">Q-Learning</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/replay-memory">Replay Memory</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/reward-shaping">Reward Shaping</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl-실습---cartpole">RL 실습 - CartPole</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl-실습---moutaincar">RL 실습 - MoutainCar</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rl-실습---pybullet_drone">RL 실습 - PyBullet_drone</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rollout">Rollout</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/sensor">Sensor</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/target-network">Target Network</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/trajectory">Trajectory</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Robotics">Robotics</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---13.-robot-data">데이터중심 AI 입문 - 13. Robot Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/데이터중심-ai-입문---14.-collecting-robot-data">데이터중심 AI 입문 - 14. Collecting Robot Data</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/dof">DoF</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/isaac-sim-실습---환경-익히기">Isaac Sim 실습 - 환경 익히기</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-closure">Loop Closure</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-detection">Loop Detection</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/making-quadrupeds-learning-to-walk.-step-by-step-guide">Making quadrupeds Learning to walk. Step-by-Step Guide</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/movement-primitive">Movement Primitive</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/pd-controller">PD Controller</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/planner">Planner</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/primitive-behavior">Primitive Behavior</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-입문---1.기초">ROS 입문 - 1.기초</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rrt">RRT</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/trajectory">Trajectory</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/ROS">ROS</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/action-(ros)">Action (ROS)</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/namespace">Namespace</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/nav2">Nav2</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/node">Node</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/occupancy-grid-map">Occupancy Grid Map</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/qosprofile">QoSProfile</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/rclpy">rclpy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-실습---ros2-turtlesim">ROS 실습 - ROS2 Turtlesim</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros-입문---1.기초">ROS 입문 - 1.기초</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/ros2">ROS2</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/sensor_msgs--and--image.msg">sensor_msgs &amp; Image.msg</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/service">Service</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/topic">Topic</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/transformation">Transformation</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/urdf">URDF</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/SLAM">SLAM</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/amcl">AMCL</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-closure">Loop Closure</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/loop-detection">Loop Detection</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/planner">Planner</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/scan-context">Scan Context</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/visual--and--lidar-descriptor">Visual &amp; LiDAR Descriptor</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Statistics">Statistics</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/bayesian">Bayesian</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/entropy">Entropy</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/exponential">Exponential</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/kl-divergence">KL Divergence</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/lagrange-multiplier">Lagrange Multiplier</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/map">MAP</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/posteriori">Posteriori</a></li><li><a class="tag-explorer-note internal" href="../06_인턴십/probability--and--likelihood">Probability &amp; Likelihood</a></li></ul></li><li class="tag-explorer-item"><a class="tag-explorer-tag internal" href="../tags/Transformer">Transformer</a><ul class="tag-explorer-notes"><li><a class="tag-explorer-note internal" href="../06_인턴십/3blue1brown_딥러닝---5.-transformer">3Blue1Brown_딥러닝 - 5.Transformer</a></li></ul></li></ul></nav></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../06_인턴십/">06_인턴십</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>RL 실습 - PyBullet_drone</a></div></nav><h1 class="article-title">RL 실습 - PyBullet_drone</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-18T08:11:58.000Z">2026년 9월 18일</time><span>15 min read</span></p><ul class="tags"><li><a href="../tags/ReinforcementLearning" class="internal tag-link">ReinforcementLearning</a></li><li><a href="../tags/Practice" class="internal tag-link">Practice</a></li></ul></div></div><article class="popover-hint"><div class="markdown-preview-view markdown-rendered"><hr/>
+<p>| 참고 : <a href="https://github.com/learnsyslab/gym-pybullet-drones" class="external external-link">https://github.com/learnsyslab/gym-pybullet-drones<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>, <a href="https://wandb.ai/jcy9066_wandb/gym-pybullet-drones-pointreach/workspace?nw=nwuserjcy9066" class="external external-link">https://wandb.ai/jcy9066_wandb/gym-pybullet-drones-pointreach/workspace?nw=nwuserjcy9066<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></p>
 <h3 id="learnpy">learn.py<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#learnpy" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
 <ul>
 <li>
@@ -577,7 +577,1270 @@ ex) Drone 생성, 물리 시뮬레이션 step, State 업데이트, collision<spa
 <span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;" data-token-type="comment"># PPO에서 Policy가 급격하게 변하는 것을 제한하는 ratio</span></span>
 <span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">ratio </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation"> th.exp(</span></span>
 <span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function">    log_prob </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function"> rollout_data.old_log_prob</span></span>
-<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">)</span></span></code></pre></figure></div></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:false,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">)</span></span></code></pre></figure>
+<ul>
+<li><strong>Clipped Surrogate Objective</strong></li>
+</ul>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="python" data-theme="github-light github-dark"><code data-language="python" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">policy_loss_1 </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> advantages </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> ratio</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">policy_loss_2 </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> advantages </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation"> th.clamp(</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function">    ratio,</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">    1</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function"> clip_range,</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">    1</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function"> clip_range</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">)</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">policy_loss </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">th.min(</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function">    policy_loss_1,</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function">    policy_loss_2</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">).mean()</span></span></code></pre></figure>
+<ul>
+<li><strong>Value Loss</strong>
+<ul>
+<li>Actor, Critic 학습</li>
+</ul>
+</li>
+</ul>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="python" data-theme="github-light github-dark"><code data-language="python" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword">if</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.clip_range_vf </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">is</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> None</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;" data-token-type="comment"># value function clipping을 사용하지 않는 경우</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">	values_pred </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> values</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword">else</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;" data-token-type="comment"># critic도 급격한 변화 제한</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">	values_pred </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation"> rollout_data.old_values</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">		+</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation"> th.clamp(values </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function"> rollout_data.old_values,</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">		  -</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function">clip_range_vf, clip_range_vf)</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">	value_loss </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation"> F.mse_loss(rollout_data.returns, values_pred)</span></span></code></pre></figure>
+<ul>
+<li><strong>Entropy Loss</strong>
+<ul>
+<li>Policy Exploration 정도를 유지하기 위한 항</li>
+</ul>
+</li>
+</ul>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="python" data-theme="github-light github-dark"><code data-language="python" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword">if</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> entropy </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">is</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> None</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">:</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">	entropy_loss </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">th.mean(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function">log_prob)</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword">else</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">:</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">	entropy_loss </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">th.mean(entropy)</span></span></code></pre></figure>
+<ul>
+<li><strong>KL Divergence</strong><br/>
+| 참고 : <a href="../06_인턴십/kl-divergence" class="internal internal-link alias" data-slug="06_인턴십/kl-divergence">KL Divergence</a>
+<ul>
+<li>KL Divergence를 이용한 과도한 Policy 업데이트 감시</li>
+</ul>
+</li>
+</ul>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="python" data-theme="github-light github-dark"><code data-language="python" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword">with</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation"> th.no_grad():</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">	log_ratio </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> log_prob </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation"> rollout_data.old_log_prob</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">	approx_kl_div </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation"> th.mean((th.exp(log_ratio) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> 1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function"> log_ratio).cpu().numpy()</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">	approx_kl_divs.append(approx_kl_div)</span></span></code></pre></figure>
+<ul>
+<li><strong>Gradient 계산, Parameter 업데이트</strong></li>
+</ul>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="python" data-theme="github-light github-dark"><code data-language="python" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.policy.optimizer.zero_grad()</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">loss.backward()</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">th.nn.utils.clip_grad_norm_( </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;" data-token-type="comment">#gradient exploding 방지</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">	self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.policy.parameters(),</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">	self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.max_grad_norm</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">)</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.policy.optimizer.step()</span></span></code></pre></figure>
+<h3 id="on_policy_algorithmpy">on_policy_algorithm.py<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#on_policy_algorithmpy" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>model.learn()</strong>
+<ul>
+<li>Rollout 수집과 PPO 학습</li>
+</ul>
+</li>
+</ul>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="python" data-theme="github-light github-dark"><code data-language="python" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword">while</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.num_timesteps </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">&lt;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation"> total_timesteps:</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    continue_training </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.collect_rollouts(</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">        self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.env,</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function">        callback,</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">        self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.rollout_buffer,</span></span>
+<span data-line><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70;" data-token-type="important">        n_rollout_steps</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.n_steps</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function">    )</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">	</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword">    if</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator"> not</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation"> continue_training:</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword">        break</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    iteration </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">+=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> 1</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">	</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">    self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">._update_current_progress_remaining(</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">        self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.num_timesteps,</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function">        total_timesteps</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function">    )</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">    self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.train()</span></span></code></pre></figure>
+<ul>
+<li><strong>action 생성 및 agent가 action 수행</strong></li>
+</ul>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="python" data-theme="github-light github-dark"><code data-language="python" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword">with</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation"> th.no_grad(): </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;" data-token-type="comment"># Exploration 수집이므로, gradient 계산 X</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    obs_tensor </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function"> obs_as_tensor(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">._last_obs, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.device) </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;" data-token-type="comment"># tensor로 변환</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">    actions, values, log_probs </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.policy(obs_tensor) </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;" data-token-type="comment"># policy가 각각 계산</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">actions </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation"> actions.cpu().numpy()</span></span></code></pre></figure>
+<ul>
+<li><strong>buffer에 저장</strong>
+<ul>
+<li>Transition 정보를 Rollout Buffer에 저장</li>
+</ul>
+</li>
+</ul>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="python" data-theme="github-light github-dark"><code data-language="python" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">rollout_buffer.add(</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">    self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">._last_obs,</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function">    actions,</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function">    rewards,</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">    self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">._last_episode_starts,</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function">    values,</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function">    log_probs,</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">)</span></span></code></pre></figure>
+<h3 id="bufferspy">Buffers.py<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#bufferspy" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>compute_returns_and_advantage()</strong>
+<ul>
+<li>GAE Advantage와 Return 계산<br/>
+| 참고 : <a href="../06_인턴십/gae" class="internal internal-link" data-slug="06_인턴십/gae">GAE</a></li>
+</ul>
+</li>
+</ul>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="python" data-theme="github-light github-dark"><code data-language="python" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">last_gae_lam </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> 0</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword">for</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> step </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword">in</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="function"> reversed</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="function">range</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.buffer_size)):</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword">	if</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> step </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">==</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.buffer_size </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> 1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">:</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">		next_non_terminal </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> 1.0</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation"> dones.astype(np.float32)</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">		next_values </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> last_values</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword">	else</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">:</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">		next_non_terminal </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> 1.0</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator"> -</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.episode_starts[step </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">+</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> 1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">]</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">		next_values </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.values[step </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">+</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> 1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">]</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">		delta </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.rewards[step] </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">+</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.gamma </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> next_values </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> next_non_terminal </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.values[step]</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">		last_gae_lam </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> delta </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">+</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.gamma </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">*</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.gae_lambda </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> next_non_terminal </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> last_gae_lam</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">	self</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">.advantages[step] </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> last_gae_lam</span></span></code></pre></figure>
+<hr/>
+<h3 id="pointreach-baseline">PointReach baseline<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#pointreach-baseline" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>
+<p>기존 task에서 waypoint 위치 변경</p>
+</li>
+<li>
+<p>각 moter 따로 제어 <code>ONE_D_RPM</code> → <code>RPM</code></p>
+</li>
+<li>
+<p>Single-Agent</p>
+</li>
+<li>
+<p>시드 고정 → 0</p>
+</li>
+<li>
+<p><span class="text-highlight">Failure</span></p>
+</li>
+<li>
+<p>한계</p>
+<ol>
+<li>Task 난이도 상승</li>
+<li>Reward의 정보 부족
+<ul>
+<li>어떻게 가야하는지에 대한 정보가 부족함</li>
+</ul>
+</li>
+<li>조기 종료 threshold를 수정하지 않음</li>
+</ol>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>Category</th><th>Parameter</th><th>Current Value</th></tr></thead><tbody><tr><td><em>Task</em></td><td>Target</td><td><span class="text-highlight">(0.5, 0.5, 1.0)</span></td></tr><tr><td><em>Environment</em></td><td>Observation</td><td><code>KIN</code></td></tr><tr><td></td><td>Action</td><td><span class="text-highlight">RPM</span></td></tr><tr><td><em>Reward</em></td><td>Function</td><td><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></td></tr><tr><td><em>PPO</em></td><td>Policy</td><td><code>MlpPolicy</code></td></tr><tr><td></td><td>Learning Rate</td><td><code>3e-4</code></td></tr><tr><td></td><td><code>n_steps</code></td><td><code>2048</code></td></tr><tr><td></td><td>Batch Size</td><td><code>64</code></td></tr><tr><td></td><td><code>n_epochs</code></td><td><code>10</code></td></tr><tr><td></td><td><code>gamma</code></td><td><code>0.99</code></td></tr><tr><td></td><td><code>gae_lambda</code></td><td><code>0.95</code></td></tr><tr><td></td><td><code>clip_range</code></td><td><code>0.2</code></td></tr><tr><td></td><td><code>ent_coef</code></td><td><code>0.0</code></td></tr><tr><td></td><td><code>vf_coef</code></td><td><code>0.5</code></td></tr><tr><td><em>Training</em></td><td>Total Timesteps</td><td><span class="text-highlight">1e6</span></td></tr><tr><td></td><td>Eval Frequency</td><td><code>1000</code> steps</td></tr></tbody></table></div>
+<p><img src="../00_attachments/pasted-image-20260915204113.png" alt width="auto" height="auto"/><br/>
+<img src="../00_attachments/pasted-image-20260915204154.png" alt width="auto" height="auto"/><br/>
+<video src="../00_attachments/learn_lr0.0003_gamma0.99_gae0.95_clip0.2_batch64_nsteps2048_epochs10_seed0_09.15.2026_20.13.03_best_20260915_215728_790.mp4" controls></video></p>
+<h3 id="reward-수정">Reward 수정<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#reward-수정" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span><br/>
+→ <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">distance</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0269em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0269em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.0197em;">l</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">line</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></p>
+</li>
+<li>
+<p><span class="text-highlight">Failure</span></p>
+</li>
+<li>
+<p>한계</p>
+<ul>
+<li>너무 복잡한 reward</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>Category</th><th>Parameter</th><th>Current Value</th></tr></thead><tbody><tr><td><em>Task</em></td><td>Target</td><td>(0.5, 0.5, 1.0)</td></tr><tr><td><em>Environment</em></td><td>Observation</td><td><code>KIN</code></td></tr><tr><td></td><td>Action</td><td>RPM</td></tr><tr><td><span class="text-highlight">*Reward*</span></td><td>Function</td><td><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">distance</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0269em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0269em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.0197em;">l</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">line</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td></tr><tr><td><em>PPO</em></td><td>Policy</td><td><code>MlpPolicy</code></td></tr><tr><td></td><td>Learning Rate</td><td><code>3e-4</code></td></tr><tr><td></td><td><code>n_steps</code></td><td><code>2048</code></td></tr><tr><td></td><td>Batch Size</td><td><code>64</code></td></tr><tr><td></td><td><code>n_epochs</code></td><td><code>10</code></td></tr><tr><td></td><td><code>gamma</code></td><td><code>0.99</code></td></tr><tr><td></td><td><code>gae_lambda</code></td><td><code>0.95</code></td></tr><tr><td></td><td><code>clip_range</code></td><td><code>0.2</code></td></tr><tr><td></td><td><code>ent_coef</code></td><td><code>0.0</code></td></tr><tr><td></td><td><code>vf_coef</code></td><td><code>0.5</code></td></tr><tr><td><em>Training</em></td><td>Total Timesteps</td><td><code>1e7</code></td></tr><tr><td></td><td>Eval Frequency</td><td><code>1000</code> steps</td></tr><tr><td><img src="../00_attachments/pasted-image-20260915210641.png" alt width="auto" height="auto"/></td><td></td><td></td></tr><tr><td><img src="../00_attachments/pasted-image-20260915210852.png" alt width="auto" height="auto"/></td><td></td><td></td></tr><tr><td><video src="../00_attachments/learn_reward_lr0.0003_gamma0.99_gae0.95_clip0.2_batch64_nsteps2048_epochs10_seed0_09.15.2026_20.50.57_best_20260915_215737_826-1.mp4" controls></video></td><td></td><td></td></tr></tbody></table></div>
+<h3 id="learning-rate-수정">Learning Rate 수정<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#learning-rate-수정" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>
+<p>3e-4 → 1e-3</p>
+</li>
+<li>
+<p><span class="text-highlight">Failure</span></p>
+</li>
+<li>
+<p>한계</p>
+<ul>
+<li>LR가 너무 커 학습이 불안정해짐<br/>
+→ drone이 뒤집혀서 급가속해 땅에 부딪힘</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>Category</th><th>Parameter</th><th>Current Value</th></tr></thead><tbody><tr><td><em>Task</em></td><td>Target</td><td>(0.5, 0.5, 1.0)</td></tr><tr><td><em>Environment</em></td><td>Observation</td><td><code>KIN</code></td></tr><tr><td></td><td>Action</td><td>RPM</td></tr><tr><td><em>Reward</em></td><td>Function</td><td><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">distance</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0269em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0269em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.0197em;">l</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">line</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td></tr><tr><td><em>PPO</em></td><td>Policy</td><td><code>MlpPolicy</code></td></tr><tr><td></td><td>Learning Rate</td><td><span class="text-highlight">1e-3</span></td></tr><tr><td></td><td><code>n_steps</code></td><td><code>2048</code></td></tr><tr><td></td><td>Batch Size</td><td><code>64</code></td></tr><tr><td></td><td><code>n_epochs</code></td><td><code>10</code></td></tr><tr><td></td><td><code>gamma</code></td><td><code>0.99</code></td></tr><tr><td></td><td><code>gae_lambda</code></td><td><code>0.95</code></td></tr><tr><td></td><td><code>clip_range</code></td><td><code>0.2</code></td></tr><tr><td></td><td><code>ent_coef</code></td><td><code>0.0</code></td></tr><tr><td></td><td><code>vf_coef</code></td><td><code>0.5</code></td></tr><tr><td><em>Training</em></td><td>Total Timesteps</td><td><code>1e6</code></td></tr><tr><td></td><td>Eval Frequency</td><td><code>1000</code> steps</td></tr></tbody></table></div>
+<p><img src="../00_attachments/pasted-image-20260915211710.png" alt width="auto" height="auto"/><br/>
+<img src="../00_attachments/pasted-image-20260915214046.png" alt width="auto" height="auto"/><br/>
+<video src="../00_attachments/learn_lr_lr0.001_gamma0.99_gae0.95_clip0.2_batch64_nsteps2048_epochs10_seed0_09.15.2026_20.43.09_best_20260916_164057_374.mp4" controls></video></p>
+<h3 id="batch-size">Batch size<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#batch-size" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>
+<p>64 → 128</p>
+</li>
+<li>
+<p><span class="text-highlight">Failure</span></p>
+</li>
+<li>
+<p>한계</p>
+<ul>
+<li>Batch size 증가로, 한 rollout 당 parameter update 횟수가 감소해 충분한 학습이 진행되지 않았을 수 있음</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>Category</th><th>Parameter</th><th>Current Value</th></tr></thead><tbody><tr><td><em>Task</em></td><td>Target</td><td>(0.5, 0.5, 1.0)</td></tr><tr><td><em>Environment</em></td><td>Observation</td><td><code>KIN</code></td></tr><tr><td></td><td>Action</td><td>RPM</td></tr><tr><td><em>Reward</em></td><td>Function</td><td><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></td></tr><tr><td><em>PPO</em></td><td>Policy</td><td><code>MlpPolicy</code></td></tr><tr><td></td><td>Learning Rate</td><td><code>3e-4</code></td></tr><tr><td></td><td><code>n_steps</code></td><td><code>2048</code></td></tr><tr><td></td><td>Batch Size</td><td><span class="text-highlight">128</span></td></tr><tr><td></td><td><code>n_epochs</code></td><td><code>10</code></td></tr><tr><td></td><td><code>gamma</code></td><td><code>0.99</code></td></tr><tr><td></td><td><code>gae_lambda</code></td><td><code>0.95</code></td></tr><tr><td></td><td><code>clip_range</code></td><td><code>0.2</code></td></tr><tr><td></td><td><code>ent_coef</code></td><td><code>0.0</code></td></tr><tr><td></td><td><code>vf_coef</code></td><td><code>0.5</code></td></tr><tr><td><em>Training</em></td><td>Total Timesteps</td><td>1e6</td></tr><tr><td></td><td>Eval Frequency</td><td><code>1000</code> steps</td></tr><tr><td><img src="../00_attachments/pasted-image-20260916111309.png" alt width="auto" height="auto"/></td><td></td><td></td></tr><tr><td><img src="../00_attachments/pasted-image-20260916111420.png" alt width="auto" height="auto"/></td><td></td><td></td></tr></tbody></table></div>
+<p><video src="../00_attachments/learn_batch_size_lr0.0003_gamma0.99_gae0.95_clip0.2_batch128_nsteps2048_epochs10_seed0_09.16.2026_10.48.48_best_20260916_111757_029.mp4" controls></video></p>
+<h3 id="clip-range">Clip Range<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#clip-range" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>
+<p>0.2 → 0.1</p>
+</li>
+<li>
+<p><span class="text-highlight">Success</span></p>
+</li>
+<li>
+<p>이유</p>
+<ul>
+<li>급격한 policy 업데이트를 방지해, Success Rate가 증가함</li>
+</ul>
+</li>
+<li>
+<p>한계</p>
+<ul>
+<li>Mean Success Step이 증가해 성공률은 높아졌으나, goal 도달 속도는 느려짐</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>Category</th><th>Parameter</th><th>Current Value</th></tr></thead><tbody><tr><td><em>Task</em></td><td>Target</td><td>(0.5, 0.5, 1.0)</td></tr><tr><td><em>Environment</em></td><td>Observation</td><td><code>KIN</code></td></tr><tr><td></td><td>Action</td><td>RPM</td></tr><tr><td><em>Reward</em></td><td>Function</td><td><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></td></tr><tr><td><em>PPO</em></td><td>Policy</td><td><code>MlpPolicy</code></td></tr><tr><td></td><td>Learning Rate</td><td><code>3e-4</code></td></tr><tr><td></td><td><code>n_steps</code></td><td><code>2048</code></td></tr><tr><td></td><td>Batch Size</td><td><code>64</code></td></tr><tr><td></td><td><code>n_epochs</code></td><td><code>10</code></td></tr><tr><td></td><td><code>gamma</code></td><td><code>0.99</code></td></tr><tr><td></td><td><code>gae_lambda</code></td><td><code>0.95</code></td></tr><tr><td></td><td><code>clip_range</code></td><td><span class="text-highlight">0.1</span></td></tr><tr><td></td><td><code>ent_coef</code></td><td><code>0.0</code></td></tr><tr><td></td><td><code>vf_coef</code></td><td><code>0.5</code></td></tr><tr><td><em>Training</em></td><td>Total Timesteps</td><td>1e6</td></tr><tr><td></td><td>Eval Frequency</td><td><code>1000</code> steps</td></tr><tr><td><img src="../00_attachments/pasted-image-20260916111112.png" alt width="auto" height="auto"/></td><td></td><td></td></tr><tr><td><img src="../00_attachments/pasted-image-20260916111226.png" alt width="auto" height="auto"/></td><td></td><td></td></tr><tr><td><video src="../00_attachments/learn_clip_range_lr0.0003_gamma0.99_gae0.95_clip0.1_batch64_nsteps2048_epochs10_seed0_09.16.2026_10.49.04_best_20260916_142026_928.mp4" controls></video></td><td></td><td></td></tr></tbody></table></div>
+<h3 id="sac">SAC<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#sac" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>| 참고 : <a href="../06_인턴십/actor-critic#soft-actor-critic" class="internal internal-link alias" data-slug="06_인턴십/actor-critic">Actor-Critic > Soft Actor-Critic</a></p>
+<ul>
+<li>
+<p>PPO → SAC</p>
+</li>
+<li>
+<p><span class="text-highlight">Failure</span></p>
+</li>
+<li>
+<p>한계</p>
+<ul>
+<li>SAC에 따른 타 hyperparameter를 조정하지 않아 Policy 자체를 제대로 학습하지 못함</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>Category</th><th>Parameter</th><th>Current Value</th></tr></thead><tbody><tr><td><em>Task</em></td><td>Target</td><td>(0.5, 0.5, 1.0)</td></tr><tr><td><em>Environment</em></td><td>Observation</td><td><code>KIN</code></td></tr><tr><td></td><td>Action</td><td>RPM</td></tr><tr><td><em>Reward</em></td><td>Function</td><td><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></td></tr><tr><td><span class="text-highlight">SAC</span></td><td>Policy</td><td><code>MlpPolicy</code></td></tr><tr><td></td><td>Learning Rate</td><td><code>3e-4</code></td></tr><tr><td></td><td><code>n_steps</code></td><td><code>2048</code></td></tr><tr><td></td><td>Batch Size</td><td><code>64</code></td></tr><tr><td></td><td><code>n_epochs</code></td><td><code>10</code></td></tr><tr><td></td><td><code>gamma</code></td><td><code>0.99</code></td></tr><tr><td></td><td><code>gae_lambda</code></td><td><code>0.95</code></td></tr><tr><td></td><td><code>clip_range</code></td><td><code>0.2</code></td></tr><tr><td></td><td><code>ent_coef</code></td><td><code>0.0</code></td></tr><tr><td></td><td><code>vf_coef</code></td><td><code>0.5</code></td></tr><tr><td><em>Training</em></td><td>Total Timesteps</td><td>1e6</td></tr><tr><td></td><td>Eval Frequency</td><td><code>1000</code> steps</td></tr><tr><td><img src="../00_attachments/pasted-image-20260916161909.png" alt width="auto" height="auto"/></td><td></td><td></td></tr><tr><td><img src="../00_attachments/pasted-image-20260916162326.png" alt width="auto" height="auto"/></td><td></td><td></td></tr><tr><td><video src="../00_attachments/learn_sac_lr0.0003_gamma0.99_seed0_09.16.2026_11.15.50_best_20260916_163825_860.mp4" controls></video></td><td></td><td></td></tr></tbody></table></div>
+<h3 id="goal-relative-observation">Goal-relative Observation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#goal-relative-observation" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>
+<p>현재 위치 기준, goal의 상대 위치를 Observation에 추가</p>
+</li>
+<li>
+<p><span class="text-highlight">Success</span></p>
+</li>
+<li>
+<p>이유</p>
+<ul>
+<li>goal까지 방향과 거리를 직접 observation으로 제공해, Policy가 goal과 현재 state의 관계를 쉽게 파악함</li>
+</ul>
+</li>
+<li>
+<p>한계</p>
+<ul>
+<li>target이 하나로 고정되어 있음</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>Category</th><th>Parameter</th><th>Current Value</th></tr></thead><tbody><tr><td><em>Task</em></td><td>Target</td><td>(0.5, 0.5, 1.0)</td></tr><tr><td><em>Environment</em></td><td>Observation</td><td><span class="text-highlight">`KIN` + Goal-relative Position</span></td></tr><tr><td></td><td>Action</td><td>RPM</td></tr><tr><td><em>Reward</em></td><td>Function</td><td><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></td></tr><tr><td><em>PPO</em></td><td>Policy</td><td><code>MlpPolicy</code></td></tr><tr><td></td><td>Learning Rate</td><td><code>3e-4</code></td></tr><tr><td></td><td><code>n_steps</code></td><td><code>2048</code></td></tr><tr><td></td><td>Batch Size</td><td><code>64</code></td></tr><tr><td></td><td><code>n_epochs</code></td><td><code>10</code></td></tr><tr><td></td><td><code>gamma</code></td><td><code>0.99</code></td></tr><tr><td></td><td><code>gae_lambda</code></td><td><code>0.95</code></td></tr><tr><td></td><td><code>clip_range</code></td><td><code>0.2</code></td></tr><tr><td></td><td><code>ent_coef</code></td><td><code>0.0</code></td></tr><tr><td></td><td><code>vf_coef</code></td><td><code>0.5</code></td></tr><tr><td><em>Training</em></td><td>Total Timesteps</td><td>1e6</td></tr><tr><td></td><td>Eval Frequency</td><td><code>1000</code> steps</td></tr></tbody></table></div>
+<p><img src="../00_attachments/pasted-image-20260916120753.png" alt width="auto" height="auto"/><br/>
+<img src="../00_attachments/pasted-image-20260916120847.png" alt width="auto" height="auto"/><br/>
+<video src="../00_attachments/learn_goal_obs_lr0.0003_gamma0.99_gae0.95_clip0.2_batch64_nsteps2048_epochs10_seed0_09.16.2026_11.16.06_best_20260916_135503_877.mp4" controls></video></p>
+<h3 id="random-start">Random Start<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#random-start" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>
+<p>초기 위치 x, y는 ±0.05m, z는 ±0.02m 변경함</p>
+</li>
+<li>
+<p><span class="text-highlight">Success</span></p>
+</li>
+<li>
+<p>한계</p>
+<ul>
+<li>Episode마다 초기 State가 달라져, 학습해야 할 state distribution이 넓어졌으나 total timestep이 동일해 학습 난이도가 상대적으로 증가함</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>Category</th><th>Parameter</th><th>Current Value</th></tr></thead><tbody><tr><td><em>Task</em></td><td>Target</td><td>(0.5, 0.5, 1.0)</td></tr><tr><td><em>Environment</em></td><td>Observation</td><td><code>KIN</code></td></tr><tr><td></td><td>Action</td><td>RPM</td></tr><tr><td></td><td><span class="text-highlight">Initial Position</span></td><td><span class="text-highlight">Randomized: x,y ±0.05 m / z ±0.02 m</span></td></tr><tr><td><em>Reward</em></td><td>Function</td><td><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></td></tr><tr><td><em>PPO</em></td><td>Policy</td><td><code>MlpPolicy</code></td></tr><tr><td></td><td>Learning Rate</td><td><code>3e-4</code></td></tr><tr><td></td><td><code>n_steps</code></td><td><code>2048</code></td></tr><tr><td></td><td>Batch Size</td><td><code>64</code></td></tr><tr><td></td><td><code>n_epochs</code></td><td><code>10</code></td></tr><tr><td></td><td><code>gamma</code></td><td><code>0.99</code></td></tr><tr><td></td><td><code>gae_lambda</code></td><td><code>0.95</code></td></tr><tr><td></td><td><code>clip_range</code></td><td><code>0.2</code></td></tr><tr><td></td><td><code>ent_coef</code></td><td><code>0.0</code></td></tr><tr><td></td><td><code>vf_coef</code></td><td><code>0.5</code></td></tr><tr><td><em>Training</em></td><td>Total Timesteps</td><td>1e6</td></tr><tr><td></td><td>Eval Frequency</td><td><code>1000</code> steps</td></tr></tbody></table></div>
+<p><img src="../00_attachments/pasted-image-20260916135250.png" alt width="auto" height="auto"/><br/>
+<img src="../00_attachments/pasted-image-20260916135426.png" alt width="auto" height="auto"/><br/>
+<video src="../00_attachments/learn_random_start_lr0.0003_gamma0.99_gae0.95_clip0.2_batch64_nsteps2048_epochs10_seed0_09.16.2026_12.09.07_best_20260916_135626_624.mp4" controls></video></p>
+<hr/>
+<h3 id="success-rate-result">Success-Rate Result<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#success-rate-result" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>Experiment</th><th>Algo</th><th>Nominal</th><th>Success</th><th>Success Rate</th><th>Mean Min Dist</th><th>Std Min Dist</th><th>Mean Success Step</th></tr></thead><tbody><tr><td><em>baseline</em></td><td>PPO</td><td>FAIL</td><td>25/50</td><td>50.0%</td><td>0.1502 m</td><td>0.0947 m</td><td>73.2</td></tr><tr><td><em>reward</em></td><td></td><td>FAIL</td><td>1/50</td><td>2.0%</td><td>0.1712 m</td><td>0.0334 m</td><td>53.0</td></tr><tr><td><em>lr</em></td><td></td><td>FAIL</td><td>3/50</td><td>6.0%</td><td>0.3158 m</td><td>0.1130 m</td><td>64.7</td></tr><tr><td><em>batch_size</em></td><td></td><td>FAIL</td><td>0/50</td><td>0.0%</td><td>1.0779 m</td><td>0.0866 m</td><td>-</td></tr><tr><td><em><strong>clip_range</strong></em></td><td></td><td><span class="text-highlight">SUCCESS</span></td><td>37/50</td><td>74.0%</td><td>0.1961 m</td><td>0.1892 m</td><td>110.5</td></tr><tr><td><em>sac</em></td><td>SAC</td><td>FAIL</td><td>0/50</td><td>0.0%</td><td>0.9879 m</td><td>0.0861 m</td><td>-</td></tr><tr><td><em><strong>goal_obs</strong></em></td><td>PPO</td><td><span class="text-highlight">SUCCESS</span></td><td>47/50</td><td><span class="text-highlight">94.0%</span></td><td>0.0959 m</td><td>0.0070 m</td><td>62.1</td></tr><tr><td><em><strong>random_start</strong></em></td><td></td><td><span class="text-highlight">SUCCESS</span></td><td>11/50</td><td>22.0%</td><td>0.1454 m</td><td>0.0401 m</td><td>104.4</td></tr><tr><td>Success criterion : distance &lt;= 0.10 m</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Evaluation episodes: 50</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Evaluation seed    : 12345</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+<ul>
+<li>결론
+<ul>
+<li>Goal-relative Observation이 가장 큰 성능 개선 효과를 보임</li>
+</ul>
+</li>
+<li>해석
+<ul>
+<li>이번 PointReach Task에선, Agent가 Goal 정보를 충분히 알지 못한 것이 bottleneck이었음</li>
+</ul>
+</li>
+</ul>
+<hr/>
+<h3 id="rl에서-어떤-식으로-agent를-학습시켜야-하는가">RL에서 어떤 식으로 Agent를 학습시켜야 하는가<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#rl에서-어떤-식으로-agent를-학습시켜야-하는가" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>
+<p>Agent 학습의 문제가 무엇인지 진단하고, 해당 부분만 수정하는 방식</p>
+<ul>
+<li>즉, Bottleneck을 찾아 하나씩 제거하는 방식</li>
+</ul>
+</li>
+<li>
+<p>핵심</p>
+<ul>
+<li>Reward 설계</li>
+<li>Policy 개선</li>
+</ul>
+</li>
+<li>
+<p>순서</p>
+<ol>
+<li>Task 정의 (고정)</li>
+<li>Observation <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span> Action 설계</li>
+<li>Reward <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span> Termination</li>
+<li>Algorithm 선택</li>
+<li>Hyperparameter tuning</li>
+<li>Generalization <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span> Robustness</li>
+</ol>
+</li>
+<li>
+<p>표준 흐름</p>
+<ol>
+<li>Task 정의</li>
+<li>Observation <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span> Action <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span> Reward 설계</li>
+<li>Baseline 학습</li>
+<li>공통 평가 지표로 성능 확인</li>
+<li>실패 원인 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span> bottleneck 진단</li>
+<li>한 요소씩 수정</li>
+<li>ablation 또는 hyperparameter tuning</li>
+<li>여러 seed로 재검증</li>
+<li>randomization <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span> robustness 평가</li>
+</ol>
+</li>
+</ul>
+<p>| 참고 : <a href="../optuna" class="internal internal-link" data-slug="optuna">Optuna</a></p></div></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>그래프 뷰</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:false,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
                 s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
                 c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
                 C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
@@ -587,4 +1850,4 @@ ex) Drone 생성, 물리 시뮬레이션 step, State 업데이트, collision<spa
                 C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
                 S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
                 s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
-                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc"><button type="button" class="toc-header" aria-controls="toc-38" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-0" class="toc-content overflow"><li class="depth-1"><a href="#learnpy" data-for="learnpy">learn.py</a></li><li class="depth-1"><a href="#training-중-evaluation-reward-graph" data-for="training-중-evaluation-reward-graph">training 중 Evaluation Reward Graph</a></li><li class="depth-1"><a href="#best-model-simulation" data-for="best-model-simulation">best model simulation</a></li><li class="depth-0"><a href="#best-model로-수행하는-최종-test-시뮬레이션" data-for="best-model로-수행하는-최종-test-시뮬레이션">best model로 수행하는 최종 test 시뮬레이션</a></li><li class="depth-1"><a href="#test-graph" data-for="test-graph">test Graph</a></li><li class="depth-1"><a href="#training-중-reward-graph" data-for="training-중-reward-graph">training 중 reward Graph</a></li><li class="depth-1"><a href="#test-graph-1" data-for="test-graph-1">test Graph</a></li><li class="depth-1"><a href="#hoveraviary" data-for="hoveraviary">HoverAviary</a></li><li class="depth-1"><a href="#baserlaviarypy" data-for="baserlaviarypy">BaseRLAviary.py</a></li><li class="depth-1"><a href="#baseaviarypy" data-for="baseaviarypy">BaseAviary.py</a></li><li class="depth-1"><a href="#ppopy" data-for="ppopy">ppo.py</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v5.0.0</a> © 2026</p><ul><li><a href="https://github.com/jcy9066">GitHub</a></li><li><a href="https://www.linkedin.com/in/changwan-jeong-6666813a1/">LinkedIn</a></li></ul></footer></div></div></body><script src="../static/resource-after-e13fffa1.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-8b336f9a.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-baba652b.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-5eb75950.js" type="module" data-persist="true"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript" data-persist="true"></script><script src="../postscript-a3359fe8.js" type="module" data-persist="true"></script></html>
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc"><button type="button" class="toc-header" aria-controls="toc-41" aria-expanded="true"><h3>목차</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-0" class="toc-content overflow"><li class="depth-1"><a href="#learnpy" data-for="learnpy">learn.py</a></li><li class="depth-1"><a href="#training-중-evaluation-reward-graph" data-for="training-중-evaluation-reward-graph">training 중 Evaluation Reward Graph</a></li><li class="depth-1"><a href="#best-model-simulation" data-for="best-model-simulation">best model simulation</a></li><li class="depth-0"><a href="#best-model로-수행하는-최종-test-시뮬레이션" data-for="best-model로-수행하는-최종-test-시뮬레이션">best model로 수행하는 최종 test 시뮬레이션</a></li><li class="depth-1"><a href="#test-graph" data-for="test-graph">test Graph</a></li><li class="depth-1"><a href="#training-중-reward-graph" data-for="training-중-reward-graph">training 중 reward Graph</a></li><li class="depth-1"><a href="#test-graph-1" data-for="test-graph-1">test Graph</a></li><li class="depth-1"><a href="#hoveraviary" data-for="hoveraviary">HoverAviary</a></li><li class="depth-1"><a href="#baserlaviarypy" data-for="baserlaviarypy">BaseRLAviary.py</a></li><li class="depth-1"><a href="#baseaviarypy" data-for="baseaviarypy">BaseAviary.py</a></li><li class="depth-1"><a href="#ppopy" data-for="ppopy">ppo.py</a></li><li class="depth-1"><a href="#on_policy_algorithmpy" data-for="on_policy_algorithmpy">on_policy_algorithm.py</a></li><li class="depth-1"><a href="#bufferspy" data-for="bufferspy">Buffers.py</a></li><li class="depth-1"><a href="#pointreach-baseline" data-for="pointreach-baseline">PointReach baseline</a></li><li class="depth-1"><a href="#reward-수정" data-for="reward-수정">Reward 수정</a></li><li class="depth-1"><a href="#learning-rate-수정" data-for="learning-rate-수정">Learning Rate 수정</a></li><li class="depth-1"><a href="#batch-size" data-for="batch-size">Batch size</a></li><li class="depth-1"><a href="#clip-range" data-for="clip-range">Clip Range</a></li><li class="depth-1"><a href="#sac" data-for="sac">SAC</a></li><li class="depth-1"><a href="#goal-relative-observation" data-for="goal-relative-observation">Goal-relative Observation</a></li><li class="depth-1"><a href="#random-start" data-for="random-start">Random Start</a></li><li class="depth-1"><a href="#success-rate-result" data-for="success-rate-result">Success-Rate Result</a></li><li class="depth-1"><a href="#rl에서-어떤-식으로-agent를-학습시켜야-하는가" data-for="rl에서-어떤-식으로-agent를-학습시켜야-하는가">RL에서 어떤 식으로 Agent를 학습시켜야 하는가</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v5.0.0</a> © 2026</p><ul><li><a href="https://github.com/jcy9066">GitHub</a></li><li><a href="https://www.linkedin.com/in/changwan-jeong-6666813a1/">LinkedIn</a></li></ul></footer></div></div></body><script src="../static/resource-after-e13fffa1.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-8b336f9a.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-baba652b.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-5eb75950.js" type="module" data-persist="true"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript" data-persist="true"></script><script src="../postscript-a3359fe8.js" type="module" data-persist="true"></script></html>
