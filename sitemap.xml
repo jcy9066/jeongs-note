@@ -1,4 +1,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml"><url>
+    <loc>https://jcy9066.github.io/jeongs-note/02_%EB%85%BC%EB%AC%B8/grail---generating-humanoid-loco-manipulation-from-3d-assets-and-video-priors</loc>
+    <lastmod>2026-10-06T12:08:28.790Z</lastmod>
+  </url><url>
+    <loc>https://jcy9066.github.io/jeongs-note/02_%EB%85%BC%EB%AC%B8/perceptive-humanoid-parkour---chaining-dynamic-human-skills-via-motion-matching</loc>
+    <lastmod>2026-10-06T08:28:16.973Z</lastmod>
+  </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/06_%EC%9D%B8%ED%84%B4%EC%8B%AD/02_%EB%9E%A9%EB%AF%B8%ED%8C%85-%EC%9E%90%EB%A3%8C/parameter-sharing</loc>
     <lastmod>2026-09-14T09:05:42.000Z</lastmod>
   </url><url>
@@ -497,72 +503,78 @@
     <loc>https://jcy9066.github.io/jeongs-note/06_%EC%9D%B8%ED%84%B4%EC%8B%AD/%EB%94%A5%EB%9F%AC%EB%8B%9D-%EC%9D%B4%EB%A1%A0---8.-recurrent-neural-network</loc>
     <lastmod>2026-09-14T09:05:42.000Z</lastmod>
   </url><url>
+    <loc>https://jcy9066.github.io/jeongs-note/02_%EB%85%BC%EB%AC%B8/</loc>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
+  </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/06_%EC%9D%B8%ED%84%B4%EC%8B%AD/02_%EB%9E%A9%EB%AF%B8%ED%8C%85-%EC%9E%90%EB%A3%8C/</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/06_%EC%9D%B8%ED%84%B4%EC%8B%AD/</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
   </url><url>
-    <loc>https://jcy9066.github.io/jeongs-note/tags/DeepLearning</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
-  </url><url>
-    <loc>https://jcy9066.github.io/jeongs-note/tags/Lecture</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
-  </url><url>
-    <loc>https://jcy9066.github.io/jeongs-note/tags/LLM</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
-  </url><url>
-    <loc>https://jcy9066.github.io/jeongs-note/tags/ReinforcementLearning</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
-  </url><url>
-    <loc>https://jcy9066.github.io/jeongs-note/tags/Algorithm</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
-  </url><url>
-    <loc>https://jcy9066.github.io/jeongs-note/tags/SLAM</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
-  </url><url>
-    <loc>https://jcy9066.github.io/jeongs-note/tags/ROS</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
-  </url><url>
-    <loc>https://jcy9066.github.io/jeongs-note/tags/Statistics</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
-  </url><url>
-    <loc>https://jcy9066.github.io/jeongs-note/tags/ImitationLearning</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
-  </url><url>
-    <loc>https://jcy9066.github.io/jeongs-note/tags/Equation</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
-  </url><url>
-    <loc>https://jcy9066.github.io/jeongs-note/tags/Coding</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
+    <loc>https://jcy9066.github.io/jeongs-note/tags/Humanoid</loc>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/Robotics</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
-  </url><url>
-    <loc>https://jcy9066.github.io/jeongs-note/tags/MachineLearning</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
-  </url><url>
-    <loc>https://jcy9066.github.io/jeongs-note/tags/Practice</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
-  </url><url>
-    <loc>https://jcy9066.github.io/jeongs-note/tags/Git</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
-  </url><url>
-    <loc>https://jcy9066.github.io/jeongs-note/tags/IsaacSim</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/Paper</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
+  </url><url>
+    <loc>https://jcy9066.github.io/jeongs-note/tags/DeepLearning</loc>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
+  </url><url>
+    <loc>https://jcy9066.github.io/jeongs-note/tags/Lecture</loc>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
+  </url><url>
+    <loc>https://jcy9066.github.io/jeongs-note/tags/LLM</loc>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
+  </url><url>
+    <loc>https://jcy9066.github.io/jeongs-note/tags/ReinforcementLearning</loc>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
+  </url><url>
+    <loc>https://jcy9066.github.io/jeongs-note/tags/Algorithm</loc>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
+  </url><url>
+    <loc>https://jcy9066.github.io/jeongs-note/tags/SLAM</loc>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
+  </url><url>
+    <loc>https://jcy9066.github.io/jeongs-note/tags/ROS</loc>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
+  </url><url>
+    <loc>https://jcy9066.github.io/jeongs-note/tags/Statistics</loc>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
+  </url><url>
+    <loc>https://jcy9066.github.io/jeongs-note/tags/ImitationLearning</loc>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
+  </url><url>
+    <loc>https://jcy9066.github.io/jeongs-note/tags/Equation</loc>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
+  </url><url>
+    <loc>https://jcy9066.github.io/jeongs-note/tags/Coding</loc>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
+  </url><url>
+    <loc>https://jcy9066.github.io/jeongs-note/tags/MachineLearning</loc>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
+  </url><url>
+    <loc>https://jcy9066.github.io/jeongs-note/tags/Practice</loc>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
+  </url><url>
+    <loc>https://jcy9066.github.io/jeongs-note/tags/Git</loc>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
+  </url><url>
+    <loc>https://jcy9066.github.io/jeongs-note/tags/IsaacSim</loc>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/LinearAlgebra</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/3D</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/Perception</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/</loc>
-    <lastmod>2026-10-06T12:09:43.186Z</lastmod>
+    <lastmod>2026-10-07T01:49:35.960Z</lastmod>
   </url></urlset>
