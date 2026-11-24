@@ -26,9 +26,6 @@
     <loc>https://jcy9066.github.io/jeongs-note/02_%EB%85%BC%EB%AC%B8/%EC%A0%95%EB%A6%AC_perceptive-humanoid-parkour_chaining-dynamic-human-skills-via-motion-matching</loc>
     <lastmod>2026-11-09T12:01:01.000Z</lastmod>
   </url><url>
-    <loc>https://jcy9066.github.io/jeongs-note/06_%EC%9D%B8%ED%84%B4%EC%8B%AD/02_%EB%9E%A9%EB%AF%B8%ED%8C%85-%EC%9E%90%EB%A3%8C/parameter-sharing</loc>
-    <lastmod>2026-09-14T09:05:42.000Z</lastmod>
-  </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/06_%EC%9D%B8%ED%84%B4%EC%8B%AD/3blue1brown_%EB%94%A5%EB%9F%AC%EB%8B%9D---1.-%EC%8B%A0%EA%B2%BD%EB%A7%9D%EC%9D%B4%EB%9E%80</loc>
     <lastmod>2026-09-18T08:11:58.000Z</lastmod>
   </url><url>
@@ -347,6 +344,9 @@
     <loc>https://jcy9066.github.io/jeongs-note/06_%EC%9D%B8%ED%84%B4%EC%8B%AD/pandas</loc>
     <lastmod>2026-09-14T09:05:42.000Z</lastmod>
   </url><url>
+    <loc>https://jcy9066.github.io/jeongs-note/06_%EC%9D%B8%ED%84%B4%EC%8B%AD/parameter-sharing</loc>
+    <lastmod>2026-11-24T16:39:47.121Z</lastmod>
+  </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/06_%EC%9D%B8%ED%84%B4%EC%8B%AD/photometric</loc>
     <lastmod>2026-11-04T12:54:44.000Z</lastmod>
   </url><url>
@@ -585,83 +585,80 @@
     <lastmod>2026-09-14T09:05:42.000Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/02_%EB%85%BC%EB%AC%B8/</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
-  </url><url>
-    <loc>https://jcy9066.github.io/jeongs-note/06_%EC%9D%B8%ED%84%B4%EC%8B%AD/02_%EB%9E%A9%EB%AF%B8%ED%8C%85-%EC%9E%90%EB%A3%8C/</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/06_%EC%9D%B8%ED%84%B4%EC%8B%AD/</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/Practice</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/DeepLearning</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/SLAM</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/3D</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/Reconstruction</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/Paper</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/Humanoid</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/Robotics</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/Lecture</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/LLM</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/ReinforcementLearning</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/Algorithm</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/ROS</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/Statistics</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/ImitationLearning</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/Equation</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/Coding</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/MachineLearning</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/Perception</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/Git</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/IsaacSim</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/LinearAlgebra</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/2D</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url><url>
     <loc>https://jcy9066.github.io/jeongs-note/tags/</loc>
-    <lastmod>2026-11-23T12:51:17.315Z</lastmod>
+    <lastmod>2026-11-24T16:58:03.011Z</lastmod>
   </url></urlset>
